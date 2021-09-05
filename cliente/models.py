@@ -1,0 +1,44 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.forms import ValidationError
+import re
+from utils import validacpf
+
+
+
+
+class Cliente(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    data_nascimento = models.DateField()
+    cpf = models.CharField(max_length=11)
+
+    def clean(self):
+        messagens_erros = {}
+
+        if not validacpf.valida_cpf(self.cpf):
+            messagens_erros['cpf'] = 'Digite um CPF válido'
+
+        if re.search(r'[^0-9]', self.cep) or len(self.cep) < 8:
+            messagens_erros['cep'] = 'CEP Inválido, digite os 8 digitos do CEP.'
+
+        if messagens_erros:
+            raise ValidationError(messagens_erros)
+
+    def __str__(self):
+        return f'{self.usuario}'
+
+    class Meta:
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+
+
+class Endereco(models.Model):
+    tipo = models.CharField(max_length=30)
+    numero = models.CharField(max_length=6)
+    complemento = models.CharField(max_length=50, blank=True, null=True)
+    cep = models.CharField(max_length=50)
+    cliente = models.ForeignKey(Cliente,  on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Endereço'
+        verbose_name_plural = 'Endereços'
