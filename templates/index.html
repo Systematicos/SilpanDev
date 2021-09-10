@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load omFilters %}
 {% block conteudo %}
     <!-- banner -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -126,7 +127,7 @@
                                                         <span class="item_price">R${{ produto.preco_marketing }}</span>
 
                                                     {% if produto.preco_marketing_promocional %}
-                                                        <del>R$ {{ produto.preco_marketing_promocional }}</del>
+                                                        <del>R$ {{ produto.preco_marketing_promocional  }}</del>
                                                     {% endif %}
 
 

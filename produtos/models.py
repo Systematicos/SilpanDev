@@ -83,7 +83,7 @@ class Produto(models.Model):
     def save(self, *args, **kwargs):
 
         super().save(*args, **kwargs)
-        max_image_size = 200
+        max_image_size = 220
 
         if self.imagem:
             self.resize_image(self.imagem, max_image_size)
@@ -91,6 +91,9 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
+    def getDesconto(self):
+        if self.preco_marketing_promocional:
+            return self.preco_marketing - self.preco_marketing_promocional
 
 class Variacao(models.Model):
     cod_varicao = models.AutoField(primary_key=True)
