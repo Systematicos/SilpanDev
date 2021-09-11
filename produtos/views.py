@@ -26,6 +26,8 @@ class ListaPrdutos(ListView):
 class DetelheProduto(View):
     pass
 
+class Test(View):
+    pass
 
 class AdicionarAoCarrinho(View):
     pass
