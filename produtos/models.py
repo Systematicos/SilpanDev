@@ -95,6 +95,20 @@ class Produto(models.Model):
         if self.preco_marketing_promocional:
             return self.preco_marketing - self.preco_marketing_promocional
 
+    @classmethod
+    def split(cls, lista, tamanho):
+        return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
+
+    @classmethod
+    def getListProdutInColun(cls):
+        lista = []
+
+        for produto in Produto.objects.all():
+            lista.append(produto)
+
+        return Produto.split(lista, 3)
+
+
 class Variacao(models.Model):
     cod_varicao = models.AutoField(primary_key=True)
 
