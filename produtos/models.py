@@ -20,10 +20,10 @@ class Categoria(models.Model):
 
 
 class Marca(models.Model):
-    marca = models.CharField(max_length=40, blank=True, null=True)
+    nome = models.CharField(max_length=40, blank=True, null=True)
 
     def __str__(self):
-        return self.marca
+        return self.nome
 
     class Meta:
         verbose_name = 'Marca'
@@ -32,20 +32,15 @@ class Marca(models.Model):
 
 class Produto(models.Model):
     nome = models.CharField(max_length=250)
-    descricao_curta = models.TextField(max_length=50, null=True, blank=True)
-    descricao_longa = models.TextField(max_length=250, null=True, blank=True)
+    descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
     imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True)
     marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
     preco_marketing = models.FloatField()
-    preco_marketing_promocional = models.FloatField(default=0)
-    tipos = models.CharField(
-        default='V',
-        max_length=1,
-        choices=(('V', 'Variação'), ('S', 'Simples'))
-
-    )
+    preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
+    cor = models.CharField(max_length=50, blank=True, null=True)
+    material = models.CharField(max_length=50, blank=True, null=True)
     largura = models.IntegerField(blank=True, null=True)
     altura = models.IntegerField(blank=True, null=True)
     comprimento = models.IntegerField(blank=True, null=True)
@@ -83,7 +78,7 @@ class Produto(models.Model):
     def save(self, *args, **kwargs):
 
         super().save(*args, **kwargs)
-        max_image_size = 220
+        max_image_size = 212
 
         if self.imagem:
             self.resize_image(self.imagem, max_image_size)
@@ -109,20 +104,3 @@ class Produto(models.Model):
         return Produto.split(lista, 3)
 
 
-class Variacao(models.Model):
-    cod_varicao = models.AutoField(primary_key=True)
-
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    nome = models.CharField(max_length=50, null=True, blank=True)
-    preco = models.FloatField()
-    preco_promocional = models.FloatField(blank=True, null=True, default=0)
-    quantidade = models.PositiveIntegerField(default=1)
-    cor = models.CharField(max_length=50, blank=True, null=True)
-    material = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.nome or self.produto.nome
-
-    class Meta:
-        verbose_name = 'Variável'
-        verbose_name_plural = 'Variações'
