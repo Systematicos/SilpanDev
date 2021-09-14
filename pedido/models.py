@@ -37,6 +37,21 @@ class Transportadora(models.Model):
         verbose_name = 'Transportadora'
         verbose_name_plural = 'Transportadoras'
 
+class Cupom(models.Model):
+    nome = models.CharField(max_length=20, null=False, blank=False)
+    valor = models.FloatField(blank=True)
+    percentual = models.PositiveIntegerField(blank=True)
+    data_inicio = models.DateTimeField(blank=True)
+    data_final = models.DateTimeField(blank=True)
+    quantidade = models.PositiveIntegerField(blank=True, default=1)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Cupom'
+        verbose_name_plural = 'Cupons'
+
 
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
@@ -48,6 +63,7 @@ class Pedido(models.Model):
     data = models.DateTimeField()
     subtotal = models.FloatField()
     desconto = models.FloatField()
+    cupom = models.ForeignKey(Cupom, on_delete=models.RESTRICT, null=True, blank=True)
     total = models.FloatField()
     frete = models.FloatField()
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)

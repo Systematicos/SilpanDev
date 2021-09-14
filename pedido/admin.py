@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Pedido, ItemPedido, FormaDePagamento,Status,Transportadora
+from .models import Pedido, ItemPedido, FormaDePagamento, Status, Transportadora, Cupom
+
 
 class FormaPagamentoInLine(admin.TabularInline):
     model = FormaDePagamento
@@ -18,6 +19,10 @@ class ItemPedidoInLine(admin.TabularInline):
     model = ItemPedido
     extra = 1
 
+class CupomInLine(admin.TabularInline):
+    model = Cupom
+    extra = 1
+
 class PedidoAdmin(admin.ModelAdmin):
     inlines = [
         ItemPedidoInLine
@@ -27,3 +32,5 @@ admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(FormaDePagamento)
 admin.site.register(Status)
 admin.site.register(Transportadora)
+admin.site.register(Cupom)
+
