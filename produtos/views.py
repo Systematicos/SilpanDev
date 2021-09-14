@@ -14,9 +14,10 @@ class ListaPrdutos(ListView):
     queryset = Produto.objects.all()
 
     def get_context_data(self, **kwargs):
+        produtos = Produto.getListProdutInColun()
         context = super(ListaPrdutos, self).get_context_data(**kwargs)
-        context['produtos'] = Produto.objects.all()
-        context['qtd_product'] = range(math.ceil(len(context['produtos']) / 3))
+        context['produtos'] = produtos
+        context['qtd_product'] = len(produtos)
         context['categorias'] = Categoria.objects.all()
 
         return context
@@ -24,7 +25,6 @@ class ListaPrdutos(ListView):
 
 class DetelheProduto(View):
     pass
-
 
 class AdicionarAoCarrinho(View):
     pass

@@ -1,21 +1,13 @@
 from django.contrib import admin
-from .models import Produto, Variacao, Marca, Categoria
-
-
-class VariacaoInLine(admin.TabularInline):
-    model = Variacao
-    extra = 1
+from .models import Produto, Marca, Categoria
 
 
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'descricao_curta', 'get_preco_formatado', 'get_preco_promocional_formatado']
-    inlines = [
-        VariacaoInLine
-    ]
+    list_display = ['nome', 'descricao', 'get_preco_formatado', 'get_preco_promocional_formatado']
 
 
 class MarcaAdmin(admin.ModelAdmin):
-    list_display = ['marca']
+    list_display = ['nome']
 
 
 class CategoriaAdmin(admin.ModelAdmin):
@@ -23,6 +15,5 @@ class CategoriaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Produto, ProdutoAdmin)
-admin.site.register(Variacao)
 admin.site.register(Marca, MarcaAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
