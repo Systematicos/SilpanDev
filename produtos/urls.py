@@ -3,8 +3,9 @@ from django.urls import path
 from django.conf import settings
 from . import views
 from django.conf.urls.static import static
-
+from .models import Categoria
 app_name = 'produtos'
+
 
 urlpatterns = [
     path("", views.ListaPrdutos.as_view(), name='lista'),
