@@ -37,9 +37,12 @@
                 <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
                     <!-- nome da categoria -->
                     {% for nome in categoria.getNomeCategoria %}
-                    <span>nome{</span>ormas
-                    <span>D</span>ecorativa</h3>
-            {% endfor %}
+                        {% for key, value in nome.items %}
+                            <span>{{ key }}</span>{{ value }}
+                        {% endfor %}
+                    {% endfor %}
+                </h3>
+
                 <!-- //nome da categoria -->
 
                 <!-- //tittle heading -->
@@ -54,7 +57,7 @@
                                     <ul>
                                         <li>
                                             <input type="checkbox" class="checked">
-                                            <span class="span">Samsung</span>
+                                            <span class="span">{{ categoria.getNomeCategoria }}</span>
                                         </li>
                                         <li>
                                             <input type="checkbox" class="checked">

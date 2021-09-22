@@ -22,17 +22,14 @@ class Categoria(models.Model):
         verbose_name_plural = 'Categorias'
 
     def getNomeCategoria(self):
-        if self.nome.find(' '):
-            nome = []
-            indexes = [x for x, v in enumerate(self.nome) if v == ' ']
-            x = 0
-            for y in indexes:
+        nome_categoria = self.nome.split()
+        nome = []
 
-                nome.append(str(self.nome[x:y]).strip())
-                x = y
-            nome.append(self.nome[x:].strip())
-        else:
-            return self.nome
+        for n in nome_categoria:
+            nome.append({n[0]: n[1:]})
+        print(nome)
+        return nome
+
 
 class Marca(models.Model):
     nome = models.CharField(max_length=40, blank=True, null=True)
@@ -70,8 +67,6 @@ class Produto(models.Model):
 
     get_preco_promocional_formatado.short_description = 'Preço Promocional'
 
-
-
     def __str__(self):
         return self.nome
 
@@ -93,5 +88,3 @@ class Produto(models.Model):
             lista.append(produto)
 
         return Produto.split(lista, 3)
-
-
