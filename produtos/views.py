@@ -27,7 +27,6 @@ class ListaPrdutosCategoria(ListView):
     context_object_name = 'produtos'
 
     template_name = 'produto/produto.html'
-
     def get_queryset(self):
         self.categoria = get_object_or_404(Categoria, nome=self.kwargs['categoria'])
 
