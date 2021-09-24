@@ -6,6 +6,9 @@ from PIL import Image
 import os
 from django.conf import settings
 from django.utils.text import slugify
+from django_resized import ResizedImageField
+
+from utils import utilsProduto
 
 
 class Categoria(models.Model):
@@ -17,6 +20,15 @@ class Categoria(models.Model):
     class Meta:
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
+
+    def getNomeCategoria(self):
+        nome_categoria = self.nome.split()
+        nome = []
+
+        for n in nome_categoria:
+            nome.append({n[0]: n[1:]})
+        print(nome)
+        return nome
 
 
 class Marca(models.Model):
@@ -34,7 +46,7 @@ class Produto(models.Model):
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
-    imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True)
+    imagem = ResizedImageField(size=[212, 212], upload_to='produto_imagens/%Y/%m/', blank=True)
     marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
     preco_marketing = models.FloatField()
@@ -46,42 +58,14 @@ class Produto(models.Model):
     comprimento = models.IntegerField(blank=True, null=True)
 
     def get_preco_formatado(self):
-        return f'R$ {self.preco_marketing:.2f}'.replace('.', ',')
+        return utilsProduto.formata_preco(self.preco_marketing)
 
     get_preco_formatado.short_description = 'Preço'
 
     def get_preco_promocional_formatado(self):
-        return f'R$ {self.preco_marketing_promocional:.2f}'.replace('.', ',')
+        return utilsProduto.formata_preco(self.preco_marketing_promocional)
 
     get_preco_promocional_formatado.short_description = 'Preço Promocional'
-
-    @staticmethod
-    def resize_image(img, new_width=800):
-        img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
-        img_pil = Image.open((img_full_path))
-        original_width, original_height = img_pil.size
-
-        if original_width <= new_width:
-            img_pil.close()
-            return
-
-        new_height = round((new_width * original_height) / original_width)
-        new_img = img_pil.resize((new_width, new_height), Image.LANCZOS)
-        new_img.save(
-            img_full_path,
-            optimize=True,
-            quality=75
-        )
-
-        print(original_width, original_height)
-
-    def save(self, *args, **kwargs):
-
-        super().save(*args, **kwargs)
-        max_image_size = 212
-
-        if self.imagem:
-            self.resize_image(self.imagem, max_image_size)
 
     def __str__(self):
         return self.nome
@@ -95,12 +79,12 @@ class Produto(models.Model):
         return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
 
     @classmethod
-    def getListProdutInColun(cls):
+    def getListProdutInColun(cls, listProduct=[]):
         lista = []
+        if not listProduct:
+            listProduct = Produto.objects.all()
 
-        for produto in Produto.objects.all():
+        for produto in listProduct:
             lista.append(produto)
 
         return Produto.split(lista, 3)
-
-

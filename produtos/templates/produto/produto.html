@@ -14,7 +14,6 @@
 
 <main>
     {% block conteudo %}
-
         <!-- page -->
         <div class="services-breadcrumb">
             <div class="agile_inner_breadcrumb">
@@ -24,7 +23,7 @@
                             <a href="index.html">Home</a>
                             <i>|</i>
                         </li>
-                        <li>Formas Decorativas</li>
+                        <li>{{ categoria }}</li>
                     </ul>
                 </div>
             </div>
@@ -36,8 +35,16 @@
             <div class="container py-xl-4 py-lg-2">
                 <!-- tittle heading -->
                 <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-                    <span>F</span>ormas
-                    <span>D</span>ecorativa</h3>
+                    <!-- nome da categoria -->
+                    {% for nome in categoria.getNomeCategoria %}
+                        {% for key, value in nome.items %}
+                            <span>{{ key }}</span>{{ value }}
+                        {% endfor %}
+                    {% endfor %}
+                </h3>
+
+                <!-- //nome da categoria -->
+
                 <!-- //tittle heading -->
                 <div class="row">
                     <!-- product right -->
@@ -50,7 +57,7 @@
                                     <ul>
                                         <li>
                                             <input type="checkbox" class="checked">
-                                            <span class="span">Samsung</span>
+                                            <span class="span">{{ categoria.getNomeCategoria }}</span>
                                         </li>
                                         <li>
                                             <input type="checkbox" class="checked">
@@ -120,6 +127,7 @@
 
                                         {% for produto in colunProdut %}
                                             <!-- produto -->
+
                                             <div class="col-md-4 product-men">
                                                 <div class="men-pro-item simpleCart_shelfItem">
                                                     <div class="men-thumb-item text-center">
@@ -134,7 +142,8 @@
 
                                                         <div class="men-cart-pro">
                                                             <div class="inner-men-cart-pro">
-                                                                <a href="{{ produto.nome }}" class="link-product-add-cart">Quick
+                                                                <a href="{{ produto.nome }}"
+                                                                   class="link-product-add-cart">Quick
                                                                     View</a>
                                                             </div>
                                                         </div>
@@ -147,10 +156,11 @@
                                                         <div class="info-product-price my-2">
 
                                                             {% if produto.preco_marketing_promocional %}
-                                                                <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco  }}</span>
-                                                                <del>R$ {{ produto.preco_marketing|formata_preco }}</del>
+                                                                <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco }}</span>
+                                                                <del>
+                                                                    R$ {{ produto.preco_marketing|formata_preco }}</del>
                                                             {% else %}
-                                                                <span class="item_price">R${{ produto.preco_marketing|formata_preco  }}</span>
+                                                                <span class="item_price">R${{ produto.preco_marketing|formata_preco }}</span>
 
                                                             {% endif %}
                                                         </div>
@@ -166,15 +176,15 @@
                                                                     {% if produto.preco_marketing_promocional > 0 %}
 
                                                                         <input type="hidden" name="amount"
-                                                                               value="{{ produto.preco_marketing|formata_preco  }}"/>
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
                                                                         <input type="hidden" name="discount_amount"
-                                                                               value="{{ produto.getDesconto|formata_preco  }}    "/>
+                                                                               value="{{ produto.getDesconto|formata_preco }}    "/>
 
                                                                     {% else %}
                                                                         <input type="hidden" name="amount"
-                                                                               value="{{ produto.preco_marketing|formata_preco  }}"/>
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
                                                                         <input type="hidden" name="discount_amount"
-                                                                               value="0,00"/>
+                                                                               z value="0,00"/>
                                                                     {% endif %}
 
 
@@ -195,11 +205,11 @@
                                             </div>
                                         {% endfor %}
                                         <!-- //produto -->
+
                                     </div>
                                 </div>
                             {% endfor %}
                             <!-- //first section -->
-
 
                         </div>
                     </div>
