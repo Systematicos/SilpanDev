@@ -149,6 +149,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 <!-- register -->
+{% load crispy_forms_tags %}
+
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -159,22 +161,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="{% url 'cliente:criar' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-form-label">Your Name</label>
+                        <label class="col-form-label">Seu Nome</label>
                         <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" class="form-control" placeholder=" " name="Username" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">CPF</label>
+                        <input type="text" class="form-control" placeholder=" " name="CPF" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" placeholder=" " name="Dt_nasc" required="">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email</label>
                         <input type="email" class="form-control" placeholder=" " name="Email" required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Password</label>
+                        <label class="col-form-label">Senha</label>
                         <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
                                required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Confirm Password</label>
+                        <label class="col-form-label">Confirmação da Senha</label>
                         <input type="password" class="form-control" placeholder=" " name="Confirm Password"
                                id="password2" required="">
                     </div>
@@ -184,8 +199,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="sub-w3l">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
-                            <label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms &
-                                Conditions</label>
+                            <label class="custom-control-label" for="customControlAutosizing2">
+                                Aceito os Termos e Condições</label>
                         </div>
                     </div>
                 </form>
@@ -215,7 +230,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <!-- search -->
                     <div class="col-10 agileits_search">
                         <form class="form-inline" action="#" method="post">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Digite o nome/código do produto" aria-label="Search"
+                            <input class="form-control mr-sm-2" type="search"
+                                   placeholder="Digite o nome/código do produto" aria-label="Search"
                                    required>
                             <button class="btn my-2 my-sm-0" type="submit">Pesquisar</button>
                         </form>
@@ -260,9 +276,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </li>
 
                     {% for categoria in categorias %}
-                    <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="../{{ categoria.nome.lower }} ">{{ categoria.nome }}</a>
-                    </li>
+                        <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link" href="../produto/{{ categoria.nome.lower }} ">{{ categoria.nome }}</a>
+                        </li>
                     {% endfor %}
 
                 </ul>
