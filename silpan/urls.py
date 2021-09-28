@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-                  path('', include('produtos.urls')),
+                  path('produto/', include('produtos.urls')),
                   path('cliente/', include('cliente.urls')),
                   path('pedido/', include('pedido.urls')),
                   path('__debug__/', include(debug_toolbar.urls)),
