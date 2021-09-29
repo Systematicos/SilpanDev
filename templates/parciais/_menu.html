@@ -121,14 +121,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="{%  url 'cliente:login' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="col-form-label">Usuário</label>
-                        <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        <input type="text" class="form-control" placeholder=" " name="user" required="">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Senha</label>
-                        <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                        <input type="password" class="form-control" placeholder=" " name="password" required="">
                     </div>
                     <div class="right-w3l">
                         <input type="submit" class="form-control" value="Login">
@@ -149,7 +150,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 <!-- register -->
-{% load crispy_forms_tags %}
 
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
