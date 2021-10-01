@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -11,10 +11,6 @@ from django.contrib.auth.models import User
 
 
 class Atualizar(View):
-    pass
-
-
-class Logout(View):
     pass
 
 
@@ -40,7 +36,15 @@ def Login(request):
             return HttpResponse('digtar usuario ou senha')
 
         usuario = authenticate(request, username=username, password=password)
+        login(request, user=usuario)
 
         if not usuario:
             return HttpResponse('nao tem usuario')
         return redirect('produtos:lista')
+
+
+def Logout(request):
+    if request.method == 'GET':
+        logout(request)
+
+        return redirect('produtos:carrinho')

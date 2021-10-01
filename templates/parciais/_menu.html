@@ -72,14 +72,40 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <li class="text-center border-right text-white">
                         <i class="fas fa-phone mr-2"></i> 11 558132554
                     </li>
-                    <li class="text-center border-right text-white">
-                        <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Login </a>
-                    </li>
-                    <li class="text-center text-white">
-                        <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Resgistrar </a>
-                    </li>
+                    {% if not request.user.is_authenticated %}
+
+                        <li class="text-center border-right text-white">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Login </a>
+                        </li>
+                        <li class="text-center text-white">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Resgistrar </a>
+                        </li>
+
+                    {% else %}
+                        <!-- menu do cliente quando logar -->
+
+                        <li class="text-center border-right text-white">
+
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown"></a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'pedido:lista' %}">Meus pedidos</a>
+                                <a class="dropdown-item" href="{% url 'cliente:criar' %}">Perfil</a>
+                                <a class="dropdown-item" href="{% url 'cliente:logout' %}">Sair</a>
+                            </div>
+                        </li>
+
+
+                        </li>
+                        <!-- //menu do cliente quando logar -->
+
+                    {% endif %}
+
                 </ul>
                 <!-- //header lists -->
             </div>
@@ -121,7 +147,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{%  url 'cliente:login' %}" method="post">
+                <form action="{% url 'cliente:login' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-form-label">Usuário</label>
@@ -209,6 +235,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 <!-- //modal -->
+
 <!-- //top-header -->
 
 <!-- header-bottom-->
