@@ -10,8 +10,8 @@ class Pagar(View):
 
 
 class FecharPedido(View):
-    pass
-
+    def get(self, request, *args, **kwargs):
+        return render(request, 'checkout.html', {})
 
 class Detalhe(View):
     pass
