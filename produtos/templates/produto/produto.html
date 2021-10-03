@@ -165,6 +165,14 @@
                                                                 <fieldset>
                                                                     <input type="hidden" name="cmd" value="_cart"/>
                                                                     <input type="hidden" name="add" value="1"/>
+                                                                    <input type="hidden" name="id" value="{{ produto.id }}"/>
+                                                                    <input type="hidden" name="imagem" value="{{ produto.imagem.url }}"/>
+                                                                    <input type="hidden" name="cor" value="{{ produto.cor }}"/>
+                                                                    <input type="hidden" name="material" value="{{ produto.material }}"/>
+                                                                    <input type="hidden" name="largura" value="{{ produto.largura }}"/>
+                                                                    <input type="hidden" name="altura" value="{{ produto.altura }}"/>
+                                                                    <input type="hidden" name="comprimento" value="{{ produto.comprimento }}"/>
+
                                                                     <input type="hidden" name="business" value=" "/>
                                                                     <input type="hidden" name="item_name"
                                                                            value="{{ produto.nome }}"/>
