@@ -20,7 +20,7 @@
 /*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.auth_permission: ~9 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.auth_permission: ~72 rows (aproximadamente)
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
 INSERT IGNORE INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
 	(1, 'Can add log entry', 1, 'add_logentry'),
@@ -97,10 +97,10 @@ INSERT IGNORE INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename
 	(72, 'Can view Cupom', 18, 'view_cupom');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.auth_user: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.auth_user: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT IGNORE INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-09-14 01:57:28.027074', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208');
+	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-10-02 18:43:02.476141', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 
 -- Copiando dados para a tabela silpan.auth_user_groups: ~0 rows (aproximadamente)
@@ -126,7 +126,7 @@ INSERT IGNORE INTO `cupom_cupom` (`id`, `nome`, `valor`, `percentual`, `data_ini
 	(3, 'systematicos11', 10, 0, '2021-09-14 23:51:01.000000', NULL, 1, 'ATIVADO');
 /*!40000 ALTER TABLE `cupom_cupom` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.django_admin_log: ~40 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.django_admin_log: ~80 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
 INSERT IGNORE INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
 	(1, '2021-09-14 00:59:37.376576', '1', 'Kit 3 Aros Coração Cortador De Bolo', 1, '[{"added": {}}]', 9, 1),
@@ -184,7 +184,31 @@ INSERT IGNORE INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object
 	(53, '2021-09-16 00:28:53.139313', '20', '12 Forminhas torta suissa ou pudim mini', 1, '[{"added": {}}]', 9, 1),
 	(54, '2021-09-16 00:32:17.956724', '21', 'Jogo c/ três formas de bolo redondas', 1, '[{"added": {}}]', 9, 1),
 	(55, '2021-09-16 00:33:57.159159', '22', 'Conjunto de formas', 1, '[{"added": {}}]', 9, 1),
-	(56, '2021-09-16 00:46:26.364537', '23', '12 Forminhas canudo', 1, '[{"added": {}}]', 9, 1);
+	(56, '2021-09-16 00:46:26.364537', '23', '12 Forminhas canudo', 1, '[{"added": {}}]', 9, 1),
+	(57, '2021-10-04 15:27:55.953547', '23', '12 Forminhas canudo', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(58, '2021-10-04 15:28:15.330214', '22', 'Conjunto de formas', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(59, '2021-10-04 15:28:35.132579', '21', 'Jogo c/ três formas de bolo redondas', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(60, '2021-10-04 15:28:54.128754', '20', '12 Forminhas torta suissa ou pudim mini', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(61, '2021-10-04 15:29:05.386630', '20', '12 Forminhas torta suissa ou pudim mini', 2, '[]', 9, 1),
+	(62, '2021-10-04 15:29:19.797776', '19', 'Conjunto de Assadeiras Retangular', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(63, '2021-10-04 15:29:33.606292', '18', 'Forma Artística para Bolos Brasil', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(64, '2021-10-04 15:29:45.003290', '17', 'Forma Decorativa Minnie', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(65, '2021-10-04 15:29:58.612951', '16', 'Balerine Decorada Pequena', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(66, '2021-10-04 15:30:10.405188', '15', 'Forma De Bolo Pudim', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(67, '2021-10-04 15:30:23.865631', '14', 'FORMA HOMENAGEM PAPAI', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(68, '2021-10-04 15:30:35.299461', '13', '12 FORMINHAS CORACAO', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(69, '2021-10-04 15:30:52.449127', '12', 'Espatula Plastica', 2, '[{"changed": {"fields": ["Cor", "Material", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(70, '2021-10-04 15:31:28.349298', '12', 'Espatula Plastica', 2, '[{"changed": {"fields": ["Cor", "Material"]}}]', 9, 1),
+	(71, '2021-10-04 15:31:40.483021', '11', '6 Forminhas suissa decorada', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(72, '2021-10-04 15:31:51.764236', '10', 'Formas Bolo De Vidro 22x8', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura"]}}]', 9, 1),
+	(73, '2021-10-04 15:32:03.821138', '10', 'Formas Bolo De Vidro 22x8', 2, '[]', 9, 1),
+	(74, '2021-10-04 15:35:12.458847', '9', 'Formas Bolo De Vidro 20x8', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(75, '2021-10-04 15:35:26.802775', '8', 'Formas Bolo De Vidro 18x8', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(76, '2021-10-04 15:36:13.256545', '7', 'Fuet Batedor De Ovo', 2, '[{"changed": {"fields": ["Cor", "Material", "Largura", "Altura"]}}]', 9, 1),
+	(77, '2021-10-04 15:36:50.290078', '6', 'Kit Confeiteiro', 2, '[{"changed": {"fields": ["Cor", "Material", "Largura", "Altura"]}}]', 9, 1),
+	(78, '2021-10-04 15:37:30.293519', '5', 'FORMINHAS TORNADO P', 2, '[{"changed": {"fields": ["Cor", "Material", "Largura", "Altura"]}}]', 9, 1),
+	(79, '2021-10-04 15:37:43.319834', '3', 'Forma De Panetone', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1),
+	(80, '2021-10-04 15:37:55.787161', '2', 'Kit 3 Aros Coração', 2, '[{"changed": {"fields": ["Cor", "Largura", "Altura", "Comprimento"]}}]', 9, 1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 
 -- Copiando dados para a tabela silpan.django_content_type: ~18 rows (aproximadamente)
@@ -243,10 +267,11 @@ INSERT IGNORE INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(30, 'cupom', '0004_alter_cupom_data_final', '2021-09-15 02:50:59.662336');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.django_session: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.django_session: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
 INSERT IGNORE INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 	('evacfq10z2h7yqfywzosf55idjs5eszi', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mPxhQ:dy52V1XeXGTCst56wmUtgqtRYQWsHD9pMhZEzl-kT18', '2021-09-28 01:57:28.035054'),
+	('yftx0gq15f5ejrw1kig6pl97thyndtf4', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mWjyQ:U4-oNght26R-TD2GTzWnHUYkursN4MCzTqV7OCxyWi0', '2021-10-16 18:43:02.632752'),
 	('z2ebj8fikkfo05dcwt9drw7s3t0ixqbe', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mPwzm:LvxCI-q9KQDVjMOpwZnGllBYpQClw2qY82mnrGWRONU', '2021-09-28 01:12:22.182865');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 
@@ -279,7 +304,7 @@ INSERT IGNORE INTO `pedido_status` (`id`, `status`) VALUES
 	(1, 'Pedido Realizado');
 /*!40000 ALTER TABLE `pedido_status` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.pedido_transportadora: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.pedido_transportadora: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `pedido_transportadora` DISABLE KEYS */;
 INSERT IGNORE INTO `pedido_transportadora` (`id`, `nome_transportadora`, `telefone`) VALUES
 	(1, 'Jadlog', '1111111111'),
@@ -287,7 +312,7 @@ INSERT IGNORE INTO `pedido_transportadora` (`id`, `nome_transportadora`, `telefo
 	(3, 'Loggi', '1111111111');
 /*!40000 ALTER TABLE `pedido_transportadora` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.produtos_categoria: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.produtos_categoria: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `produtos_categoria` DISABLE KEYS */;
 INSERT IGNORE INTO `produtos_categoria` (`id`, `nome`) VALUES
 	(1, 'Acessórios'),
@@ -298,36 +323,36 @@ INSERT IGNORE INTO `produtos_categoria` (`id`, `nome`) VALUES
 	(6, 'Forminhas');
 /*!40000 ALTER TABLE `produtos_categoria` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.produtos_marca: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.produtos_marca: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `produtos_marca` DISABLE KEYS */;
 INSERT IGNORE INTO `produtos_marca` (`id`, `nome`) VALUES
 	(1, 'Genérica');
 /*!40000 ALTER TABLE `produtos_marca` ENABLE KEYS */;
 
--- Copiando dados para a tabela silpan.produtos_produto: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.produtos_produto: ~21 rows (aproximadamente)
 /*!40000 ALTER TABLE `produtos_produto` DISABLE KEYS */;
 INSERT IGNORE INTO `produtos_produto` (`id`, `nome`, `descricao`, `quantidade`, `imagem`, `preco_marketing`, `preco_marketing_promocional`, `cor`, `material`, `largura`, `altura`, `comprimento`, `categoria_id`, `marca_id`) VALUES
-	(2, 'Kit 3 Aros Coração', 'Cortador De Bolo\r\n23cm 26cm 28cm por 5cm altura', 75, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214139_sw0HNv8.png', 49.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(3, 'Forma De Panetone', 'Cone Pra Recheio\r\n14x13,5 Com Tampa', 68, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214330.png', 29.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(5, 'FORMINHAS TORNADO P', 'FORMINHAS TORNADO P\r\n12X6 ALUMINIO', 35, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214922.png', 19.9, 17.9, NULL, NULL, NULL, NULL, NULL, 6, 1),
-	(6, 'Kit Confeiteiro', '1 Faca fio ondulado\r\n1 fuet\r\n1 espatula liza \r\n25cm com cabo branco', 25, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214302.png', 74.9, 0, NULL, 'Inox', NULL, NULL, NULL, 1, 1),
-	(7, 'Fuet Batedor De Ovo', 'Fuet Batedor De Ovo Clares Em Neve\r\n25cm e 30cm\r\nvarias cores', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214746.png', 24.9, 0, NULL, NULL, NULL, NULL, NULL, 1, 1),
-	(8, 'Formas Bolo De Vidro 18x8', 'Formas Bolo De Vidro\r\n18x8', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403.png', 17.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(9, 'Formas Bolo De Vidro 20x8', 'Formas Bolo De Vidro \r\n20x8', 1, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_TlLUm2Y.png', 19.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(10, 'Formas Bolo De Vidro 22x8', 'Formas Bolo De Vidro \r\n22x8', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_VcSCuZC.png', 24.9, 21.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(11, '6 Forminhas suissa decorada', '6 Forminhas suissa decorada\r\n9x6x4', 74, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215528.png', 49.9, 44.9, NULL, 'Aluminio', NULL, NULL, NULL, 6, 1),
-	(12, 'Espatula Plastica', 'Espatula Plastica Decorativa\r\nTriangulo\r\nRosa E Branca', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214727.png', 4.9, 0, NULL, NULL, NULL, NULL, NULL, 1, 1),
-	(13, '12 FORMINHAS CORACAO', '12 FORMINHAS CORACAO\r\nBALAO\r\n7X2,5', 15, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214448.png', 35.9, 31.9, NULL, 'Aluminio', NULL, NULL, NULL, 6, 1),
-	(14, 'FORMA HOMENAGEM PAPAI', 'FORMA HOMENAGEM PAPAI\r\n14,3X4,8', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215244.png', 19.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(15, 'Forma De Bolo Pudim', 'Forma De Bolo Pudim\r\nTorta Suissa\r\n13x8', 64, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215336.png', 12.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(16, 'Balerine Decorada Pequena', 'Balerine Decorada Pequena\r\n16x6', 16, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215639.png', 39.9, 35.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(17, 'Forma Decorativa Minnie', 'Forma Decorativa Minnie \r\n35x5alt', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215944.png', 69.9, 64.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(18, 'Forma Artística para Bolos Brasil', 'Forma Artística para Bolos Brasil', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215910.png', 49.9, 45.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(19, 'Conjunto de Assadeiras Retangular', 'Conjunto de Assadeiras Retangular', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220013.png', 69.9, 0, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(20, '12 Forminhas torta suissa ou pudim mini', '12 Forminhas torta suissa ou pudim mini\r\n0 4 fundo \r\n2,5 altura\r\n5 boca \r\npara bufes', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220112.png', 29.9, 24.9, NULL, 'Aluminio', NULL, NULL, NULL, 6, 1),
-	(21, 'Jogo c/ três formas de bolo redondas', 'Jogo c/ três formas de bolo redondas\r\n10,15,20x10alt', 84, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220229.png', 29.9, 24.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(22, 'Conjunto de formas', 'Conjunto de formas com 3 peças coração', 49, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220045.png', 39.9, 32.9, NULL, 'Aluminio', NULL, NULL, NULL, 3, 1),
-	(23, '12 Forminhas canudo', '12 Forminhas canudo', 87, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215725.png', 9.9, 13.9, NULL, 'Aluminio', NULL, NULL, NULL, 1, 1);
+	(2, 'Kit 3 Aros Coração', 'Cortador De Bolo\r\n23cm 26cm 28cm por 5cm altura', 75, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214139_sw0HNv8.png', 49.9, 0, 'Aluminio', 'Aluminio', 2, 4, 6, 3, 1),
+	(3, 'Forma De Panetone', 'Cone Pra Recheio\r\n14x13,5 Com Tampa', 68, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214330.png', 29.9, 0, 'Aluminio', 'Aluminio', 6, 2, 4, 3, 1),
+	(5, 'FORMINHAS TORNADO P', 'FORMINHAS TORNADO P\r\n12X6 ALUMINIO', 35, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214922.png', 19.9, 17.9, 'Preto', 'Plastico', 3, 3, NULL, 6, 1),
+	(6, 'Kit Confeiteiro', '1 Faca fio ondulado\r\n1 fuet\r\n1 espatula liza \r\n25cm com cabo branco', 25, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214302.png', 74.9, 0, 'Branco', 'Inox e Plastico', 2, 2, NULL, 1, 1),
+	(7, 'Fuet Batedor De Ovo', 'Fuet Batedor De Ovo Clares Em Neve\r\n25cm e 30cm\r\nvarias cores', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214746.png', 24.9, 0, 'Variações', 'Aluminio e Plastico', 2, 4, NULL, 1, 1),
+	(8, 'Formas Bolo De Vidro 18x8', 'Formas Bolo De Vidro\r\n18x8', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403.png', 17.9, 0, 'Aluminio', 'Aluminio', 2, 2, 4, 3, 1),
+	(9, 'Formas Bolo De Vidro 20x8', 'Formas Bolo De Vidro \r\n20x8', 1, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_TlLUm2Y.png', 19.9, 0, 'Aluminio', 'Aluminio', 2, 3, 4, 3, 1),
+	(10, 'Formas Bolo De Vidro 22x8', 'Formas Bolo De Vidro \r\n22x8', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_VcSCuZC.png', 24.9, 21.9, 'Aluminio', 'Aluminio', 6, 3, NULL, 3, 1),
+	(11, '6 Forminhas suissa decorada', '6 Forminhas suissa decorada\r\n9x6x4', 74, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215528.png', 49.9, 44.9, 'Aluminio', 'Aluminio', 1, 3, 3, 6, 1),
+	(12, 'Espatula Plastica', 'Espatula Plastica Decorativa\r\nTriangulo\r\nRosa E Branca', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214727.png', 4.9, 0, 'Prata', 'Plastico', 3, 2, 2, 1, 1),
+	(13, '12 FORMINHAS CORACAO', '12 FORMINHAS CORACAO\r\nBALAO\r\n7X2,5', 15, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214448.png', 35.9, 31.9, 'Aluminio', 'Aluminio', 2, 3, 1, 6, 1),
+	(14, 'FORMA HOMENAGEM PAPAI', 'FORMA HOMENAGEM PAPAI\r\n14,3X4,8', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215244.png', 19.9, 0, 'Aluminio', 'Aluminio', 2, 4, 3, 3, 1),
+	(15, 'Forma De Bolo Pudim', 'Forma De Bolo Pudim\r\nTorta Suissa\r\n13x8', 64, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215336.png', 12.9, 0, 'Aluminio', 'Aluminio', 1, 4, 5, 3, 1),
+	(16, 'Balerine Decorada Pequena', 'Balerine Decorada Pequena\r\n16x6', 16, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215639.png', 39.9, 35.9, 'Aluminio', 'Aluminio', 3, 5, 3, 3, 1),
+	(17, 'Forma Decorativa Minnie', 'Forma Decorativa Minnie \r\n35x5alt', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215944.png', 69.9, 64.9, 'Aluminio', 'Aluminio', 2, 2, 1, 3, 1),
+	(18, 'Forma Artística para Bolos Brasil', 'Forma Artística para Bolos Brasil', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215910.png', 49.9, 45.9, 'Aluminio', 'Aluminio', 4, 3, 2, 3, 1),
+	(19, 'Conjunto de Assadeiras Retangular', 'Conjunto de Assadeiras Retangular', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220013.png', 69.9, 0, 'Aluminio', 'Aluminio', 3, 5, 6, 3, 1),
+	(20, '12 Forminhas torta suissa ou pudim mini', '12 Forminhas torta suissa ou pudim mini\r\n0 4 fundo \r\n2,5 altura\r\n5 boca \r\npara bufes', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220112.png', 29.9, 24.9, 'Aluminio', 'Aluminio', 2, 4, 6, 6, 1),
+	(21, 'Jogo c/ três formas de bolo redondas', 'Jogo c/ três formas de bolo redondas\r\n10,15,20x10alt', 84, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220229.png', 29.9, 24.9, 'Aluminio', 'Aluminio', 2, 6, 5, 3, 1),
+	(22, 'Conjunto de formas', 'Conjunto de formas com 3 peças coração', 49, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220045.png', 39.9, 32.9, 'Aluminio', 'Aluminio', 4, 6, 3, 3, 1),
+	(23, '12 Forminhas canudo', '12 Forminhas canudo', 87, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215725.png', 9.9, 13.9, 'Aluminio', 'Aluminio', 3, 2, 5, 1, 1);
 /*!40000 ALTER TABLE `produtos_produto` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
