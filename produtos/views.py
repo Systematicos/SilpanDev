@@ -2,12 +2,13 @@ import math
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponse
 from .models import Produto, Categoria
+from . import models
 
-
-class ListaPrdutos(ListView):
+class ListaProdutos(ListView):
     context_object_name = 'produtos'
 
     template_name = 'produto/product.html'
@@ -15,7 +16,7 @@ class ListaPrdutos(ListView):
 
     def get_context_data(self, **kwargs):
         produtos = Produto.getListProdutInColun()
-        context = super(ListaPrdutos, self).get_context_data(**kwargs)
+        context = super(ListaProdutos, self).get_context_data(**kwargs)
         context['produtos'] = produtos
         context['qtd_product'] = len(produtos)
         context['categorias'] = Categoria.objects.all().order_by('nome')
@@ -23,7 +24,7 @@ class ListaPrdutos(ListView):
         return context
 
 
-class ListaPrdutosCategoria(ListView):
+class ListaProdutosCategoria(ListView):
     context_object_name = 'produtos'
 
     template_name = 'produto/produto.html'
@@ -43,9 +44,11 @@ class ListaPrdutosCategoria(ListView):
 
         return context
 
-class DetelheProduto(View):
-    pass
-
+class DetalheProduto(DetailView):
+    model = models.Produto
+    context_object_name = 'detalhe'
+    template_name = 'produto/detalhe.html'
+    slug_url_kwarg = 'slug'
 
 class AdicionarAoCarrinho(View):
     pass
