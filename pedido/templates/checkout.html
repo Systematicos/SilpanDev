@@ -34,52 +34,51 @@
             <!-- Endereço-->
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
-                    <h4 class="mb-sm-4 mb-3">Add a new Details</h4>
-                    <form action="../../templates/payment.html" method="post" class="creditly-card-form agileinfo_form">
+                    <h4 class="mb-sm-4 mb-3">Adcionar detalhes da compra</h4>
+
+                    <form method="post" class="creditly-card-form agileinfo_form" id="form_endereco">
+                    {% csrf_token %}
                         <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                             <div class="information-wrapper">
                                 <div class="first-row">
                                     <div class="controls form-group">
-                                        <input class="billing-address-name form-control" type="text" name="name"
-                                               placeholder="Full Name" required="">
+                                        <input class="billing-address-name form-control" type="text" name="nome"
+                                               placeholder="Nome completo" required="">
+                                    </div>
+                                    <div class="controls form-group">
+                                        <input class="billing-address-name form-control" type="text" name="cpf"
+                                               placeholder="CPF" required="">
+                                    </div>
+                                    <div class="controls form-group">
+                                        <input class="billing-address-name form-control" type="text" name="endereco"
+                                               placeholder="Endereço" required="">
                                     </div>
                                     <div class="w3_agileits_card_number_grids">
                                         <div class="w3_agileits_card_number_grid_left form-group">
                                             <div class="controls">
-                                                <input type="text" class="form-control" placeholder="Mobile Number"
-                                                       name="number" required="">
-                                            </div>
-                                        </div>
-                                        <div class="w3_agileits_card_number_grid_right form-group">
-                                            <div class="controls">
-                                                <input type="text" class="form-control" placeholder="Landmark"
-                                                       name="landmark" required="">
+                                                <input type="text" class="form-control" placeholder="Número de telefone"
+                                                       name="numero_telefone" required="">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="controls form-group">
-                                        <input type="text" class="form-control" placeholder="Town/City" name="city"
-                                               required="">
-                                    </div>
-                                    <div class="controls form-group">
-                                        <select class="option-w3ls">
-                                            <option>Select Address type</option>
-                                            <option>Office</option>
-                                            <option>Home</option>
-                                            <option>Commercial</option>
+                                        <select class="option-w3ls" name="forma_pagamento">
+                                            <option>Selecione o tipo de Pagamento</option>
+                                            <option>Cartão de Crédito</option>
+                                            <option>Cartão de Debito</option>
+                                            <option>Pix</option>
 
                                         </select>
                                     </div>
                                 </div>
-                                <button class="submit check_out btn">Delivery to this Address</button>
+                                <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                                        >Fazer Pagamento
+                                    <span class="far fa-hand-point-right"></span>
+                                </button>
                             </div>
                         </div>
                     </form>
-                    <div class="checkout-right-basket">
-                        <a href="../../templates/payment.html">Make a Payment
-                            <span class="far fa-hand-point-right"></span>
-                        </a>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -98,6 +97,9 @@
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
 
+    <!-- pagamento -->
+    <script src="{% static 'js/pagamento.js' %}"></script>
+    <!-- //pagamento -->
     <!-- nav smooth scroll -->
     <script>
         $(document).ready(function () {
@@ -137,12 +139,12 @@
 
         const loadProducts = () => {
             if (typeof window === 'object' && window.localStorage) {
-                    var data = window.localStorage.getItem('PPminicarts'), today, expires;
+                var data = window.localStorage.getItem('PPminicarts'), today, expires;
 
                 if (data) {
                     data = JSON.parse(decodeURIComponent(data));
                 }
-    console.log(data)
+                console.log(data)
                 if (data && data.expires) {
                     today = new Date();
                     expires = new Date(data.expires);

@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 
 # Create your models here.
@@ -7,6 +9,7 @@ import os
 from django.conf import settings
 from django.utils.text import slugify
 from django_resized import ResizedImageField
+
 
 from utils import utilsProduto
 
@@ -88,3 +91,25 @@ class Produto(models.Model):
             lista.append(produto)
 
         return Produto.split(lista, 3)
+
+    @classmethod
+    def convert_json_Produto(cls, json_data):
+        list_product = []
+        json_data = json.loads(json_data)
+        for product in json_data['value']['items']:
+            produto = Produto()
+            produto.nome = product['item_name']
+            produto.descricao = product['descricao']
+            produto.quantidade = product['quantidade']
+            produto.imagem = product['imagem']
+            produto.categoria = product['categoria']
+            produto.preco_marketing = product['amount']
+            produto.preco_marketing_promocional = product['discount_amount']
+            produto.cor = product['cor']
+            produto.material = product['material']
+            produto.largura = product['largura']
+            produto.altura = product['altura']
+            produto.comprimento = product['comprimento']
+
+            list_product.append(produto)
+        return list_product

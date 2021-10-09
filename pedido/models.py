@@ -26,7 +26,7 @@ class Status(models.Model):
         verbose_name_plural = 'Status'
 
 
-class Transportadora(models.Model):
+'''class Transportadora(models.Model):
     nome_transportadora = models.CharField(unique=True, max_length=50)
     telefone = models.CharField(max_length=11)
 
@@ -37,14 +37,12 @@ class Transportadora(models.Model):
         verbose_name = 'Transportadora'
         verbose_name_plural = 'Transportadoras'
 
-
+'''
 
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
     total = models.FloatField()
     status = models.ForeignKey(Status, models.DO_NOTHING)
-    transportadora = models.ForeignKey(Transportadora, models.DO_NOTHING,
-                                       blank=True, null=True)
     forma_pagamento = models.ForeignKey(FormaDePagamento, models.DO_NOTHING)
     data = models.DateTimeField()
     subtotal = models.FloatField()

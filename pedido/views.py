@@ -4,15 +4,16 @@ import urllib.parse
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from pedido.forms import ProdutoForm
-from produtos.models import Categoria
+from produtos.models import Categoria, Produto
 
 
 class Pagar(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('Pagar')
+    def post(self, request, *args, **kwargs):
+        print(json.loads(request.body.decode('utf-8')))
+        return JsonResponse({})
 
 
 class FecharPedido(View):
@@ -23,10 +24,10 @@ class FecharPedido(View):
         return context
 
     def post(self, request, *args, **kwargs):
-        formUser = request.COOKIES['dados']
-        formUser = urllib.parse.unquote(formUser)
-        formUser = json.loads(formUser)
-        print(formUser)
+        dados = request.COOKIES['dados']
+        dados = urllib.parse.unquote(dados)
+
+        # list_product = Produto.convert_json_Produto(dados)
         context = {}
         context['d'] = request.POST.get('PPminicarts')
         context['categorias'] = Categoria.objects.all().order_by('nome')
