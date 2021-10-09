@@ -134,7 +134,8 @@
 
                                                         <div class="men-cart-pro">
                                                             <div class="inner-men-cart-pro">
-                                                                <a href="{{ produto.nome }}" class="link-product-add-cart">Quick
+                                                                <a href="{{ produto.categoria.nome }}/{{ produto.id }}"
+                                                                   class="link-product-add-cart">Quick
                                                                     View</a>
                                                             </div>
                                                         </div>
@@ -147,10 +148,11 @@
                                                         <div class="info-product-price my-2">
 
                                                             {% if produto.preco_marketing_promocional %}
-                                                                <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco  }}</span>
-                                                                <del>R$ {{ produto.preco_marketing|formata_preco }}</del>
+                                                                <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco }}</span>
+                                                                <del>
+                                                                    R$ {{ produto.preco_marketing|formata_preco }}</del>
                                                             {% else %}
-                                                                <span class="item_price">R${{ produto.preco_marketing|formata_preco  }}</span>
+                                                                <span class="item_price">R${{ produto.preco_marketing|formata_preco }}</span>
 
                                                             {% endif %}
                                                         </div>
@@ -166,13 +168,13 @@
                                                                     {% if produto.preco_marketing_promocional > 0 %}
 
                                                                         <input type="hidden" name="amount"
-                                                                               value="{{ produto.preco_marketing|formata_preco  }}"/>
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
                                                                         <input type="hidden" name="discount_amount"
-                                                                               value="{{ produto.getDesconto|formata_preco  }}    "/>
+                                                                               value="{{ produto.getDesconto|formata_preco }}    "/>
 
                                                                     {% else %}
                                                                         <input type="hidden" name="amount"
-                                                                               value="{{ produto.preco_marketing|formata_preco  }}"/>
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
                                                                         <input type="hidden" name="discount_amount"
                                                                                value="0,00"/>
                                                                     {% endif %}
