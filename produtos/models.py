@@ -59,6 +59,12 @@ class Produto(models.Model):
     largura = models.IntegerField(blank=True, null=True)
     altura = models.IntegerField(blank=True, null=True)
     comprimento = models.IntegerField(blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.nome)}'
+            self.slug = slug
 
     def get_preco_formatado(self):
         return utilsProduto.formata_preco(self.preco_marketing)

@@ -4,7 +4,7 @@ from .models import Produto, Marca, Categoria
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ['nome', 'descricao', 'get_preco_formatado', 'get_preco_promocional_formatado']
-
+    prepopulated_fields = {'slug': ('nome',)}
 
 class MarcaAdmin(admin.ModelAdmin):
     list_display = ['nome']
