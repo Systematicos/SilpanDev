@@ -3,87 +3,87 @@
 {% load static %}
 
 {% block conteudo %}
-    <div class="privacy py-sm-5 py-4">
-        <div class="container py-xl-4 py-lg-2">
-            <!-- tittle heading -->
-            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-                <span>C</span>heckout
-            </h3>
-            <!-- //tittle heading -->
-            <div class="checkout-right">
-                <h4 class="mb-sm-4 mb-3">Your shopping cart contains:
-                    <span>X Products</span>
-                </h4>
-                <div class="table-responsive" id="table-products">
-                    <table class="timetable_sub">
-                        <thead>
-                        <tr>
-                            <th>SL No.</th>
-                            <th>Product</th>
-                            <th>Quality</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Remove</th>
-                        </tr>
-                        </thead>
-                        <tbody id="t-product">
-                        </tbody>
-                    </table>
-                </div>
+<div class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>heckout
+        </h3>
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <h4 class="mb-sm-4 mb-3">Your shopping cart contains:
+                <span>X Products</span>
+            </h4>
+            <div class="table-responsive" id="table-products">
+                <table class="timetable_sub">
+                    <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Product</th>
+                        <th>Quality</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody id="t-product">
+                    </tbody>
+                </table>
             </div>
-            <!-- Endereço-->
-            <div class="checkout-left">
-                <div class="address_form_agile mt-sm-5 mt-4">
-                    <h4 class="mb-sm-4 mb-3">Adcionar detalhes da compra</h4>
+        </div>
+        <!-- Endereço-->
+        <div class="checkout-left">
+            <div class="address_form_agile mt-sm-5 mt-4">
+                <h4 class="mb-sm-4 mb-3">Adcionar detalhes da compra</h4>
 
-                    <form method="post" class="creditly-card-form agileinfo_form" id="form_endereco">
+                <form method="post" class="creditly-card-form agileinfo_form" id="form_endereco">
                     {% csrf_token %}
-                        <div class="creditly-wrapper wthree, w3_agileits_wrapper">
-                            <div class="information-wrapper">
-                                <div class="first-row">
-                                    <div class="controls form-group">
-                                        <input class="billing-address-name form-control" type="text" name="nome"
-                                               placeholder="Nome completo" required="">
-                                    </div>
-                                    <div class="controls form-group">
-                                        <input class="billing-address-name form-control" type="text" name="cpf"
-                                               placeholder="CPF" required="">
-                                    </div>
-                                    <div class="controls form-group">
-                                        <input class="billing-address-name form-control" type="text" name="endereco"
-                                               placeholder="Endereço" required="">
-                                    </div>
-                                    <div class="w3_agileits_card_number_grids">
-                                        <div class="w3_agileits_card_number_grid_left form-group">
-                                            <div class="controls">
-                                                <input type="text" class="form-control" placeholder="Número de telefone"
-                                                       name="numero_telefone" required="">
-                                            </div>
+                    <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                        <div class="information-wrapper">
+                            <div class="first-row">
+                                <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="nome"
+                                           placeholder="Nome completo" required="">
+                                </div>
+                                <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="cpf"
+                                           placeholder="CPF" required="">
+                                </div>
+                                <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="endereco"
+                                           placeholder="Endereço" required="">
+                                </div>
+                                <div class="w3_agileits_card_number_grids">
+                                    <div class="w3_agileits_card_number_grid_left form-group">
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Número de telefone"
+                                                   name="numero_telefone" required="">
                                         </div>
                                     </div>
-                                    <div class="controls form-group">
-                                        <select class="option-w3ls" name="forma_pagamento">
-                                            <option>Selecione o tipo de Pagamento</option>
-                                            <option>Cartão de Crédito</option>
-                                            <option>Cartão de Debito</option>
-                                            <option>Pix</option>
-
-                                        </select>
-                                    </div>
                                 </div>
-                                <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                                        >Fazer Pagamento
-                                    <span class="far fa-hand-point-right"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                                <div class="controls form-group">
+                                    <select class="option-w3ls" name="forma_pagamento">
+                                        <option>Selecione o tipo de Pagamento</option>
+                                        {% for Forma_pagamento in Forma_pagamentos %}
+                                        <option value="{{ Forma_pagamento.id }}">{{ Forma_pagamento }}</option>
 
-                </div>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                            >Fazer Pagamento
+                                <span class="far fa-hand-point-right"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
-    <!-- //Endereço-->
+</div>
+<!-- //Endereço-->
 
 {% endblock conteudo %}
 

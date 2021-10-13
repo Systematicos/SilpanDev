@@ -6,13 +6,31 @@ from django.views.generic.list import ListView
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 
+from cliente.models import Cliente
+from cupom.models import Cupom
 from pedido.forms import ProdutoForm
+from pedido.models import Pedido, FormaDePagamento, Status, ItemPedido
 from produtos.models import Categoria, Produto
 
 
 class Pagar(View):
     def post(self, request, *args, **kwargs):
-        print(json.loads(request.body.decode('utf-8')))
+        requestJson = json.loads(request.body.decode('utf-8'))
+
+        cliente = Cliente.objects.get(cpf=Cliente.popular_cliente(requestJson, None).cpf)
+        formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
+        status_pedido = Status.objects.get(id=1)
+        cupom_pedido = Cupom.objects.get(id=2)
+        pedido = Pedido.criarPedido(cliente, formaDePagamento, cupom_pedido, status_pedido)
+        itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
+
+        print(requestJson)
+
+        Pedido.save(pedido)
+
+        for item in itens:
+            ItemPedido.save(item)
+
         return JsonResponse({})
 
 
@@ -24,14 +42,9 @@ class FecharPedido(View):
         return context
 
     def post(self, request, *args, **kwargs):
-        dados = request.COOKIES['dados']
-        dados = urllib.parse.unquote(dados)
-
-        # list_product = Produto.convert_json_Produto(dados)
         context = {}
-        context['d'] = request.POST.get('PPminicarts')
         context['categorias'] = Categoria.objects.all().order_by('nome')
-        tes = request.POST
+        context['Forma_pagamentos'] = FormaDePagamento.objects.all().order_by('forma_de_pagamento')
         return render(request, 'checkout.html', context)
 
 

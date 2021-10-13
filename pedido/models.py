@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from cliente.models import Cliente
 from produtos.models import Produto
 from cupom.models import Cupom
+
 
 class FormaDePagamento(models.Model):
     forma_de_pagamento = models.CharField(unique=True, max_length=30)
@@ -39,6 +42,7 @@ class Status(models.Model):
 
 '''
 
+
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
     total = models.FloatField()
@@ -56,6 +60,22 @@ class Pedido(models.Model):
     def __str__(self):
         return f'Pedido N. {self.pk}'
 
+    @classmethod
+    def criarPedido(cls, cliente, formaDePagamento, cupom, status):
+        pedido = Pedido()
+        pedido.data = datetime.today()
+        pedido.frete = 0.0
+        pedido.status = status
+        pedido.cliente = cliente
+        pedido.forma_pagamento = formaDePagamento
+
+        pedido.subtotal = 100
+        pedido.total = 90
+        pedido.desconto = 10
+        pedido.cupom = cupom
+
+        return pedido
+
     class Meta:
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
@@ -71,6 +91,34 @@ class ItemPedido(models.Model):
 
     def __str__(self):
         return f'Item do {self.pedido}'
+
+    @classmethod
+    def criarItemPedido(cls, pedido, produto, preco, cor, material, largura, altura, comprimento, imagem,
+                        preco_promocional=0, quantidade=1):
+        item = ItemPedido()
+        item.pedido = pedido
+        item.produto = produto
+        item.preco = preco
+        item.preco_promocional = preco_promocional
+        item.quantidade = quantidade
+        item.imagem = imagem
+        return item
+
+    @classmethod
+    def criarListItensPedido(cls, pedido, reqJson):
+        itens = []
+        for item in reqJson:
+            produto = Produto.objects.get(id=item['id'])
+            itens.append(
+                ItemPedido.criarItemPedido(pedido, produto, item['amount'], item['cor'], item['material'],
+                                           item['largura'], item['altura'], item['comprimento'], imagem=item['href'],
+                                           quantidade=item['quantity']))
+
+        return itens
+
+    @classmethod
+    def getItensPedido(cls):
+        pass
 
     class Meta:
         verbose_name = 'Item do pedido'

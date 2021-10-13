@@ -37,8 +37,12 @@ class Cliente(models.Model):
         cliente = Cliente()
 
         cliente.usuario = user
-        cliente.cpf = form['CPF']
-        cliente.data_nascimento = form['Dt_nasc']
+        try:
+            cliente.cpf = form['CPF']
+            cliente.data_nascimento = form['Dt_nasc']
+        except KeyError:
+            cliente.cpf = form['cpf']
+            cliente.data_nascimento = None
 
         return cliente
 
