@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {% block titulo %} Silpan  {% endblock titulo %}</title>
+</head>
+<body>
+
+{% include 'parciais/_menu.html' %}
+<div class="page-head_agile_info_w3l">
+
+</div>
+{% load omFilters %}
+
+<main>
+    {% block conteudo %}
+        <!-- page -->
+        <div class="services-breadcrumb">
+            <div class="agile_inner_breadcrumb">
+                <div class="container">
+                    <ul class="w3_short">
+                        <li>
+                            <a href="index.html">Home</a>
+                            <i>|</i>
+                        </li>
+                        <li>{{ categoria }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- //page -->
+
+        <!-- top Products -->
+        <div class="ads-grid py-sm-5 py-4">
+            <div class="container py-xl-4 py-lg-2">
+                <!-- tittle heading -->
+                <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                    <!-- nome da categoria -->
+                    {% for nome in categoria.getNomeCategoria %}
+                        {% for key, value in nome.items %}
+                            <span>{{ key }}</span>{{ value }}
+                        {% endfor %}
+                    {% endfor %}
+                </h3>
+
+                <!-- //nome da categoria -->
+
+                <!-- //tittle heading -->
+                <div class="row">
+                    <!-- product right -->
+                    <div class="col-lg-3 mt-lg-0 mt-4 p-lg-0">
+                        <div class="side-bar p-sm-4 p-3">
+                            <div class="search-hotel border-bottom py-2">
+                                <h3 class="agileits-sear-head mb-3">Brand</h3>
+
+                                <div class="left-side py-2">
+                                    <ul>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Red Mi</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Apple</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Nexus</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Motorola</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Micromax</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checked">
+                                            <span class="span">Lenovo</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- price -->
+                            <div class="range border-bottom py-2">
+                                <h3 class="agileits-sear-head mb-3">Price</h3>
+                                <div class="w3l-range">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Under $1,000</a>
+                                        </li>
+                                        <li class="my-1">
+                                            <a href="#">$1,000 - $5,000</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">$5,000 - $10,000</a>
+                                        </li>
+                                        <li class="my-1">
+                                            <a href="#">$10,000 - $20,000</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- //price -->
+
+                        </div>
+                        <!-- //product right -->
+                    </div>
+                    <!-- product left -->
+                    <div class="agileinfo-ads-display col-lg-9">
+
+
+                        <div class="wrapper">
+
+                            {% for colunProdut in produtos %}
+                                <!-- first section -->
+
+                                <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                                    <div class="row">
+
+                                        {% for produto in colunProdut %}
+                                            <!-- produto -->
+
+                                            <div class="col-md-4 product-men">
+                                                <div class="men-pro-item simpleCart_shelfItem">
+                                                    <div class="men-thumb-item text-center">
+
+                                                        {% if produto.imagem %}
+                                                            <img src="{{ produto.imagem.url }}"
+                                                                 alt="{{ produto.nome }}">
+                                                        {% else %}
+                                                            <img src="{{ produto.imagem.url }}"
+                                                                 alt="{{ produto.nome }}">
+                                                        {% endif %}
+
+                                                        <div class="men-cart-pro">
+                                                            <div class="inner-men-cart-pro">
+                                                                <a href="{{ produto.slug }}"
+                                                                   class="link-product-add-cart">Quick
+                                                                    View</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item-info-product text-center border-top mt-4">
+                                                        <h4 class="pt-1">
+                                                            <a href="{{ produto.nome }}">{{ produto.nome }}</a>
+                                                        </h4>
+                                                        <div class="info-product-price my-2">
+
+                                                            {% if produto.preco_marketing_promocional %}
+                                                                <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco }}</span>
+                                                                <del>
+                                                                    R$ {{ produto.preco_marketing|formata_preco }}</del>
+                                                            {% else %}
+                                                                <span class="item_price">R${{ produto.preco_marketing|formata_preco }}</span>
+
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                            <form action="#" method="post">
+                                                                <fieldset>
+                                                                    <input type="hidden" name="cmd" value="_cart"/>
+                                                                    <input type="hidden" name="add" value="1"/>
+                                                                    <input type="hidden" name="id" value="{{ produto.id }}"/>
+                                                                    <input type="hidden" name="imagem" value="{{ produto.imagem.url }}"/>
+                                                                    <input type="hidden" name="cor" value="{{ produto.cor }}"/>
+                                                                    <input type="hidden" name="material" value="{{ produto.material }}"/>
+                                                                    <input type="hidden" name="largura" value="{{ produto.largura }}"/>
+                                                                    <input type="hidden" name="altura" value="{{ produto.altura }}"/>
+                                                                    <input type="hidden" name="comprimento" value="{{ produto.comprimento }}"/>
+
+                                                                    <input type="hidden" name="business" value=" "/>
+                                                                    <input type="hidden" name="item_name"
+                                                                           value="{{ produto.nome }}"/>
+
+                                                                    {% if produto.preco_marketing_promocional > 0 %}
+
+                                                                        <input type="hidden" name="amount"
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
+                                                                        <input type="hidden" name="discount_amount"
+                                                                               value="{{ produto.getDesconto|formata_preco }}    "/>
+
+                                                                    {% else %}
+                                                                        <input type="hidden" name="amount"
+                                                                               value="{{ produto.preco_marketing|formata_preco }}"/>
+                                                                        <input type="hidden" name="discount_amount"
+                                                                               z value="0,00"/>
+                                                                    {% endif %}
+
+
+
+                                                                    <input type="hidden" name="currency_code"
+                                                                           value="BRL"/>
+                                                                    <input type="hidden" name="return" value=" "/>
+                                                                    <input type="hidden" name="cancel_return"
+                                                                           value=" "/>
+                                                                    <input type="submit" name="submit" value="Adiciona"
+                                                                           class="button btn"/>
+                                                                </fieldset>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        <!-- //produto -->
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <!-- //first section -->
+
+                        </div>
+                    </div>
+                    <!-- //product left -->
+
+
+                </div>
+            </div>
+        </div>
+        <!-- //top products -->
+
+    {% endblock conteudo %}
+</main>
+
+{% include 'parciais/_footer.html' %}
+</body>
+</html>
+

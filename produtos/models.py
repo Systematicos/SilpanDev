@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 
 # Create your models here.
@@ -6,6 +8,9 @@ from PIL import Image
 import os
 from django.conf import settings
 from django.utils.text import slugify
+from django_resized import ResizedImageField
+
+from utils import utilsProduto
 
 
 class Categoria(models.Model):
@@ -18,25 +23,22 @@ class Categoria(models.Model):
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
 
+    def getNomeCategoria(self):
+        nome_categoria = self.nome.split()
+        nome = []
 
-class Marca(models.Model):
-    nome = models.CharField(max_length=40, blank=True, null=True)
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = 'Marca'
-        verbose_name_plural = 'Marcas'
+        for n in nome_categoria:
+            nome.append({n[0]: n[1:]})
+        return nome
 
 
 class Produto(models.Model):
+    slug = models.SlugField(unique=True, null=True)
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
-    imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True)
-    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
-    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
+    imagem = ResizedImageField(size=[212, 212], upload_to='produto_imagens/%Y/%m/', blank=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
     preco_marketing = models.FloatField()
     preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
     cor = models.CharField(max_length=50, blank=True, null=True)
@@ -45,43 +47,20 @@ class Produto(models.Model):
     altura = models.IntegerField(blank=True, null=True)
     comprimento = models.IntegerField(blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.nome)}'
+            self.slug = slug
+
     def get_preco_formatado(self):
-        return f'R$ {self.preco_marketing:.2f}'.replace('.', ',')
+        return utilsProduto.formata_preco(self.preco_marketing)
 
     get_preco_formatado.short_description = 'Preço'
 
     def get_preco_promocional_formatado(self):
-        return f'R$ {self.preco_marketing_promocional:.2f}'.replace('.', ',')
+        return utilsProduto.formata_preco(self.preco_marketing_promocional)
 
     get_preco_promocional_formatado.short_description = 'Preço Promocional'
-
-    @staticmethod
-    def resize_image(img, new_width=800):
-        img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
-        img_pil = Image.open((img_full_path))
-        original_width, original_height = img_pil.size
-
-        if original_width <= new_width:
-            img_pil.close()
-            return
-
-        new_height = round((new_width * original_height) / original_width)
-        new_img = img_pil.resize((new_width, new_height), Image.LANCZOS)
-        new_img.save(
-            img_full_path,
-            optimize=True,
-            quality=75
-        )
-
-        print(original_width, original_height)
-
-    def save(self, *args, **kwargs):
-
-        super().save(*args, **kwargs)
-        max_image_size = 212
-
-        if self.imagem:
-            self.resize_image(self.imagem, max_image_size)
 
     def __str__(self):
         return self.nome
@@ -95,12 +74,34 @@ class Produto(models.Model):
         return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
 
     @classmethod
-    def getListProdutInColun(cls):
+    def getListProdutInColun(cls, listProduct=[]):
         lista = []
+        if not listProduct:
+            listProduct = Produto.objects.all()
 
-        for produto in Produto.objects.all():
+        for produto in listProduct:
             lista.append(produto)
 
         return Produto.split(lista, 3)
 
+    @classmethod
+    def convert_json_Produto(cls, json_data):
+        list_product = []
+        json_data = json.loads(json_data)
+        for product in json_data['value']['items']:
+            produto = Produto()
+            produto.nome = product['item_name']
+            produto.descricao = product['descricao']
+            produto.quantidade = product['quantidade']
+            produto.imagem = product['imagem']
+            produto.categoria = product['categoria']
+            produto.preco_marketing = product['amount']
+            produto.preco_marketing_promocional = product['discount_amount']
+            produto.cor = product['cor']
+            produto.material = product['material']
+            produto.largura = product['largura']
+            produto.altura = product['altura']
+            produto.comprimento = product['comprimento']
 
+            list_product.append(produto)
+        return list_product

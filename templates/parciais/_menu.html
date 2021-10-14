@@ -54,7 +54,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="container-fluid">
         <div class="row main-top-w3l py-2">
             <div class="col-lg-4 header-most-top">
-                <p class="text-white text-lg-left text-center">Offer Zone Top Deals & Discounts
+                <p class="text-white text-lg-left text-center">Cupom 'systematicos10' de 10% desconto na primeira compra
                     <i class="fas fa-shopping-cart ml-1"></i>
                 </p>
             </div>
@@ -72,14 +72,40 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <li class="text-center border-right text-white">
                         <i class="fas fa-phone mr-2"></i> 11 558132554
                     </li>
-                    <li class="text-center border-right text-white">
-                        <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Login </a>
-                    </li>
-                    <li class="text-center text-white">
-                        <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Resgistrar </a>
-                    </li>
+                    {% if not request.user.is_authenticated %}
+
+                        <li class="text-center border-right text-white">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Login </a>
+                        </li>
+                        <li class="text-center text-white">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Resgistrar </a>
+                        </li>
+
+                    {% else %}
+                        <!-- menu do cliente quando logar -->
+
+                        <li class="text-center border-right text-white">
+
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown"></a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'pedido:lista' %}">Meus pedidos</a>
+                                <a class="dropdown-item" href="{% url 'cliente:criar' %}">Perfil</a>
+                                <a class="dropdown-item" href="{% url 'cliente:logout' %}">Sair</a>
+                            </div>
+                        </li>
+
+
+                        </li>
+                        <!-- //menu do cliente quando logar -->
+
+                    {% endif %}
+
                 </ul>
                 <!-- //header lists -->
             </div>
@@ -121,14 +147,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="{% url 'cliente:login' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="col-form-label">Usuário</label>
-                        <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        <input type="text" class="form-control" placeholder=" " name="user" required="">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Senha</label>
-                        <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                        <input type="password" class="form-control" placeholder=" " name="password" required="">
                     </div>
                     <div class="right-w3l">
                         <input type="submit" class="form-control" value="Login">
@@ -149,6 +176,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 <!-- register -->
+
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -159,22 +187,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="{% url 'cliente:criar' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-form-label">Your Name</label>
+                        <label class="col-form-label">Seu Nome</label>
                         <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" class="form-control" placeholder=" " name="Username" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">CPF</label>
+                        <input type="text" class="form-control" placeholder=" " name="CPF" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" placeholder=" " name="Dt_nasc" required="">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email</label>
                         <input type="email" class="form-control" placeholder=" " name="Email" required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Password</label>
+                        <label class="col-form-label">Senha</label>
                         <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
                                required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Confirm Password</label>
+                        <label class="col-form-label">Confirmação da Senha</label>
                         <input type="password" class="form-control" placeholder=" " name="Confirm Password"
                                id="password2" required="">
                     </div>
@@ -184,8 +225,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="sub-w3l">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
-                            <label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms &
-                                Conditions</label>
+                            <label class="custom-control-label" for="customControlAutosizing2">
+                                Aceito os Termos e Condições</label>
                         </div>
                     </div>
                 </form>
@@ -194,6 +235,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 <!-- //modal -->
+
 <!-- //top-header -->
 
 <!-- header-bottom-->
@@ -204,7 +246,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="col-md-3 logo_agile">
                 <h1 class="text-center">
                     <a href="index.html" class="font-weight-bold font-italic">
-                        <img src="../static/images/logo2.png" alt=" " class="img-fluid">Electro Store
+                        <img src="../static/images/logo2.png" alt=" " class="img-fluid">Silpan
                     </a>
                 </h1>
             </div>
@@ -215,9 +257,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <!-- search -->
                     <div class="col-10 agileits_search">
                         <form class="form-inline" action="#" method="post">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                            <input class="form-control mr-sm-2" type="search"
+                                   placeholder="Digite o nome/código do produto" aria-label="Search"
                                    required>
-                            <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                            <button class="btn my-2 my-sm-0" type="submit">Pesquisar</button>
                         </form>
                     </div>
                     <!-- //search -->
@@ -254,185 +297,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto text-center mr-xl-5">
                     <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="index.html">Home
+                        <a class="nav-link" href="{% url 'home' %}">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Electronics
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="agile_inner_drop_nav_info p-4">
-                                <h5 class="mb-3">Mobiles, Computers</h5>
-                                <div class="row">
-                                    <div class="col-sm-6 multi-gd-img">
-                                        <ul class="multi-column-dropdown">
-                                            <li>
-                                                <a href="product.html">All Mobile Phones</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">All Mobile Accessories</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Cases & Covers</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Screen Protectors</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Power Banks</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">All Certified Refurbished</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Tablets</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Wearable Devices</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Smart Home</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 multi-gd-img">
-                                        <ul class="multi-column-dropdown">
-                                            <li>
-                                                <a href="product.html">Laptops</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Drives & Storage</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Printers & Ink</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Networking Devices</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Computer Accessories</a>
-                                            </li>
-                                            <li>
-                                                <a href="product.html">Game Zone</a>
-                                            </li>
-                                            <li>
-                                                <a href="../product.html">Software</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Appliances
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="agile_inner_drop_nav_info p-4">
-                                <h5 class="mb-3">TV, Appliances, Electronics</h5>
-                                <div class="row">
-                                    <div class="col-sm-6 multi-gd-img">
-                                        <ul class="multi-column-dropdown">
-                                            <li>
-                                                <a href="product2.html">Televisions</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Home Entertainment Systems</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Headphones</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Speakers</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">MP3, Media Players & Accessories</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Audio & Video Accessories</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Cameras</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">DSLR Cameras</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Camera Accessories</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 multi-gd-img">
-                                        <ul class="multi-column-dropdown">
-                                            <li>
-                                                <a href="product2.html">Musical Instruments</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Gaming Consoles</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">All Electronics</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Air Conditioners</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Refrigerators</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Washing Machines</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Kitchen & Home Appliances</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">Heating & Cooling Appliances</a>
-                                            </li>
-                                            <li>
-                                                <a href="product2.html">All Appliances</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="../about.html">About Us</a>
-                    </li>
-                    <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="../product.html">New Arrivals</a>
-                    </li>
-                    <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Pages
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="product.html">Product 1</a>
-                            <a class="dropdown-item" href="product2.html">Product 2</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="single.html">Single Product 1</a>
-                            <a class="dropdown-item" href="single2.html">Single Product 2</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="checkout.html">Checkout Page</a>
-                            <a class="dropdown-item" href="payment.html">Payment Page</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
+
+                    {% for categoria in categorias %}
+                        <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link" href="../produto/{{ categoria.nome.lower }} ">{{ categoria.nome }}</a>
+                        </li>
+                    {% endfor %}
+
                 </ul>
             </div>
         </nav>
     </div>
 </div>
 <!-- //navigation -->
+{% block conteudo %}
+{% endblock conteudo %}
 
 <!-- js-files -->
 <!-- jquery -->
@@ -520,7 +403,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- //password-script -->
 
 <!-- scroll seller -->
-<script src="{% static '../js/scroll.js ' %}"></script>
+<script src="{% static 'js/scroll.js ' %}"></script>
 <!-- //scroll seller -->
 
 <!-- smoothscroll -->
