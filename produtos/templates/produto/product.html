@@ -134,7 +134,7 @@
 
                                                         <div class="men-cart-pro">
                                                             <div class="inner-men-cart-pro">
-                                                                <a href="{{ produto.categoria.nome }}/{{ produto.id }}"
+                                                                <a href="{{ produto.slug }}"
                                                                    class="link-product-add-cart">Quick
                                                                     View</a>
                                                             </div>
@@ -161,6 +161,14 @@
                                                                 <fieldset>
                                                                     <input type="hidden" name="cmd" value="_cart"/>
                                                                     <input type="hidden" name="add" value="1"/>
+                                                                    <input type="hidden" name="id" value="{{ produto.id }}"/>
+                                                                    <input type="hidden" name="imagem" value="{{ produto.imagem.url }}"/>
+                                                                    <input type="hidden" name="cor" value="{{ produto.cor }}"/>
+                                                                    <input type="hidden" name="material" value="{{ produto.material }}"/>
+                                                                    <input type="hidden" name="largura" value="{{ produto.largura }}"/>
+                                                                    <input type="hidden" name="altura" value="{{ produto.altura }}"/>
+                                                                    <input type="hidden" name="comprimento" value="{{ produto.comprimento }}"/>
+
                                                                     <input type="hidden" name="business" value=" "/>
                                                                     <input type="hidden" name="item_name"
                                                                            value="{{ produto.nome }}"/>
@@ -176,7 +184,7 @@
                                                                         <input type="hidden" name="amount"
                                                                                value="{{ produto.preco_marketing|formata_preco }}"/>
                                                                         <input type="hidden" name="discount_amount"
-                                                                               value="0,00"/>
+                                                                               z value="0,00"/>
                                                                     {% endif %}
 
 

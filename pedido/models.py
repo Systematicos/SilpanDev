@@ -29,7 +29,7 @@ class Status(models.Model):
         verbose_name_plural = 'Status'
 
 
-'''class Transportadora(models.Model):
+class Transportadora(models.Model):
     nome_transportadora = models.CharField(unique=True, max_length=50)
     telefone = models.CharField(max_length=11)
 
@@ -40,20 +40,21 @@ class Status(models.Model):
         verbose_name = 'Transportadora'
         verbose_name_plural = 'Transportadoras'
 
-'''
+
 
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
+    cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING )
     total = models.FloatField()
     status = models.ForeignKey(Status, models.DO_NOTHING)
-    forma_pagamento = models.ForeignKey(FormaDePagamento, models.DO_NOTHING)
+    forma_pagamento = models.ForeignKey(FormaDePagamento, models.DO_NOTHING )
     data = models.DateTimeField()
     subtotal = models.FloatField()
-    desconto = models.FloatField()
-    cupom = models.ForeignKey(Cupom, on_delete=models.DO_NOTHING, blank=True)
+    desconto = models.FloatField(default=0.0)
+    cupom = models.ForeignKey(Cupom, on_delete=models.DO_NOTHING, null=True)
     total = models.FloatField()
-    frete = models.FloatField()
+    transportadora = models.ForeignKey(Transportadora, null=True, on_delete=models.DO_NOTHING )
+    frete = models.FloatField(null=True)
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)
 
@@ -82,13 +83,12 @@ class Pedido(models.Model):
 
 
 class ItemPedido(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    pedido = models.ForeignKey(Pedido, on_delete=models.DO_NOTHING)
+    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
     preco = models.FloatField()
     preco_promocional = models.FloatField(default=0)
     quantidade = models.PositiveIntegerField()
     imagem = models.CharField(max_length=250)
-
     def __str__(self):
         return f'Item do {self.pedido}'
 
@@ -123,5 +123,3 @@ class ItemPedido(models.Model):
     class Meta:
         verbose_name = 'Item do pedido'
         verbose_name_plural = 'Itens do pedido'
-
-# Create your models here.

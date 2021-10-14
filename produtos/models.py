@@ -10,7 +10,6 @@ from django.conf import settings
 from django.utils.text import slugify
 from django_resized import ResizedImageField
 
-
 from utils import utilsProduto
 
 
@@ -30,28 +29,16 @@ class Categoria(models.Model):
 
         for n in nome_categoria:
             nome.append({n[0]: n[1:]})
-        print(nome)
         return nome
 
 
-class Marca(models.Model):
-    nome = models.CharField(max_length=40, blank=True, null=True)
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = 'Marca'
-        verbose_name_plural = 'Marcas'
-
-
 class Produto(models.Model):
+    slug = models.SlugField(unique=True, null=True)
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
     imagem = ResizedImageField(size=[212, 212], upload_to='produto_imagens/%Y/%m/', blank=True)
-    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
-    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
+    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
     preco_marketing = models.FloatField()
     preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
     cor = models.CharField(max_length=50, blank=True, null=True)
@@ -59,7 +46,6 @@ class Produto(models.Model):
     largura = models.IntegerField(blank=True, null=True)
     altura = models.IntegerField(blank=True, null=True)
     comprimento = models.IntegerField(blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
