@@ -20,8 +20,7 @@ class Pagar(View):
         cliente = Cliente.objects.get(cpf=Cliente.popular_cliente(requestJson, None).cpf)
         formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
         status_pedido = Status.objects.get(id=1)
-        cupom_pedido = Cupom.objects.get(id=2)
-        pedido = Pedido.criarPedido(cliente, formaDePagamento, cupom_pedido, status_pedido)
+        pedido = Pedido.criarPedido(cliente, formaDePagamento, status=status_pedido)
         itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
 
         print(requestJson)
