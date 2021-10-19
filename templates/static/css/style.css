@@ -563,7 +563,11 @@ h3.tittle-w3l span {
 }
 
 #PPminicarts {
-    left: 44% !important;
+    left: inherit ;
+    z-index: 999 ;
+    right: 19% ;
+    top: 96px ;
+    position: absolute;
 }
 
 .minicarts-showing #PPminicarts form {
