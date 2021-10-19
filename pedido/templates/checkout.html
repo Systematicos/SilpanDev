@@ -155,13 +155,13 @@
                     }
                 }
 
-                return data && data.value;
+                return data;
             }
         }
 
         const constructListProducts = () => {
-            if (loadProducts().items.length > 0) {
-                const items = loadProducts().items;
+            if (loadProducts().value.items.length > 0) {
+                const items = loadProducts().value.items;
                 let html = '';
                 let count = 0;
                 for (let item of items) {
@@ -189,7 +189,7 @@
                         <td class="invert">${item.item_name}</td>
                         <td class="invert">R$ ${item.amount.toFixed(2)}</td>
                         <td class="invert">
-                            <div class="close1"> </div>
+                            <button type="button" onclick="removeProduct(${item.id})"> x </button>
                         </td>
                     </tr>
                 `
@@ -197,7 +197,15 @@
                 document.getElementById('t-product').innerHTML = html;
             }
         }
+        const removeProduct = (id) => {
+            let items = loadProducts();
 
+            itemIndex = items.value.items.findIndex(item => item.id == id);
+            items.value.items.splice(itemIndex, 1);
+            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
+            window.location.reload();
+        }
+        constructListProducts();
         constructListProducts();
     </script>
     <!-- //popup modal (for location)-->
@@ -223,6 +231,7 @@
                 evt.preventDefault();
             }
         });
+
     </script>
     <!-- //cart-js -->
 
