@@ -7,42 +7,54 @@
     <div class="container py-xl-4 py-lg-2">
         <!-- tittle heading -->
         <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>C</span>onfirmação de Pedido
+            <span>A</span>dicionar detalhes da compra
         </h3>
-        <!-- //tittle heading -->
-        <div class="checkout-right">
-            <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                <span>X Produtos</span>
-            </h4>
-            <div class="table-responsive" id="table-products">
-                <table class="timetable_sub">
-                    <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Nome do Produto</th>
-                        <th>Preço</th>
-                        <th>Remover</th>
-                    </tr>
-                    </thead>
-                    <tbody id="t-product">
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
         <!-- Endereço-->
         <div class="checkout-left">
             <div class="address_form_agile mt-sm-5 mt-4">
-                <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form agileinfo_form" id="form">
+                <form method="post" class="creditly-card-form agileinfo_form" id="form_cliente">
                     {% csrf_token %}
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                        <div class="information-wrapper">
+                            <div class="first-row">
+                             <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="cpf"
+                                           placeholder="CPF" id="text_cpf" required="" >
+                                </div>
+                                <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="nome"
+                                           placeholder="Nome Completo" id="nome" required="">
+                                </div>
 
+                                <div class="controls form-group">
+                                    <input class="billing-address-name form-control" type="text" name="endereco"
+                                           placeholder="Endereço" required="">
+                                </div>
+                                <div class="w3_agileits_card_number_grids">
+                                    <div class="w3_agileits_card_number_grid_left form-group">
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Número de Telefone"
+                                                   name="numero_telefone" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="controls form-group">
+                                    <select class="option-w3ls" name="forma_pagamento">
+                                        <option>Tipo de Pagamento</option>
+                                        {% for Forma_pagamento in Forma_pagamentos %}
+                                        <option value="{{ Forma_pagamento.id }}">{{ Forma_pagamento }}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                            >Selecionar Cliente e endereço de entrega
+                            >Finalizar Pedido
                                 <span class="far fa-hand-point-right"></span>
                             </button>
                         </div>
+                    </div>
                 </form>
 
             </div>
@@ -66,8 +78,6 @@
     <!-- pagamento -->
     <script src="{% static 'js/pagamento.js' %}"></script>
     <!-- //pagamento -->
-
-
     <!-- nav smooth scroll -->
     <script>
         $(document).ready(function () {
