@@ -16,7 +16,62 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function setInputsForm(form) {
+    inputs = []
 
+    if (form.querySelector('text_date') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'date'
+        input.name = 'data'
+        input.placeholder = 'Data'
+        input.id = 'text_date'
+        input.required = ""
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+
+    if (form.querySelector('text_email') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'email'
+        input.name = 'email'
+        input.placeholder = 'E-mail'
+        input.id = 'text_email'
+        input.required = ""
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+
+    if (form.querySelector('text_usuario') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'text'
+        input.name = 'usuario'
+        input.placeholder = 'Usuário'
+        input.id = 'text_usuario'
+        input.required = ""
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+
+    return inputs
+}
 
 async function esconderCampoPesquisa(input) {
     const data = {}
@@ -44,23 +99,15 @@ async function esconderCampoPesquisa(input) {
         if (response.ok) {
             return response.json()
         } else if (response.status == 404) {
-            campos = ['Data', '', '', '']
             form = document.getElementById('form_cliente')
+
             divInputs = form.querySelectorAll('.controls.form-group')[1]
             console.log(divInputs)
-            div = document.createElement('div')
-            div.className = 'controls form-group'
-            input = document.createElement('input')
-            input.className = 'billing-address-name form-control'
-            input.type = 'date'
-            input.name = 'data'
-            input.placeholder = 'Data'
-            input.id = 'text_date'
-            input.required = ""
+            inputs = setInputsForm(form)
+            for (input in inputs) {
+            divInputs.parentNode.insertBefore(input, divInputs.nextSibling);
 
-            div.appendChild(input)
-
-            divInputs.parentNode.insertBefore(div, divInputs.nextSibling);
+            }
 
         }
 
