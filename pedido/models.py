@@ -62,7 +62,7 @@ class Pedido(models.Model):
         return f'Pedido N. {self.pk}'
 
     @classmethod
-    def criarPedido(cls, cliente, formaDePagamento, cupom, status):
+    def criarPedido(cls, cliente, formaDePagamento, status):
         pedido = Pedido()
         pedido.data = datetime.today()
         pedido.frete = 0.0
@@ -73,7 +73,7 @@ class Pedido(models.Model):
         pedido.subtotal = 100
         pedido.total = 90
         pedido.desconto = 10
-        pedido.cupom = cupom
+        #pedido.cupom = cupom
 
         return pedido
 
