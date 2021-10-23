@@ -3,8 +3,8 @@ from .models import Produto, Categoria
 
 
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'descricao', 'get_preco_formatado', 'get_preco_promocional_formatado']
-    prepopulated_fields = {'slug': ('nome',)}
+    list_display = ['nome', 'slug', 'descricao', 'get_preco_formatado', 'get_preco_promocional_formatado']
+
 
 class MarcaAdmin(admin.ModelAdmin):
     list_display = ['nome']
