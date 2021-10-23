@@ -34,17 +34,32 @@ class Pagar(View):
 
 
 class FecharPedido(View):
-    template_name = 'checkout.html'
+    global template_name
 
     def get_context_data(self, **kwargs):
         context = super(FecharPedido, self).get_context_data()
         return context
 
     def post(self, request, *args, **kwargs):
+        template_name = 'checkout.html'
+        context = {}
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+        return render(request, template_name, context)
+
+
+class selecionarClienteEndereco(View):
+    global template_name
+
+    def get_context_data(self, **kwargs):
+        context = super(selecionarClienteEndereco, self).get_context_data()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        template_name = 'finalizarPedido.html'
         context = {}
         context['categorias'] = Categoria.objects.all().order_by('nome')
         context['Forma_pagamentos'] = FormaDePagamento.objects.all().order_by('forma_de_pagamento')
-        return render(request, 'checkout.html', context)
+        return render(request, template_name, context)
 
 
 class Detalhe(View):
