@@ -14,12 +14,10 @@
 
 
 -- Copiando estrutura do banco de dados para silpan
-DROP DATABASE IF EXISTS `silpan`;
 CREATE DATABASE IF NOT EXISTS `silpan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `silpan`;
 
 -- Copiando estrutura para tabela silpan.auth_group
-DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE IF NOT EXISTS `auth_group` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
@@ -33,7 +31,6 @@ DELETE FROM `auth_group`;
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.auth_group_permissions
-DROP TABLE IF EXISTS `auth_group_permissions`;
 CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `group_id` int NOT NULL,
@@ -51,7 +48,6 @@ DELETE FROM `auth_group_permissions`;
 /*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.auth_permission
-DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE IF NOT EXISTS `auth_permission` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -145,7 +141,6 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.auth_user
-DROP TABLE IF EXISTS `auth_user`;
 CREATE TABLE IF NOT EXISTS `auth_user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `password` varchar(128) NOT NULL,
@@ -166,13 +161,12 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 DELETE FROM `auth_user`;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-10-14 01:04:27.188754', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208'),
+	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-10-21 17:10:17.588323', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208'),
 	(13, 'pbkdf2_sha256$260000$TV6Tk5wt2IrEWBTOFiJEPh$uaO+HP3hJWbfXVHMmMp8xEUE04ckSI4vrjfHXjbXslo=', NULL, 0, 'add', '', '', 'add@add', 0, 1, '2021-09-27 18:17:05.078076'),
-	(15, 'pbkdf2_sha256$260000$hW5qDzTQ84K1fkI2yuBE0a$cGCLVTfTAOKv8y/nrPuUdQOopsI2Qg6YdUCss0eCGZE=', NULL, 0, 'addadddd', '', '', 'adddd@add', 0, 1, '2021-09-27 18:19:36.113764');
+	(15, 'pbkdf2_sha256$260000$hW5qDzTQ84K1fkI2yuBE0a$cGCLVTfTAOKv8y/nrPuUdQOopsI2Qg6YdUCss0eCGZE=', NULL, 0, 'addadddd', 'Gyovane', 'Souza', 'adddd@add', 0, 1, '2021-09-27 18:19:36.113764');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.auth_user_groups
-DROP TABLE IF EXISTS `auth_user_groups`;
 CREATE TABLE IF NOT EXISTS `auth_user_groups` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -190,7 +184,6 @@ DELETE FROM `auth_user_groups`;
 /*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.auth_user_user_permissions
-DROP TABLE IF EXISTS `auth_user_user_permissions`;
 CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -208,26 +201,25 @@ DELETE FROM `auth_user_user_permissions`;
 /*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.cliente_cliente
-DROP TABLE IF EXISTS `cliente_cliente`;
 CREATE TABLE IF NOT EXISTS `cliente_cliente` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `usuario_id` int NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `sobrenome` varchar(100) NOT NULL,
   `data_nascimento` date NOT NULL,
   `cpf` varchar(11) NOT NULL,
+  `telefone` varchar(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `cliente_cliente_usuario_id_ca212392_fk_auth_user_id` FOREIGN KEY (`usuario_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `cpf` (`cpf`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela silpan.cliente_cliente: ~0 rows (aproximadamente)
 DELETE FROM `cliente_cliente`;
 /*!40000 ALTER TABLE `cliente_cliente` DISABLE KEYS */;
-INSERT INTO `cliente_cliente` (`id`, `usuario_id`, `data_nascimento`, `cpf`) VALUES
-	(1, 15, '0022-02-22', '38348575819');
 /*!40000 ALTER TABLE `cliente_cliente` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.cliente_endereco
-DROP TABLE IF EXISTS `cliente_endereco`;
 CREATE TABLE IF NOT EXISTS `cliente_endereco` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `tipo` varchar(30) NOT NULL,
@@ -246,7 +238,6 @@ DELETE FROM `cliente_endereco`;
 /*!40000 ALTER TABLE `cliente_endereco` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.cupom_cupom
-DROP TABLE IF EXISTS `cupom_cupom`;
 CREATE TABLE IF NOT EXISTS `cupom_cupom` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nome` varchar(20) NOT NULL,
@@ -267,7 +258,6 @@ DELETE FROM `cupom_cupom`;
 /*!40000 ALTER TABLE `cupom_cupom` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.django_admin_log
-DROP TABLE IF EXISTS `django_admin_log`;
 CREATE TABLE IF NOT EXISTS `django_admin_log` (
   `id` int NOT NULL AUTO_INCREMENT,
   `action_time` datetime(6) NOT NULL,
@@ -343,7 +333,6 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.django_content_type
-DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE IF NOT EXISTS `django_content_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `app_label` varchar(100) NOT NULL,
@@ -378,7 +367,6 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.django_migrations
-DROP TABLE IF EXISTS `django_migrations`;
 CREATE TABLE IF NOT EXISTS `django_migrations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `app` varchar(255) NOT NULL,
@@ -425,7 +413,6 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.django_session
-DROP TABLE IF EXISTS `django_session`;
 CREATE TABLE IF NOT EXISTS `django_session` (
   `session_key` varchar(40) NOT NULL,
   `session_data` longtext NOT NULL,
@@ -434,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.django_session: ~11 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.django_session: ~12 rows (aproximadamente)
 DELETE FROM `django_session`;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
@@ -453,7 +440,6 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.pedido_formadepagamento
-DROP TABLE IF EXISTS `pedido_formadepagamento`;
 CREATE TABLE IF NOT EXISTS `pedido_formadepagamento` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `forma_de_pagamento` varchar(30) NOT NULL,
@@ -461,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `pedido_formadepagamento` (
   UNIQUE KEY `forma_de_pagamento` (`forma_de_pagamento`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.pedido_formadepagamento: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.pedido_formadepagamento: ~3 rows (aproximadamente)
 DELETE FROM `pedido_formadepagamento`;
 /*!40000 ALTER TABLE `pedido_formadepagamento` DISABLE KEYS */;
 INSERT INTO `pedido_formadepagamento` (`id`, `forma_de_pagamento`) VALUES
@@ -471,7 +457,6 @@ INSERT INTO `pedido_formadepagamento` (`id`, `forma_de_pagamento`) VALUES
 /*!40000 ALTER TABLE `pedido_formadepagamento` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.pedido_itempedido
-DROP TABLE IF EXISTS `pedido_itempedido`;
 CREATE TABLE IF NOT EXISTS `pedido_itempedido` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `pedido_id` bigint NOT NULL,
@@ -486,15 +471,17 @@ CREATE TABLE IF NOT EXISTS `pedido_itempedido` (
   CONSTRAINT `pedido_itempedido_pedido_id_15c6b42d_fk_pedido_pedido_id` FOREIGN KEY (`pedido_id`) REFERENCES `pedido_pedido` (`id`),
   CONSTRAINT `pedido_itempedido_produto_id_a5d1c607_fk_produtos_produto_id` FOREIGN KEY (`produto_id`) REFERENCES `produtos_produto` (`id`),
   CONSTRAINT `pedido_itempedido_chk_1` CHECK ((`quantidade` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.pedido_itempedido: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.pedido_itempedido: ~2 rows (aproximadamente)
 DELETE FROM `pedido_itempedido`;
 /*!40000 ALTER TABLE `pedido_itempedido` DISABLE KEYS */;
+INSERT INTO `pedido_itempedido` (`id`, `pedido_id`, `produto_id`, `preco`, `preco_promocional`, `quantidade`, `imagem`) VALUES
+	(1, 1, 11, 49, 0, 2, 'http://127.0.0.1:8000/produto/forminhas'),
+	(2, 1, 5, 19, 0, 1, 'http://127.0.0.1:8000/produto/forminhas');
 /*!40000 ALTER TABLE `pedido_itempedido` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.pedido_pedido
-DROP TABLE IF EXISTS `pedido_pedido`;
 CREATE TABLE IF NOT EXISTS `pedido_pedido` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `cliente_id` bigint NOT NULL,
@@ -509,6 +496,7 @@ CREATE TABLE IF NOT EXISTS `pedido_pedido` (
   `frete` double DEFAULT NULL,
   `codigo_rastreio` varchar(50) DEFAULT NULL,
   `notal_fiscal` varchar(70) DEFAULT NULL,
+  `vendedor_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codigo_rastreio` (`codigo_rastreio`),
   KEY `pedido_pedido_cliente_id_4f20d09c_fk_cliente_cliente_id` (`cliente_id`),
@@ -516,11 +504,13 @@ CREATE TABLE IF NOT EXISTS `pedido_pedido` (
   KEY `pedido_pedido_forma_pagamento_id_ebf3fa94_fk_pedido_fo` (`forma_pagamento_id`),
   KEY `pedido_pedido_cupom_id_d28c0aa3_fk_cupom_cupom_id` (`cupom_id`),
   KEY `pedido_pedido_transportadora_id_f00e4f7e_fk_pedido_tr` (`transportadora_id`),
+  KEY `pedido_pedido_vendedor_id_f06206a5_fk_auth_user_id` (`vendedor_id`),
   CONSTRAINT `pedido_pedido_cliente_id_4f20d09c_fk_cliente_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `cliente_cliente` (`id`),
   CONSTRAINT `pedido_pedido_cupom_id_d28c0aa3_fk_cupom_cupom_id` FOREIGN KEY (`cupom_id`) REFERENCES `cupom_cupom` (`id`),
   CONSTRAINT `pedido_pedido_forma_pagamento_id_ebf3fa94_fk_pedido_fo` FOREIGN KEY (`forma_pagamento_id`) REFERENCES `pedido_formadepagamento` (`id`),
   CONSTRAINT `pedido_pedido_status_id_65de990b_fk_pedido_status_id` FOREIGN KEY (`status_id`) REFERENCES `pedido_status` (`id`),
-  CONSTRAINT `pedido_pedido_transportadora_id_f00e4f7e_fk_pedido_tr` FOREIGN KEY (`transportadora_id`) REFERENCES `pedido_transportadora` (`id`)
+  CONSTRAINT `pedido_pedido_transportadora_id_f00e4f7e_fk_pedido_tr` FOREIGN KEY (`transportadora_id`) REFERENCES `pedido_transportadora` (`id`),
+  CONSTRAINT `pedido_pedido_vendedor_id_f06206a5_fk_auth_user_id` FOREIGN KEY (`vendedor_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela silpan.pedido_pedido: ~0 rows (aproximadamente)
@@ -529,7 +519,6 @@ DELETE FROM `pedido_pedido`;
 /*!40000 ALTER TABLE `pedido_pedido` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.pedido_status
-DROP TABLE IF EXISTS `pedido_status`;
 CREATE TABLE IF NOT EXISTS `pedido_status` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `status` varchar(50) NOT NULL,
@@ -537,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `pedido_status` (
   UNIQUE KEY `status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.pedido_status: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.pedido_status: ~7 rows (aproximadamente)
 DELETE FROM `pedido_status`;
 /*!40000 ALTER TABLE `pedido_status` DISABLE KEYS */;
 INSERT INTO `pedido_status` (`id`, `status`) VALUES
@@ -551,7 +540,6 @@ INSERT INTO `pedido_status` (`id`, `status`) VALUES
 /*!40000 ALTER TABLE `pedido_status` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.pedido_transportadora
-DROP TABLE IF EXISTS `pedido_transportadora`;
 CREATE TABLE IF NOT EXISTS `pedido_transportadora` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nome_transportadora` varchar(50) NOT NULL,
@@ -566,14 +554,13 @@ DELETE FROM `pedido_transportadora`;
 /*!40000 ALTER TABLE `pedido_transportadora` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.produtos_categoria
-DROP TABLE IF EXISTS `produtos_categoria`;
 CREATE TABLE IF NOT EXISTS `produtos_categoria` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.produtos_categoria: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.produtos_categoria: ~6 rows (aproximadamente)
 DELETE FROM `produtos_categoria`;
 /*!40000 ALTER TABLE `produtos_categoria` DISABLE KEYS */;
 INSERT INTO `produtos_categoria` (`id`, `nome`) VALUES
@@ -586,7 +573,6 @@ INSERT INTO `produtos_categoria` (`id`, `nome`) VALUES
 /*!40000 ALTER TABLE `produtos_categoria` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela silpan.produtos_produto
-DROP TABLE IF EXISTS `produtos_produto`;
 CREATE TABLE IF NOT EXISTS `produtos_produto` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `slug` varchar(50) DEFAULT NULL,
@@ -608,7 +594,7 @@ CREATE TABLE IF NOT EXISTS `produtos_produto` (
   CONSTRAINT `produtos_produto_categoria_id_4444949b_fk_produtos_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `produtos_categoria` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela silpan.produtos_produto: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela silpan.produtos_produto: ~22 rows (aproximadamente)
 DELETE FROM `produtos_produto`;
 /*!40000 ALTER TABLE `produtos_produto` DISABLE KEYS */;
 INSERT INTO `produtos_produto` (`id`, `slug`, `nome`, `descricao`, `quantidade`, `imagem`, `categoria_id`, `preco_marketing`, `preco_marketing_promocional`, `cor`, `material`, `largura`, `altura`, `comprimento`) VALUES
