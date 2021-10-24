@@ -54,20 +54,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="container-fluid">
         <div class="row main-top-w3l py-2">
             <div class="col-lg-4 header-most-top">
-                <p class="text-white text-lg-left text-center">Cupom 'systematicos10' de 10% desconto na primeira compra
+                <p class="text-white text-lg-left text-center">Cupom 'systematicos10' 10% de desconto na primeira compra
                     <i class="fas fa-shopping-cart ml-1"></i>
                 </p>
             </div>
-            <div class="col-lg-8 header-right mt-lg-0 mt-2">
+            <div class="col-lg-5 header-right mt-lg-1 mt-2">
                 <!-- header lists -->
                 <ul>
                     <li class="text-center border-right text-white">
-                        <a class="play-icon popup-with-zoom-anim text-white" href="#small-dialog1">
-                            <i class="fas fa-map-marker mr-2"></i>Selecione sua Localização</a>
-                    </li>
-                    <li class="text-center border-right text-white">
                         <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
-                            <i class="fas fa-truck mr-2"></i>Rastreamento Pedido</a>
+                            <i class="fas fa-truck mr-2"></i>Rastrear Pedido</a>
                     </li>
                     <li class="text-center border-right text-white">
                         <i class="fas fa-phone mr-2"></i> 11 558132554
@@ -76,13 +72,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                         <li class="text-center border-right text-white">
                             <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
-                                <i class="fas fa-sign-in-alt mr-2"></i> Login </a>
+                                <i class="fas fa-sign-in-alt mr-2"></i> Entre </a>
                         </li>
-                        <li class="text-center text-white">
-                            <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
-                                <i class="fas fa-sign-out-alt mr-2"></i>Resgistrar </a>
-                        </li>
-
+                        <!-- <li class="text-center text-white">
+                             <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
+                                 <i class="fas fa-sign-out-alt mr-2"></i>Cadastre-se </a>
+                         </li>
+                        -->
                     {% else %}
                         <!-- menu do cliente quando logar -->
 
@@ -113,26 +109,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 </div>
 
-<!-- Botão de select-location -->
-<div id="small-dialog1" class="mfp-hide">
-    <div class="select-city">
-        <h3>
-            <i class="fas fa-map-marker"></i> Por favor selecione sua localização </h3>
-        <select class="list_of_cities">
-            <optgroup label="Popular Cities">
-                <option selected style="display:none;color:#eee;">Selecione sua cidade</option>
-                <option>São Paulo</option>
-                <option>Rio de Janeiro</option>
-            </optgroup>
-            <optgroup label="RG">
-                <option>Porto Alegre</option>
-                <option>Campinas</option>
 
-            </optgroup>
-        </select>
-        <div class="clearfix"></div>
-    </div>
-</div>
 <!-- //shop locator (popup) -->
 
 <!-- modals -->
@@ -141,7 +118,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">Login</h5>
+                <h5 class="modal-title text-center">Entre</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -158,7 +135,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <input type="password" class="form-control" placeholder=" " name="password" required="">
                     </div>
                     <div class="right-w3l">
-                        <input type="submit" class="form-control" value="Login">
+                        <input type="submit" class="form-control" value="Entre">
                     </div>
                     <div class="sub-w3l">
                         <div class="custom-control custom-checkbox mr-sm-2">
@@ -166,10 +143,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <label class="custom-control-label" for="customControlAutosizing">Lembre-me ?</label>
                         </div>
                     </div>
-                    <p class="text-center dont-do mt-3">Não tem uma conta?
-                        <a href="#" data-toggle="modal" data-target="#exampleModal2">
-                            Registrar agora</a>
-                    </p>
+
                 </form>
             </div>
         </div>
@@ -181,7 +155,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Register</h5>
+                <h5 class="modal-title">Cadastro</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -190,24 +164,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <form action="{% url 'cliente:criar' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-form-label">Seu Nome</label>
+                        <label class="col-form-label">Nome Completo</label>
                         <input type="text" class="form-control" placeholder=" " name="Name" required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Username</label>
+                        <label class="col-form-label">Usuário</label>
                         <input type="text" class="form-control" placeholder=" " name="Username" required="">
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">CPF</label>
-                        <input type="text" class="form-control" placeholder=" " name="CPF" required="">
+                        <label class="col-form-label">Email</label>
+                        <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">CPF (Apenas Dígitos)</label>
+                        <input type="text" class="form-control" placeholder=" " name="CPF" required="" , maxlength="11">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" placeholder=" " name="Dt_nasc" required="">
                     </div>
+
                     <div class="form-group">
-                        <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                        <label class="col-form-label">Celular (DDD+Número)</label>
+                        <input type="tel" class="form-control" placeholder=" " name="Celular" required="" ,
+                               maxlength="11">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Senha</label>
@@ -220,7 +200,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                id="password2" required="">
                     </div>
                     <div class="right-w3l">
-                        <input type="submit" class="form-control" value="Register">
+                        <input type="submit" class="form-control" value="Cadastrar">
                     </div>
                     <div class="sub-w3l">
                         <div class="custom-control custom-checkbox mr-sm-2">
@@ -234,6 +214,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     </div>
 </div>
+
+<!-- //register -->
+
 <!-- //modal -->
 
 <!-- //top-header -->
@@ -243,9 +226,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="container">
         <div class="row header-bot_inner_wthreeinfo_header_mid">
             <!-- logo -->
-            <div class="col-md-3 logo_agile">
+            <div class="col-md-1 logo_agile">
                 <h1 class="text-center">
-                    <a href="index.html" class="font-weight-bold font-italic">
+                    <a href="{% url 'home' %}" class="font-weight-bold font-italic">
                         <img src="../static/images/logo2.png" alt=" " class="img-fluid">Silpan
                     </a>
                 </h1>
@@ -297,12 +280,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto text-center mr-xl-5">
                     <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="{% url 'home' %}">Home
+                        <a class="nav-link" href="{% url 'home' %}">Início
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
-                    {% for categoria in categorias %}
+                    {% for  categoria in categorias %}
                         <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link" href="../produto/{{ categoria.nome.lower }} ">{{ categoria.nome }}</a>
                         </li>

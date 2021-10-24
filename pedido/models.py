@@ -44,7 +44,7 @@ class Transportadora(models.Model):
 
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING )
+    cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
     total = models.FloatField()
     status = models.ForeignKey(Status, models.DO_NOTHING)
     forma_pagamento = models.ForeignKey(FormaDePagamento, models.DO_NOTHING )
@@ -57,12 +57,13 @@ class Pedido(models.Model):
     frete = models.FloatField(null=True)
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)
+    vendedor = models.ForeignKey(User,on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return f'Pedido N. {self.pk}'
 
     @classmethod
-    def criarPedido(cls, cliente, formaDePagamento, cupom, status):
+    def criarPedido(cls, cliente, formaDePagamento, status):
         pedido = Pedido()
         pedido.data = datetime.today()
         pedido.frete = 0.0
@@ -73,7 +74,7 @@ class Pedido(models.Model):
         pedido.subtotal = 100
         pedido.total = 90
         pedido.desconto = 10
-        pedido.cupom = cupom
+        #pedido.cupom = cupom
 
         return pedido
 

@@ -20,8 +20,7 @@ class Pagar(View):
         cliente = Cliente.objects.get(cpf=Cliente.popular_cliente(requestJson, None).cpf)
         formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
         status_pedido = Status.objects.get(id=1)
-        cupom_pedido = Cupom.objects.get(id=2)
-        pedido = Pedido.criarPedido(cliente, formaDePagamento, cupom_pedido, status_pedido)
+        pedido = Pedido.criarPedido(cliente, formaDePagamento, status=status_pedido)
         itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
 
         print(requestJson)
@@ -35,17 +34,32 @@ class Pagar(View):
 
 
 class FecharPedido(View):
-    template_name = 'checkout.html'
+    global template_name
 
     def get_context_data(self, **kwargs):
         context = super(FecharPedido, self).get_context_data()
         return context
 
     def post(self, request, *args, **kwargs):
+        template_name = 'checkout.html'
+        context = {}
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+        return render(request, template_name, context)
+
+
+class selecionarClienteEndereco(View):
+    global template_name
+
+    def get_context_data(self, **kwargs):
+        context = super(selecionarClienteEndereco, self).get_context_data()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        template_name = 'finalizarPedido.html'
         context = {}
         context['categorias'] = Categoria.objects.all().order_by('nome')
         context['Forma_pagamentos'] = FormaDePagamento.objects.all().order_by('forma_de_pagamento')
-        return render(request, 'checkout.html', context)
+        return render(request, template_name, context)
 
 
 class Detalhe(View):

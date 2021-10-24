@@ -6,9 +6,12 @@ from utils import validacpf
 
 
 class Cliente(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=255,unique=True)
+    nome = models.CharField(max_length=50)
+    sobrenome = models.CharField(max_length=100)
     data_nascimento = models.DateField()
-    cpf = models.CharField(max_length=11)
+    cpf = models.CharField(max_length=11, unique=True)
+    telefone = models.CharField(max_length=11)
 
     def clean(self):
         messagens_erros = {}
@@ -22,21 +25,12 @@ class Cliente(models.Model):
         if messagens_erros:
             raise ValidationError(messagens_erros)
 
-    @classmethod
-    def popular_usuario(cls, form):
-        usuario = User()
-        usuario.username = form['Username']
-        usuario.set_password(form['Password'])
-        usuario.email = form['Email']
-        usuario.is_active = True
 
-        return usuario
 
     @classmethod
-    def popular_cliente(cls, form, user):
+    def popular_cliente(cls, form):
         cliente = Cliente()
 
-        cliente.usuario = user
         try:
             cliente.cpf = form['CPF']
             cliente.data_nascimento = form['Dt_nasc']
@@ -45,9 +39,6 @@ class Cliente(models.Model):
             cliente.data_nascimento = None
 
         return cliente
-
-    def __str__(self):
-        return f'{self.usuario}'
 
     class Meta:
         verbose_name = 'Cliente'

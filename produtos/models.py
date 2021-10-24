@@ -9,8 +9,15 @@ import os
 from django.conf import settings
 from django.utils.text import slugify
 from django_resized import ResizedImageField
+from autoslug import AutoSlugField
+from django.urls import reverse
+
 
 from utils import utilsProduto
+
+class AvailableManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_available=True)
 
 
 class Categoria(models.Model):
@@ -33,7 +40,7 @@ class Categoria(models.Model):
 
 
 class Produto(models.Model):
-    slug = models.SlugField(unique=True, null=True)
+    slug = AutoSlugField(unique=True, always_update=False, populate_from="nome")
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
@@ -47,10 +54,8 @@ class Produto(models.Model):
     altura = models.IntegerField(blank=True, null=True)
     comprimento = models.IntegerField(blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            slug = f'{slugify(self.nome)}'
-            self.slug = slug
+    def get_absolute_url(self):
+        return reverse("produtos:detalhe", kwargs={"slug": self.slug})
 
     def get_preco_formatado(self):
         return utilsProduto.formata_preco(self.preco_marketing)
