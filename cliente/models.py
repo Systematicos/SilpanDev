@@ -16,11 +16,8 @@ class Cliente(models.Model):
     def clean(self):
         messagens_erros = {}
 
-        if not validacpf.valida_cpf(self.cpf):
-            messagens_erros['cpf'] = 'Digite um CPF válido'
-
-        if re.search(r'[^0-9]', self.cep) or len(self.cep) < 8:
-            messagens_erros['cep'] = 'CEP Inválido, digite os 8 digitos do CEP.'
+        #if not validacpf.valida_cpf(self.cpf):
+            #messagens_erros['cpf'] = 'Digite um CPF válido'
 
         if messagens_erros:
             raise ValidationError(messagens_erros)
@@ -40,6 +37,9 @@ class Cliente(models.Model):
 
         return cliente
 
+    def __str__(self):
+        return self.nome
+
     class Meta:
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'
@@ -52,6 +52,8 @@ class Endereco(models.Model):
     cep = models.CharField(max_length=50)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f' Tipo: {self.tipo}, do cliente {self.cliente.nome}{self.cliente.sobrenome}'
     class Meta:
         verbose_name = 'Endereço'
         verbose_name_plural = 'Endereços'

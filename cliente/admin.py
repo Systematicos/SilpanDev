@@ -4,10 +4,11 @@ from .models import Cliente, Endereco
 
 class EnderecoInLine(admin.TabularInline):
     model = Endereco
-    extra = 2
+    extra = 1
 
 
 class ClienteAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'sobrenome', 'cpf', 'telefone']
     inlines = [
         EnderecoInLine
     ]
