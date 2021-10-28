@@ -19,6 +19,11 @@ function getCookie(name) {
 function setInputsForm() {
     inputs = []
 
+    text_endereco = document.getElementById('text_endereco')
+    if (text_endereco != null) {
+        text_endereco.parentNode.removeChild(text_endereco)
+    }
+
     if (document.getElementById('text_date') == null) {
 
         div = document.createElement('div')
@@ -53,6 +58,68 @@ function setInputsForm() {
         inputs.push(div)
     }
 
+    if (document.getElementById('text_tipo_endereco') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'text'
+        input.name = 'tipo_endereco'
+        input.placeholder = 'Nome do endereço'
+        input.id = 'text_tipo_endereco'
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+    if (document.getElementById('text_cep') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'text'
+        input.name = 'text_cep'
+        input.placeholder = 'CEP'
+        input.id = 'text_cep'
+        input.required = ""
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+    if (document.getElementById('text_num') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'text'
+        input.name = 'text_num'
+        input.placeholder = 'Número'
+        input.id = 'text_num'
+        input.required = ""
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
+    if (document.getElementById('text_complement') == null) {
+
+        div = document.createElement('div')
+        div.className = 'controls form-group'
+
+        input = document.createElement('input')
+        input.className = 'billing-address-name form-control'
+        input.type = 'text'
+        input.name = 'text_complement'
+        input.placeholder = 'Complemento'
+        input.id = 'text_complement'
+        div.appendChild(input)
+
+        inputs.push(div)
+    }
 
     return inputs
 }
@@ -60,12 +127,17 @@ function setInputsForm() {
 function deleteInputsForm() {
 
     text_dat = document.getElementById('text_date')
-    text_dat.parentNode.removeChild(text_dat)
+    if (text_dat != null) {
+        text_dat.parentNode.removeChild(text_dat)
+    }
+
 
     text_email = document.getElementById('text_email')
-    text_email.parentNode.removeChild(text_email)
-}
+    if (text_email != null) {
+        text_email.parentNode.removeChild(text_email)
+    }
 
+}
 
 
 async function esconderCampoPesquisa(input) {
@@ -101,7 +173,7 @@ async function esconderCampoPesquisa(input) {
             inputs = setInputsForm()
 
 
-            for (let i = 0; i < inputs.length; i++) {
+            for (let i = (inputs.length-1); i >0; i--) {
                 divInputs.parentNode.insertBefore(inputs[i], divInputs.nextSibling);
             }
 
@@ -109,13 +181,14 @@ async function esconderCampoPesquisa(input) {
 
     }).then(data => ({
             data: data,
-
         })
     ).then(res => {
 
         let response = JSON.parse(res.data.Cliente)
         console.log(response)
-        document.getElementById("nome").value = `${response[0]['fields']['nome']} ${response[0]['fields']['sobrenomez']} `
+        document.getElementById("text_nome").value = `${response[0]['fields']['nome']} ${response[0]['fields']['sobrenome']} `
+        document.getElementById("text_telefone").value = `${response[0]['fields']['telefone']} `
+
 
     }).catch((error) => {
         console.error(error)
