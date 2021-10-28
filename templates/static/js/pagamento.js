@@ -16,10 +16,10 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function setInputsForm(form) {
+function setInputsForm() {
     inputs = []
 
-    if (form.querySelector('text_date') == null) {
+    if (document.getElementById('text_date') == null) {
 
         div = document.createElement('div')
         div.className = 'controls form-group'
@@ -36,7 +36,7 @@ function setInputsForm(form) {
         inputs.push(div)
     }
 
-    if (form.querySelector('text_email') == null) {
+    if (document.getElementById('text_email') == null) {
 
         div = document.createElement('div')
         div.className = 'controls form-group'
@@ -53,25 +53,20 @@ function setInputsForm(form) {
         inputs.push(div)
     }
 
-    if (form.querySelector('text_usuario') == null) {
-
-        div = document.createElement('div')
-        div.className = 'controls form-group'
-
-        input = document.createElement('input')
-        input.className = 'billing-address-name form-control'
-        input.type = 'text'
-        input.name = 'usuario'
-        input.placeholder = 'Usuário'
-        input.id = 'text_usuario'
-        input.required = ""
-        div.appendChild(input)
-
-        inputs.push(div)
-    }
 
     return inputs
 }
+
+function deleteInputsForm() {
+
+    text_dat = document.getElementById('text_date')
+    text_dat.parentNode.removeChild(text_dat)
+
+    text_email = document.getElementById('text_email')
+    text_email.parentNode.removeChild(text_email)
+}
+
+
 
 async function esconderCampoPesquisa(input) {
     const data = {}
@@ -97,16 +92,17 @@ async function esconderCampoPesquisa(input) {
 
     }).then((response) => {
         if (response.ok) {
+            deleteInputsForm()
             return response.json()
         } else if (response.status == 404) {
             form = document.getElementById('form_cliente')
 
             divInputs = form.querySelectorAll('.controls.form-group')[1]
-            console.log(divInputs)
-            inputs = setInputsForm(form)
-            for (input in inputs) {
-            divInputs.parentNode.insertBefore(input, divInputs.nextSibling);
+            inputs = setInputsForm()
 
+
+            for (let i = 0; i < inputs.length; i++) {
+                divInputs.parentNode.insertBefore(inputs[i], divInputs.nextSibling);
             }
 
         }
@@ -118,7 +114,8 @@ async function esconderCampoPesquisa(input) {
     ).then(res => {
 
         let response = JSON.parse(res.data.Cliente)
-        document.getElementById("nome").value = `${response[1]['fields']['first_name']} ${response[1]['fields']['last_name']} `
+        console.log(response)
+        document.getElementById("nome").value = `${response[0]['fields']['nome']} ${response[0]['fields']['sobrenomez']} `
 
     }).catch((error) => {
         console.error(error)
