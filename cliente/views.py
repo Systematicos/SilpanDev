@@ -61,9 +61,8 @@ def buscarByCPF(request):
         try:
             cliente = Cliente.objects.get(cpf=json.loads(request.body.decode('utf-8'))['cpf'])
             endereco = Endereco.objects.filter(cliente_id=cliente.pk).values()
-            usuario = User.objects.get(id=cliente.usuario_id)
 
-            cliente = serializers.serialize("json", [cliente, usuario])
+            cliente = serializers.serialize("json", [cliente,])
 
             return JsonResponse({
                 'Cliente': cliente
