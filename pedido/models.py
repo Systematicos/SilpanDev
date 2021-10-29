@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from cliente.models import Cliente
+from cliente.models import Cliente, Endereco
 from produtos.models import Produto
 from cupom.models import Cupom
 
@@ -58,19 +58,21 @@ class Pedido(models.Model):
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)
     vendedor = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    endereco_entrega = models.ForeignKey(Endereco, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return f'Pedido N. {self.pk}'
 
     @classmethod
-    def criarPedido(cls, cliente, formaDePagamento, status):
+    def criarPedido(cls, cliente, formaDePagamento, vendedor, endereco, status):
         pedido = Pedido()
         pedido.data = datetime.today()
         pedido.frete = 0.0
         pedido.status = status
         pedido.cliente = cliente
         pedido.forma_pagamento = formaDePagamento
-
+        pedido.vendedor = vendedor
+        pedido.endereco_entrega = endereco
         pedido.subtotal = 100
         pedido.total = 90
         pedido.desconto = 10

@@ -9,5 +9,6 @@ urlpatterns = [
     path("logout", views.Logout, name='logout'),
     path("login", views.Login, name='login'),
     path("buscar", views.buscarByCPF, name='buscarByCpf'),
+    path("buscarenderecos", views.buscarEndereco, name='buscarEnderecos'),
 
 ]

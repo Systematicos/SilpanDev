@@ -3,68 +3,66 @@
 {% load static %}
 
 {% block conteudo %}
-<div class="privacy py-sm-5 py-4">
-    <div class="container py-xl-4 py-lg-2">
-        <!-- tittle heading -->
-        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>A</span>dicionar detalhes da compra
-        </h3>
+    <div class="privacy py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <!-- tittle heading -->
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>A</span>dicionar detalhes da compra
+            </h3>
 
-        <!-- Endereço-->
-        <div class="checkout-left">
-            <div class="address_form_agile mt-sm-5 mt-4">
-                <form method="post" class="creditly-card-form agileinfo_form" id="form_cliente">
-                    {% csrf_token %}
-                    <div class="creditly-wrapper wthree, w3_agileits_wrapper">
-                        <div class="information-wrapper">
-                            <div class="first-row">
-                             <div class="controls form-group">
-                                    <input class="billing-address-name form-control" type="text" name="cpf"
-                                           placeholder="CPF" id="text_cpf" required="" >
-                                </div>
-                                <div class="controls form-group">
-                                    <input class="billing-address-name form-control" type="text" name="nome"
-                                           placeholder="Nome Completo" id="text_nome" required="">
-                                </div>
+            <!-- Endereço-->
+            <div class="checkout-left">
+                <div class="address_form_agile mt-sm-5 mt-4">
+                    <form method="post" class="creditly-card-form agileinfo_form" id="form_cliente">
+                        {% csrf_token %}
+                        <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                            <div class="information-wrapper">
+                                <div class="first-row">
+                                    <div class="controls form-group">
+                                        <input class="billing-address-name form-control" type="text" name="cpf"
+                                               placeholder="CPF" id="text_cpf" required="">
+                                    </div>
+                                    <div class="controls form-group">
+                                        <input class="billing-address-name form-control" type="text" name="nome"
+                                               placeholder="Nome Completo" id="text_nome" required="">
+                                    </div>
 
-                                <div class="controls form-group">
-                                    <input class="billing-address-name form-control" type="text" name="endereco"
-                                           placeholder="Endereço" required="" id="text_endereco">
-                                </div>
-                                <div class="w3_agileits_card_number_grids">
-                                    <div class="w3_agileits_card_number_grid_left form-group">
-                                        <div class="controls">
-                                            <div>
-
+                                    <div class="controls form-group">
+                                        <select class="option-w3ls" name="endereco" id="select_endereco">
+                                            <option>Endereços</option>
+                                        </select>
+                                    </div>
+                                    <div class="w3_agileits_card_number_grids">
+                                        <div class="w3_agileits_card_number_grid_left form-group">
+                                            <div class="controls">
+                                                <input type="text" class="form-control" placeholder="Número de Telefone"
+                                                       name="numero_telefone" required="" id="text_telefone">
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Número de Telefone"
-                                                   name="numero_telefone" required="" id="text_telefone">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="controls form-group">
-                                    <select class="option-w3ls" name="forma_pagamento">
-                                        <option>Tipo de Pagamento</option>
-                                        {% for Forma_pagamento in Forma_pagamentos %}
-                                        <option value="{{ Forma_pagamento.id }}">{{ Forma_pagamento }}</option>
+                                    <div class="controls form-group">
+                                        <select class="option-w3ls" name="forma_pagamento">
+                                            <option>Tipo de Pagamento</option>
+                                            {% for Forma_pagamento in Forma_pagamentos %}
+                                                <option value="{{ Forma_pagamento.id }}">{{ Forma_pagamento }}</option>
 
-                                        {% endfor %}
-                                    </select>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
+                                <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                                >Finalizar Pedido
+                                    <span class="far fa-hand-point-right"></span>
+                                </button>
                             </div>
-                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                            >Finalizar Pedido
-                                <span class="far fa-hand-point-right"></span>
-                            </button>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- //Endereço-->
+    <!-- //Endereço-->
 
 {% endblock conteudo %}
 
@@ -81,6 +79,7 @@
     <!-- pagamento -->
     <script src="{% static 'js/pagamento.js' %}"></script>
     <!-- //pagamento -->
+
     <!-- nav smooth scroll -->
     <script>
         $(document).ready(function () {
@@ -118,27 +117,6 @@
 
         });
 
-        const loadProducts = () => {
-            if (typeof window === 'object' && window.localStorage) {
-                var data = window.localStorage.getItem('PPminicarts'), today, expires;
-
-                if (data) {
-                    data = JSON.parse(decodeURIComponent(data));
-                }
-                console.log(data)
-                if (data && data.expires) {
-                    today = new Date();
-                    expires = new Date(data.expires);
-
-                    if (today > expires) {
-                        this.destroy();
-                        return;
-                    }
-                }
-
-                return data;
-            }
-        }
 
         const constructListProducts = () => {
             if (loadProducts().value.items.length > 0) {

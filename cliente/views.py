@@ -60,9 +60,29 @@ def buscarByCPF(request):
     if request.method == 'POST':
         try:
             cliente = Cliente.objects.get(cpf=json.loads(request.body.decode('utf-8'))['cpf'])
+            endereco = Endereco.objects.all().filter(cliente_id=cliente.pk)
+            enderecos = []
+            for end in endereco:
+                enderecos.append(end)
+
+            cliente = serializers.serialize("json", [cliente])
+            enderecos = serializers.serialize("json", [enderecos,], many=True)
+
+            return JsonResponse({
+                'Cliente': cliente,
+                'Endereco':enderecos
+            })
+        except:
+            return JsonResponse({}, status=404)
+
+
+def buscarEndereco(request):
+    if request.method == 'POST':
+        try:
+            cliente = Cliente.objects.get(cpf=json.loads(request.body.decode('utf-8'))['cpf'])
             endereco = Endereco.objects.filter(cliente_id=cliente.pk).values()
 
-            cliente = serializers.serialize("json", [cliente,])
+            cliente = serializers.serialize("json", [cliente, ])
 
             return JsonResponse({
                 'Cliente': cliente
