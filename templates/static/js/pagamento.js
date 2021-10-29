@@ -16,6 +16,28 @@ function getCookie(name) {
     return cookieValue;
 }
 
+const loadProducts = () => {
+    if (typeof window === 'object' && window.localStorage) {
+        var data = window.localStorage.getItem('PPminicarts'), today, expires;
+
+        if (data) {
+            data = JSON.parse(decodeURIComponent(data));
+        }
+        console.log(data)
+        if (data && data.expires) {
+            today = new Date();
+            expires = new Date(data.expires);
+
+            if (today > expires) {
+                this.destroy();
+                return;
+            }
+        }
+
+        return data;
+    }
+}
+
 function setInputsForm() {
     inputs = []
 
@@ -32,8 +54,8 @@ function setInputsForm() {
         input = document.createElement('input')
         input.className = 'billing-address-name form-control'
         input.type = 'date'
-        input.name = 'data'
-        input.placeholder = 'Data'
+        input.name = 'date_nascimento'
+        input.placeholder = 'Data de nascimento'
         input.id = 'text_date'
         input.required = ""
         div.appendChild(input)
@@ -81,7 +103,7 @@ function setInputsForm() {
         input = document.createElement('input')
         input.className = 'billing-address-name form-control'
         input.type = 'text'
-        input.name = 'text_cep'
+        input.name = 'cep'
         input.placeholder = 'CEP'
         input.id = 'text_cep'
         input.required = ""
@@ -97,7 +119,7 @@ function setInputsForm() {
         input = document.createElement('input')
         input.className = 'billing-address-name form-control'
         input.type = 'text'
-        input.name = 'text_num'
+        input.name = 'numero_casa'
         input.placeholder = 'Número'
         input.id = 'text_num'
         input.required = ""
@@ -113,7 +135,7 @@ function setInputsForm() {
         input = document.createElement('input')
         input.className = 'billing-address-name form-control'
         input.type = 'text'
-        input.name = 'text_complement'
+        input.name = 'complemento'
         input.placeholder = 'Complemento'
         input.id = 'text_complement'
         div.appendChild(input)
@@ -131,14 +153,45 @@ function deleteInputsForm() {
         text_dat.parentNode.removeChild(text_dat)
     }
 
-
     text_email = document.getElementById('text_email')
     if (text_email != null) {
         text_email.parentNode.removeChild(text_email)
     }
 
+    text_tipo_endereco = document.getElementById('text_tipo_endereco')
+    if (text_tipo_endereco != null) {
+        text_tipo_endereco.parentNode.removeChild(text_tipo_endereco)
+    }
+
+    text_cep = document.getElementById('text_cep')
+    if (text_cep != null) {
+        text_cep.parentNode.removeChild(text_cep)
+    }
+
+    text_num = document.getElementById('text_num')
+    if (text_num != null) {
+        text_num.parentNode.removeChild(text_num)
+    }
+
+    text_complement = document.getElementById('text_complement')
+    if (text_complement != null) {
+        text_complement.parentNode.removeChild(text_complement)
+    }
+
+
 }
 
+function criarPopulaEndereco(enderecos) {
+    var select_endereco = document.getElementById("select_endereco");
+
+    for (endereco in enderecos) {
+        var opt = document.createElement("option");
+        opt.value = endereco.tipo
+
+        select_endereco.appendChild(opt)
+    }
+
+}
 
 async function esconderCampoPesquisa(input) {
     const data = {}
@@ -173,7 +226,7 @@ async function esconderCampoPesquisa(input) {
             inputs = setInputsForm()
 
 
-            for (let i = (inputs.length-1); i >0; i--) {
+            for (let i = (inputs.length - 1); i > 0; i--) {
                 divInputs.parentNode.insertBefore(inputs[i], divInputs.nextSibling);
             }
 
@@ -202,15 +255,14 @@ function pagar(element) {
 
     const inputs = new FormData(element);
     const data = Object.fromEntries(inputs)
-
     data.csrfmiddlewaretoken = getCookie('csrftoken')
-    data.cart = loadProducts().items;
+    data.cart = loadProducts().value.items;
 
     const headers = new Headers({
         'X-CSRFToken': data.csrfmiddlewaretoken
     });
 
-    console.log(data)
+    console.log(data.cart)
     fetch(`${url}/pedido/`, {
         method: 'POST',
         headers,
