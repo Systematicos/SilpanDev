@@ -184,10 +184,10 @@ function deleteInputsForm() {
 function criarPopulaEndereco(enderecos) {
     var select_endereco = document.getElementById("select_endereco");
 
-    for (endereco in enderecos) {
+    for (index in enderecos) {
         var opt = document.createElement("option");
-        opt.value = endereco.tipo
-
+        opt.value = enderecos[index].tipo
+        opt.text = `${enderecos[index].tipo} Número: ${enderecos[index].numero} - CEP: ${enderecos[index].cep} `
         select_endereco.appendChild(opt)
     }
 
@@ -238,10 +238,13 @@ async function esconderCampoPesquisa(input) {
     ).then(res => {
 
         let response = JSON.parse(res.data.Cliente)
+
         console.log(response)
+        console.log(JSON.parse(res.data.Endereco))
+
         document.getElementById("text_nome").value = `${response[0]['fields']['nome']} ${response[0]['fields']['sobrenome']} `
         document.getElementById("text_telefone").value = `${response[0]['fields']['telefone']} `
-
+        criarPopulaEndereco(JSON.parse(res.data.Endereco))
 
     }).catch((error) => {
         console.error(error)

@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from django.db import models
@@ -75,6 +76,7 @@ class Endereco(models.Model):
         endereco.cliente = cliente
 
         return endereco
+
     class Meta:
         verbose_name = 'Endereço'
         verbose_name_plural = 'Endereços'

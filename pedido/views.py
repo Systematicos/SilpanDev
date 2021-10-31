@@ -17,15 +17,15 @@ from produtos.models import Categoria, Produto
 class Pagar(View):
     def post(self, request, *args, **kwargs):
         requestJson = json.loads(request.body.decode('utf-8'))
+
         try:
-            cliente = Cliente.objects.get(cpf=Cliente.popular_cliente(requestJson).cpf)
+            cliente = Cliente.objects.get(cpf=requestJson['cpf'])
         except Cliente.DoesNotExist:
             cliente = Cliente.popular_cliente(requestJson, cadastro=True)
             Cliente.save(cliente)
 
         try:
-            endereco = Endereco.populaEndereco(requestJson, cliente)
-            endereco = Endereco.objects.get(cliente=cliente, tipo=endereco.tipo)
+            endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
         except Endereco.DoesNotExist:
             Endereco.save(endereco)
 
@@ -36,7 +36,7 @@ class Pagar(View):
                                     endereco=endereco, status=status_pedido)
         itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
 
-        print(requestJson)
+        pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
         Pedido.save(pedido)
 
         for item in itens:

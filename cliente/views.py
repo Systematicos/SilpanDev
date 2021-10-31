@@ -4,9 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
+from rest_framework.renderers import JSONRenderer
 
 import cliente
 from . import forms
+from .Serializers import EnderecoSerializer
 from .forms import ClienteForm, UserForm
 from .models import Cliente, Endereco
 from django.contrib.auth.models import User
@@ -63,29 +65,19 @@ def buscarByCPF(request):
             endereco = Endereco.objects.all().filter(cliente_id=cliente.pk)
             enderecos = []
             for end in endereco:
-                enderecos.append(end)
+                enderecoSerializ = EnderecoSerializer(end)
+                enderecos.append(enderecoSerializ.data)
 
-            cliente = serializers.serialize("json", [cliente])
-            enderecos = serializers.serialize("json", [enderecos,], many=True)
 
+            enderecos = json.dumps(enderecos)
+            cliente = serializers.serialize("json", [cliente, ])
             return JsonResponse({
                 'Cliente': cliente,
-                'Endereco':enderecos
-            })
-        except:
-            return JsonResponse({}, status=404)
+                'Endereco': enderecos
+            }, safe=False)
+        except Exception as inst:
+            print(type(inst))
+            print(inst.args)
+            print(inst)
 
-
-def buscarEndereco(request):
-    if request.method == 'POST':
-        try:
-            cliente = Cliente.objects.get(cpf=json.loads(request.body.decode('utf-8'))['cpf'])
-            endereco = Endereco.objects.filter(cliente_id=cliente.pk).values()
-
-            cliente = serializers.serialize("json", [cliente, ])
-
-            return JsonResponse({
-                'Cliente': cliente
-            })
-        except:
             return JsonResponse({}, status=404)
