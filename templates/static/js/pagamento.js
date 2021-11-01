@@ -41,9 +41,9 @@ const loadProducts = () => {
 function setInputsForm() {
     inputs = []
 
-    text_endereco = document.getElementById('text_endereco')
-    if (text_endereco != null) {
-        text_endereco.parentNode.removeChild(text_endereco)
+    select_endereco = document.getElementById('select_endereco')
+    if (select_endereco != null) {
+        select_endereco.style.display = 'none'
     }
 
     if (document.getElementById('text_date') == null) {
@@ -143,10 +143,19 @@ function setInputsForm() {
         inputs.push(div)
     }
 
+    cadastro = document.createElement('input')
+    cadastro.className = 'billing-address-name form-control'
+    cadastro.type = 'hidden'
+    cadastro.name = 'cadastro'
+    cadastro.value = 'True'
+    cadastro.id = 'cadastro'
+    inputs.push(cadastro)
     return inputs
 }
 
 function deleteInputsForm() {
+    select_endereco = document.getElementById('select_endereco')
+    select_endereco.style.display = 'block'
 
     text_dat = document.getElementById('text_date')
     if (text_dat != null) {
@@ -216,15 +225,14 @@ async function esconderCampoPesquisa(input) {
         body: JSON.stringify(data)
 
     }).then((response) => {
+
         if (response.ok) {
             deleteInputsForm()
             return response.json()
         } else if (response.status == 404) {
             form = document.getElementById('form_cliente')
-
             divInputs = form.querySelectorAll('.controls.form-group')[1]
             inputs = setInputsForm()
-
 
             for (let i = (inputs.length - 1); i > 0; i--) {
                 divInputs.parentNode.insertBefore(inputs[i], divInputs.nextSibling);
@@ -265,7 +273,7 @@ function pagar(element) {
         'X-CSRFToken': data.csrfmiddlewaretoken
     });
 
-    console.log(data.cart)
+    console.log(data)
     fetch(`${url}/pedido/`, {
         method: 'POST',
         headers,

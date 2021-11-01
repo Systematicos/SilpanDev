@@ -28,20 +28,16 @@ class Cliente(models.Model):
     import re
 
     @classmethod
-    def popular_cliente(cls, form, cadastro=False):
+    def popular_cliente(cls, form):
         cliente = Cliente()
-        if cadastro:
-            try:
-                cliente.nome = form['nome']
 
-                cliente.data_nascimento = form['Dt_nasc']
-                cliente.email = form['email']
-                cliente.telefone = form['numero_telefone']
-            except KeyError:
-                cliente.nome = form['nome']
-                cliente.email = form['email']
-                cliente.telefone = form['numero_telefone']
-                cliente.data_nascimento = datetime.today()
+
+        cliente.nome = form['nome']
+
+        cliente.telefone = form['numero_telefone']
+        cliente.nome = form['nome']
+        cliente.email = form['email']
+        cliente.data_nascimento = datetime.today()
 
         cliente.cpf = form['cpf']
 
