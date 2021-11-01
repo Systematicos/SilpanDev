@@ -18,15 +18,14 @@ class Pagar(View):
     def post(self, request, *args, **kwargs):
         requestJson = json.loads(request.body.decode('utf-8'))
 
-        try:
-            cliente = Cliente.objects.get(cpf=requestJson['cpf'])
-        except Cliente.DoesNotExist:
-            cliente = Cliente.popular_cliente(requestJson, cadastro=True)
-            Cliente.save(cliente)
+        if not requestJson['cadastro']:
 
-        try:
+            cliente = Cliente.objects.get(cpf=requestJson['cpf'])
             endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
-        except Endereco.DoesNotExist:
+        else:
+            cliente = Cliente.popular_cliente(requestJson)
+            Cliente.save(cliente)
+            endereco = Endereco.populaEndereco(requestJson, cliente)
             Endereco.save(endereco)
 
         formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
@@ -41,8 +40,6 @@ class Pagar(View):
 
         for item in itens:
             ItemPedido.save(item)
-
-        return JsonResponse({})
 
 
 class FecharPedido(View):
