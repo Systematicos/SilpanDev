@@ -1529,7 +1529,11 @@ li.subitem1 p {
 /*-- //single-page --*/
 
 /*-- checkout --*/
-
+.checkout-right h3 {
+    color: #F45C5D;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
 .checkout-right h4 {
     color: #F45C5D;
     font-size: 26px;

@@ -46,6 +46,9 @@ function setInputsForm() {
         select_endereco.style.display = 'none'
     }
 
+    cadastro = document.getElementById('cadastro')
+    cadastro.value = 'True'
+
     if (document.getElementById('text_date') == null) {
 
         div = document.createElement('div')
@@ -143,19 +146,16 @@ function setInputsForm() {
         inputs.push(div)
     }
 
-    cadastro = document.createElement('input')
-    cadastro.className = 'billing-address-name form-control'
-    cadastro.type = 'hidden'
-    cadastro.name = 'cadastro'
-    cadastro.value = 'True'
-    cadastro.id = 'cadastro'
-    inputs.push(cadastro)
+
     return inputs
 }
 
 function deleteInputsForm() {
     select_endereco = document.getElementById('select_endereco')
     select_endereco.style.display = 'block'
+
+    cadastro = document.getElementById('cadastro')
+    cadastro.value = 'False'
 
     text_dat = document.getElementById('text_date')
     if (text_dat != null) {
