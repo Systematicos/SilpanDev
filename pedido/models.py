@@ -71,7 +71,7 @@ class Pedido(models.Model):
         pedido.forma_pagamento = formaDePagamento
         pedido.vendedor = vendedor
         pedido.endereco_entrega = endereco
-        #pedido.cupom = cupom
+        # pedido.cupom = cupom
 
         return pedido
 
@@ -87,6 +87,14 @@ class Pedido(models.Model):
         total = subtotal - desconto
 
         return subtotal, total, desconto
+
+    @classmethod
+    def baixaEstoque(cls, items):
+
+        for item in items:
+            produto = Produto.objects.get(id=item.produto.id)
+            produto.quantidade -= item.quantidade
+            Produto.save(produto)
 
     class Meta:
         verbose_name = 'Pedido'
@@ -140,8 +148,13 @@ class ItemPedido(models.Model):
         return itens
 
     @classmethod
-    def getItensPedido(cls):
-        pass
+    def getItensPedido(cls, pedido_id):
+        pedido_itens = ItemPedido.objects.filter(pedido_id=pedido_id)
+        itens = []
+        for item in pedido_itens:
+            itens.append(item)
+
+        return itens
 
     class Meta:
         verbose_name = 'Item do pedido'

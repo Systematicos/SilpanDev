@@ -1,24 +1,19 @@
 import json
-import urllib.parse
 
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.views.generic.list import ListView
+from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse, JsonResponse
 
 from cliente.models import Cliente, Endereco
-from cupom.models import Cupom
-from pedido.forms import ProdutoForm
 from pedido.models import Pedido, FormaDePagamento, Status, ItemPedido
-from produtos.models import Categoria, Produto
+from produtos.models import Categoria
+from pycep_correios import get_address_from_cep, WebService
 
 
 class Pagar(View):
     def post(self, request, *args, **kwargs):
         requestJson = json.loads(request.body.decode('utf-8'))
-
-        if not requestJson['cadastro']:
+        if not eval(requestJson['cadastro']):
 
             cliente = Cliente.objects.get(cpf=requestJson['cpf'])
             endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
@@ -38,8 +33,11 @@ class Pagar(View):
         pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
         Pedido.save(pedido)
 
+        Pedido.baixaEstoque(itens)
         for item in itens:
             ItemPedido.save(item)
+
+        return redirect('home')
 
 
 class FecharPedido(View):
@@ -68,6 +66,27 @@ class selecionarClienteEndereco(View):
         context = {}
         context['categorias'] = Categoria.objects.all().order_by('nome')
         context['Forma_pagamentos'] = FormaDePagamento.objects.all().order_by('forma_de_pagamento')
+        return render(request, template_name, context)
+
+
+class resumo(View):
+    global template_name
+
+    def get(self, request, *args, **kwargs):
+        template_name = 'createPedido.html'
+        pedido_id = kwargs.get('id')
+
+        pedido = Pedido.objects.get(id=pedido_id)
+        itens = ItemPedido.getItensPedido(pedido_id=pedido.id)
+
+        endereco = get_address_from_cep(pedido.endereco_entrega.cep, webservice=WebService.VIACEP)
+        endereco['numero'] = pedido.endereco_entrega.numero
+        context = {}
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+        context['items'] = itens
+        context['pedido'] = pedido
+        context['endereco'] = endereco
+
         return render(request, template_name, context)
 
 
