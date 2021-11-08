@@ -49,14 +49,15 @@ class DetalheProduto(DetailView):
     context_object_name = 'detalhe'
     template_name = 'produto/detalhe.html'
 
-    def get_queryset(self):
-        self.produto = get_object_or_404(Produto, slug=self.kwargs['slug'])
 
+    def get_object(self):
+        self.produto = get_object_or_404(Produto, slug=self.kwargs['slug'])
+        return self.produto
+'''
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categoria'] = self.categoria
-
-
+         context['categoria'] = self.categoria
+'''
 class AdicionarAoCarrinho(View):
     pass
 
