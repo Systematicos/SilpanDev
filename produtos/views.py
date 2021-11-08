@@ -39,6 +39,7 @@ class ListaProdutosCategoria(ListView):
         context = super().get_context_data(**kwargs)
         context['categoria'] = self.categoria
         context['produtos'] = Produto.getListProdutInColun(Produto.objects.all().filter(categoria=self.categoria))
+
         context['qtd_product'] = len(context['produtos'])
         context['categorias'] = Categoria.objects.all().order_by('nome')
 

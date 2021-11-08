@@ -11,6 +11,7 @@ from django.utils.text import slugify
 from django_resized import ResizedImageField
 from autoslug import AutoSlugField
 from django.urls import reverse
+from stdimage import StdImageField
 
 from utils import utilsProduto
 
@@ -44,7 +45,10 @@ class Produto(models.Model):
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
     quantidade = models.IntegerField(default=1)
-    imagem = ResizedImageField(size=[212, 212], upload_to='produto_imagens/%Y/%m/', blank=True)
+    imagem = StdImageField(upload_to='produto_imagens/%Y/%m/',
+                           variations={'full': {'width': 500, 'height': 500},
+                                       'medium': {'width': 212, 'height': 212},
+                                       'thumbnail': {'width': 50, 'height': 50}})
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
     preco_marketing = models.FloatField()
     preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
@@ -110,3 +114,6 @@ class Produto(models.Model):
 
             list_product.append(produto)
         return list_product
+
+
+
