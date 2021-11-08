@@ -278,7 +278,12 @@ function pagar(element) {
         method: 'POST',
         headers,
         body: JSON.stringify(data)
-    })
+    }).then(res => {
+        if(res.status == 200 && res.redirected){
+            paypals.minicarts.reset()
+            window.location.href=`${res.url}`
+        }
+    } )
 
 
 }
@@ -290,8 +295,3 @@ document.getElementById('form_cliente').addEventListener('submit', (event) => {
     pagar(event.target)
 })
 
-
-/*document.getElementById('form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    pagar(event.target)
-})*/

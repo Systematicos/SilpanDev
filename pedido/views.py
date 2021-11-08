@@ -1,14 +1,16 @@
 import json
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 
 from cliente.models import Cliente, Endereco
 from pedido.models import Pedido, FormaDePagamento, Status, ItemPedido
 from produtos.models import Categoria
 from pycep_correios import get_address_from_cep, WebService
-
 
 class Pagar(View):
     def post(self, request, *args, **kwargs):
@@ -37,7 +39,9 @@ class Pagar(View):
         for item in itens:
             ItemPedido.save(item)
 
-        return redirect('home')
+        url = reverse('pedido:resumo', kwargs={'id': pedido.id})
+
+        return redirect(url)
 
 
 class FecharPedido(View):
