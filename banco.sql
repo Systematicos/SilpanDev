@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           8.0.26 - MySQL Community Server - GPL
+-- Versão do servidor:           8.0.22 - MySQL Community Server - GPL
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              11.2.0.6213
+-- HeidiSQL Versão:              11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -12,56 +12,17 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Copiando estrutura do banco de dados para silpan
-CREATE DATABASE IF NOT EXISTS `silpan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `silpan`;
-
--- Copiando estrutura para tabela silpan.auth_group
-CREATE TABLE IF NOT EXISTS `auth_group` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.auth_group: ~0 rows (aproximadamente)
-DELETE FROM `auth_group`;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.auth_group_permissions
-CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `group_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
-  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.auth_group_permissions: ~0 rows (aproximadamente)
-DELETE FROM `auth_group_permissions`;
 /*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.auth_permission
-CREATE TABLE IF NOT EXISTS `auth_permission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `content_type_id` int NOT NULL,
-  `codename` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
-  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.auth_permission: ~68 rows (aproximadamente)
-DELETE FROM `auth_permission`;
+-- Copiando dados para a tabela silpan.auth_permission: ~76 rows (aproximadamente)
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
+INSERT IGNORE INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
 	(1, 'Can add log entry', 1, 'add_logentry'),
 	(2, 'Can change log entry', 1, 'change_logentry'),
 	(3, 'Can delete log entry', 1, 'delete_logentry'),
@@ -140,145 +101,46 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 	(76, 'Can view Imagem', 19, 'view_imagens');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.auth_user
-CREATE TABLE IF NOT EXISTS `auth_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.auth_user: ~2 rows (aproximadamente)
-DELETE FROM `auth_user`;
+-- Copiando dados para a tabela silpan.auth_user: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-10-21 17:10:17.588323', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208'),
+INSERT IGNORE INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
+	(1, 'pbkdf2_sha256$260000$oLokZ9p3LMbYCHbPAH3miG$ZLvpBicEvzDlNOrJKJaNCiMCQHqxeyCuEc4SoBKMO1E=', '2021-11-04 00:25:49.021615', 1, 'admin', '', '', '', 1, 1, '2021-09-14 01:12:16.734208'),
 	(13, 'pbkdf2_sha256$260000$TV6Tk5wt2IrEWBTOFiJEPh$uaO+HP3hJWbfXVHMmMp8xEUE04ckSI4vrjfHXjbXslo=', NULL, 0, 'add', '', '', 'add@add', 0, 1, '2021-09-27 18:17:05.078076'),
 	(15, 'pbkdf2_sha256$260000$hW5qDzTQ84K1fkI2yuBE0a$cGCLVTfTAOKv8y/nrPuUdQOopsI2Qg6YdUCss0eCGZE=', NULL, 0, 'addadddd', 'Gyovane', 'Souza', 'adddd@add', 0, 1, '2021-09-27 18:19:36.113764');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.auth_user_groups
-CREATE TABLE IF NOT EXISTS `auth_user_groups` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `group_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
-  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.auth_user_groups: ~0 rows (aproximadamente)
-DELETE FROM `auth_user_groups`;
 /*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.auth_user_user_permissions
-CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
-  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.auth_user_user_permissions: ~0 rows (aproximadamente)
-DELETE FROM `auth_user_user_permissions`;
 /*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.cliente_cliente
-CREATE TABLE IF NOT EXISTS `cliente_cliente` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `nome` varchar(50) NOT NULL,
-  `sobrenome` varchar(100) NOT NULL,
-  `data_nascimento` date NOT NULL,
-  `cpf` varchar(11) NOT NULL,
-  `telefone` varchar(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `cpf` (`cpf`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.cliente_cliente: ~0 rows (aproximadamente)
-DELETE FROM `cliente_cliente`;
 /*!40000 ALTER TABLE `cliente_cliente` DISABLE KEYS */;
+INSERT IGNORE INTO `cliente_cliente` (`id`, `email`, `nome`, `sobrenome`, `data_nascimento`, `cpf`, `telefone`) VALUES
+	(1, 'rafa@gmail.com', 'Rafa', 'Sousa', '2021-10-27', '10958756988', '1265656565'),
+	(5, 'rafa@hotmail.com', 'Rafa Oliveira', '', '2021-11-03', '10958756987', '11965875644'),
+	(8, 'rafa@outlook.com', 'Rafinha', '', '2021-11-03', '87485688876', '11974586525'),
+	(9, 'rafinha@gmail.com', 'Rafa Oliver', '', '2021-11-03', '10958756982', '11965875647');
 /*!40000 ALTER TABLE `cliente_cliente` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.cliente_endereco
-CREATE TABLE IF NOT EXISTS `cliente_endereco` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(30) NOT NULL,
-  `numero` varchar(6) NOT NULL,
-  `complemento` varchar(50) DEFAULT NULL,
-  `cep` varchar(50) NOT NULL,
-  `cliente_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cliente_endereco_cliente_id_0dd74237_fk_cliente_cliente_id` (`cliente_id`),
-  CONSTRAINT `cliente_endereco_cliente_id_0dd74237_fk_cliente_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `cliente_cliente` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.cliente_endereco: ~0 rows (aproximadamente)
-DELETE FROM `cliente_endereco`;
 /*!40000 ALTER TABLE `cliente_endereco` DISABLE KEYS */;
+INSERT IGNORE INTO `cliente_endereco` (`id`, `tipo`, `numero`, `complemento`, `cep`, `cliente_id`) VALUES
+	(1, 'R Emilio Conesa 78', '66', '558 B', '0587569877', 5),
+	(2, 'R zero a esquerda ', '58', '85B', '05875030', 8),
+	(3, 'oadlvnadlvn', '85', '85B', '0854765988', 9);
 /*!40000 ALTER TABLE `cliente_endereco` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.cupom_cupom
-CREATE TABLE IF NOT EXISTS `cupom_cupom` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) NOT NULL,
-  `valor` double NOT NULL,
-  `percentual` int unsigned NOT NULL,
-  `data_inicio` datetime(6) NOT NULL,
-  `data_final` datetime(6) DEFAULT NULL,
-  `quantidade` int unsigned NOT NULL,
-  `status` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `cupom_cupom_chk_1` CHECK ((`percentual` >= 0)),
-  CONSTRAINT `cupom_cupom_chk_2` CHECK ((`quantidade` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.cupom_cupom: ~0 rows (aproximadamente)
-DELETE FROM `cupom_cupom`;
 /*!40000 ALTER TABLE `cupom_cupom` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cupom_cupom` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.django_admin_log
-CREATE TABLE IF NOT EXISTS `django_admin_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `action_time` datetime(6) NOT NULL,
-  `object_id` longtext,
-  `object_repr` varchar(200) NOT NULL,
-  `action_flag` smallint unsigned NOT NULL,
-  `change_message` longtext NOT NULL,
-  `content_type_id` int DEFAULT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
-  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.django_admin_log: ~37 rows (aproximadamente)
-DELETE FROM `django_admin_log`;
+-- Copiando dados para a tabela silpan.django_admin_log: ~51 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
+INSERT IGNORE INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
 	(1, '2021-09-14 00:59:37.376576', '1', 'Kit 3 Aros Coração Cortador De Bolo', 1, '[{"added": {}}]', 9, 1),
 	(2, '2021-09-14 02:04:39.090699', '1', 'Kit 3 Aros Coração', 1, '[{"added": {}}]', 9, 1),
 	(3, '2021-09-14 03:03:13.188799', '1', 'systematicos10', 1, '[{"added": {}}]', 17, 1),
@@ -329,22 +191,36 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 	(48, '2021-09-27 18:16:16.419237', '5', 'admin11', 3, '', 4, 1),
 	(49, '2021-09-27 18:16:16.485578', '6', 'admin2', 3, '', 4, 1),
 	(50, '2021-09-27 18:17:01.979456', '10', 'add', 3, '', 4, 1),
-	(51, '2021-10-02 00:48:54.647400', '23', '12 Forminhas canudo', 2, '[{"added": {"name": "Imagem", "object": "Imagens object (1)"}}, {"added": {"name": "Imagem", "object": "Imagens object (2)"}}, {"added": {"name": "Imagem", "object": "Imagens object (3)"}}]', 9, 1);
+	(51, '2021-10-02 00:48:54.647400', '23', '12 Forminhas canudo', 2, '[{"added": {"name": "Imagem", "object": "Imagens object (1)"}}, {"added": {"name": "Imagem", "object": "Imagens object (2)"}}, {"added": {"name": "Imagem", "object": "Imagens object (3)"}}]', 9, 1),
+	(52, '2021-11-03 23:47:15.268068', '23', '12 Forminhas canudo', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(53, '2021-11-03 23:47:17.548973', '23', '12 Forminhas canudo', 2, '[]', 9, 1),
+	(54, '2021-11-03 23:57:34.180547', '22', 'Conjunto de formas', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(55, '2021-11-03 23:57:53.201111', '21', 'Jogo c/ três formas de bolo redondas', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(56, '2021-11-03 23:58:19.211012', '20', '12 Forminhas torta suissa ou pudim mini', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(57, '2021-11-03 23:58:49.792534', '19', 'Conjunto de Assadeiras Retangular', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(58, '2021-11-03 23:59:18.003947', '18', 'Forma Artística para Bolos Brasil', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(59, '2021-11-03 23:59:33.530888', '17', 'Forma Decorativa Minnie', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(60, '2021-11-03 23:59:51.392618', '16', 'Balerine Decorada Pequena', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(61, '2021-11-04 00:00:06.600936', '15', 'Forma De Bolo Pudim', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(62, '2021-11-04 00:00:26.466201', '14', 'FORMA HOMENAGEM PAPAI', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(63, '2021-11-04 00:00:53.956598', '13', '12 FORMINHAS CORACAO', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(64, '2021-11-04 00:01:07.242643', '12', 'Espatula Plastica', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(65, '2021-11-04 00:01:25.385331', '11', '6 Forminhas suissa decorada', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(66, '2021-11-04 00:01:55.175664', '10', 'Formas Bolo De Vidro 22x8', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(67, '2021-11-04 00:02:08.723640', '9', 'Formas Bolo De Vidro 20x8', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(68, '2021-11-04 00:02:23.053228', '8', 'Formas Bolo De Vidro 18x8', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(69, '2021-11-04 00:02:40.191126', '7', 'Fuet Batedor De Ovo', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(70, '2021-11-04 00:03:02.727670', '6', 'Kit Confeiteiro', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(71, '2021-11-04 00:03:21.232771', '5', 'FORMINHAS TORNADO P', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(72, '2021-11-04 00:03:36.717939', '3', 'Forma De Panetone', 2, '[{"changed": {"fields": ["Preco marketing"]}}]', 9, 1),
+	(73, '2021-11-04 00:04:02.935037', '2', 'Kit 3 Aros Coração', 2, '[{"changed": {"fields": ["Preco marketing", "Preco marketing promocional"]}}]', 9, 1),
+	(74, '2021-11-04 00:04:19.752120', '24', 'Tes', 3, '', 9, 1),
+	(75, '2021-11-04 00:08:15.341624', '7', 'Fuet Batedor De Ovo', 3, '', 9, 1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.django_content_type
-CREATE TABLE IF NOT EXISTS `django_content_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) NOT NULL,
-  `model` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.django_content_type: ~17 rows (aproximadamente)
-DELETE FROM `django_content_type`;
+-- Copiando dados para a tabela silpan.django_content_type: ~19 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
+INSERT IGNORE INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 	(1, 'admin', 'logentry'),
 	(3, 'auth', 'group'),
 	(2, 'auth', 'permission'),
@@ -366,19 +242,9 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 	(6, 'sessions', 'session');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.django_migrations
-CREATE TABLE IF NOT EXISTS `django_migrations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `applied` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.django_migrations: ~26 rows (aproximadamente)
-DELETE FROM `django_migrations`;
+-- Copiando dados para a tabela silpan.django_migrations: ~31 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
+INSERT IGNORE INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(1, 'contenttypes', '0001_initial', '2021-09-14 01:07:25.405809'),
 	(2, 'auth', '0001_initial', '2021-09-14 01:07:25.714089'),
 	(3, 'admin', '0001_initial', '2021-09-14 01:07:25.838202'),
@@ -412,19 +278,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(33, 'produtos', '0002_alter_produto_imagem', '2021-10-05 22:24:38.106016');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.django_session
-CREATE TABLE IF NOT EXISTS `django_session` (
-  `session_key` varchar(40) NOT NULL,
-  `session_data` longtext NOT NULL,
-  `expire_date` datetime(6) NOT NULL,
-  PRIMARY KEY (`session_key`),
-  KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.django_session: ~12 rows (aproximadamente)
-DELETE FROM `django_session`;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+INSERT IGNORE INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+	('3tjx7vp4f43s86s9whe9ifz4hjklj9gx', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1miQZh:V5q-CO1c4s3VjghggCNkklOQ0GXmyGmMDyB1Y6F69Vc', '2021-11-18 00:25:49.163208'),
 	('73o7tioh1370m2qqzut8kbjnxtngk0dx', 'e30:1mW6sz:MYlro2p_k_SCUTWru2ClGX_QykzP-w0KkQoKAYpPASE', '2021-10-15 00:58:49.542203'),
 	('evacfq10z2h7yqfywzosf55idjs5eszi', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mPxhQ:dy52V1XeXGTCst56wmUtgqtRYQWsHD9pMhZEzl-kT18', '2021-09-28 01:57:28.035054'),
 	('fphspd16kxsrpd3xdvex3d5l1n3uux7o', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mW52x:VqfS2xqW9RumPIXEgv0Lz16xiWz0zNVfIKWNz8aW-Xc', '2021-10-14 23:00:59.550275'),
@@ -439,97 +296,35 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 	('z2ebj8fikkfo05dcwt9drw7s3t0ixqbe', '.eJxVjEEOwiAQRe_C2hCYQgsu3XsGMsCMVA0kpV0Z765NutDtf-_9lwi4rSVsnZYwZ3EWWpx-t4jpQXUH-Y711mRqdV3mKHdFHrTLa8v0vBzu30HBXr41DBoYJ8cKrE569AysKDlrEdGZyBDJ-kGpMbEBMxiPkyU2MSvttWfx_gDVozea:1mPwzm:LvxCI-q9KQDVjMOpwZnGllBYpQClw2qY82mnrGWRONU', '2021-09-28 01:12:22.182865');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.pedido_formadepagamento
-CREATE TABLE IF NOT EXISTS `pedido_formadepagamento` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `forma_de_pagamento` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `forma_de_pagamento` (`forma_de_pagamento`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.pedido_formadepagamento: ~3 rows (aproximadamente)
-DELETE FROM `pedido_formadepagamento`;
 /*!40000 ALTER TABLE `pedido_formadepagamento` DISABLE KEYS */;
-INSERT INTO `pedido_formadepagamento` (`id`, `forma_de_pagamento`) VALUES
+INSERT IGNORE INTO `pedido_formadepagamento` (`id`, `forma_de_pagamento`) VALUES
 	(1, 'Cartão de Credito'),
 	(3, 'Mercado Pago'),
 	(2, 'PIX');
 /*!40000 ALTER TABLE `pedido_formadepagamento` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.pedido_itempedido
-CREATE TABLE IF NOT EXISTS `pedido_itempedido` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `pedido_id` bigint NOT NULL,
-  `produto_id` bigint NOT NULL,
-  `preco` double NOT NULL,
-  `preco_promocional` double NOT NULL,
-  `quantidade` int unsigned NOT NULL,
-  `imagem` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pedido_itempedido_pedido_id_15c6b42d_fk_pedido_pedido_id` (`pedido_id`),
-  KEY `pedido_itempedido_produto_id_a5d1c607_fk_produtos_produto_id` (`produto_id`),
-  CONSTRAINT `pedido_itempedido_pedido_id_15c6b42d_fk_pedido_pedido_id` FOREIGN KEY (`pedido_id`) REFERENCES `pedido_pedido` (`id`),
-  CONSTRAINT `pedido_itempedido_produto_id_a5d1c607_fk_produtos_produto_id` FOREIGN KEY (`produto_id`) REFERENCES `produtos_produto` (`id`),
-  CONSTRAINT `pedido_itempedido_chk_1` CHECK ((`quantidade` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela silpan.pedido_itempedido: ~2 rows (aproximadamente)
-DELETE FROM `pedido_itempedido`;
+-- Copiando dados para a tabela silpan.pedido_itempedido: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `pedido_itempedido` DISABLE KEYS */;
-INSERT INTO `pedido_itempedido` (`id`, `pedido_id`, `produto_id`, `preco`, `preco_promocional`, `quantidade`, `imagem`) VALUES
-	(1, 1, 11, 49, 0, 2, 'http://127.0.0.1:8000/produto/forminhas'),
-	(2, 1, 5, 19, 0, 1, 'http://127.0.0.1:8000/produto/forminhas');
+INSERT IGNORE INTO `pedido_itempedido` (`id`, `pedido_id`, `produto_id`, `preco`, `preco_promocional`, `quantidade`, `imagem`, `cor`, `material`, `largura`, `altura`, `comprimento`) VALUES
+	(1, 1, 2, 49.9, 0, 1, 'http://127.0.0.1:8000/produto/', 'None', 'Aluminio', 0, 0, 0),
+	(2, 1, 11, 49.9, 44.9, 5, 'http://127.0.0.1:8000/produto/', 'None', 'Aluminio', 0, 0, 0),
+	(3, 1, 10, 24.9, 21.9, 3, 'http://127.0.0.1:8000/produto/', 'None', 'Aluminio', 0, 0, 0),
+	(4, 2, 3, 33, 0, 1, 'http://127.0.0.1:8000/produto/', 'None', 'Aluminio', 0, 0, 0),
+	(5, 2, 5, 20, 17, 1, 'http://127.0.0.1:8000/produto/', 'None', 'None', 0, 0, 0),
+	(6, 2, 6, 75, 73, 1, 'http://127.0.0.1:8000/produto/', 'None', 'Inox', 0, 0, 0);
 /*!40000 ALTER TABLE `pedido_itempedido` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.pedido_pedido
-CREATE TABLE IF NOT EXISTS `pedido_pedido` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `cliente_id` bigint NOT NULL,
-  `status_id` bigint NOT NULL,
-  `forma_pagamento_id` bigint NOT NULL,
-  `data` datetime(6) NOT NULL,
-  `subtotal` double NOT NULL,
-  `desconto` double NOT NULL,
-  `cupom_id` bigint DEFAULT NULL,
-  `total` double NOT NULL,
-  `transportadora_id` bigint DEFAULT NULL,
-  `frete` double DEFAULT NULL,
-  `codigo_rastreio` varchar(50) DEFAULT NULL,
-  `notal_fiscal` varchar(70) DEFAULT NULL,
-  `vendedor_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `codigo_rastreio` (`codigo_rastreio`),
-  KEY `pedido_pedido_cliente_id_4f20d09c_fk_cliente_cliente_id` (`cliente_id`),
-  KEY `pedido_pedido_status_id_65de990b_fk_pedido_status_id` (`status_id`),
-  KEY `pedido_pedido_forma_pagamento_id_ebf3fa94_fk_pedido_fo` (`forma_pagamento_id`),
-  KEY `pedido_pedido_cupom_id_d28c0aa3_fk_cupom_cupom_id` (`cupom_id`),
-  KEY `pedido_pedido_transportadora_id_f00e4f7e_fk_pedido_tr` (`transportadora_id`),
-  KEY `pedido_pedido_vendedor_id_f06206a5_fk_auth_user_id` (`vendedor_id`),
-  CONSTRAINT `pedido_pedido_cliente_id_4f20d09c_fk_cliente_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `cliente_cliente` (`id`),
-  CONSTRAINT `pedido_pedido_cupom_id_d28c0aa3_fk_cupom_cupom_id` FOREIGN KEY (`cupom_id`) REFERENCES `cupom_cupom` (`id`),
-  CONSTRAINT `pedido_pedido_forma_pagamento_id_ebf3fa94_fk_pedido_fo` FOREIGN KEY (`forma_pagamento_id`) REFERENCES `pedido_formadepagamento` (`id`),
-  CONSTRAINT `pedido_pedido_status_id_65de990b_fk_pedido_status_id` FOREIGN KEY (`status_id`) REFERENCES `pedido_status` (`id`),
-  CONSTRAINT `pedido_pedido_transportadora_id_f00e4f7e_fk_pedido_tr` FOREIGN KEY (`transportadora_id`) REFERENCES `pedido_transportadora` (`id`),
-  CONSTRAINT `pedido_pedido_vendedor_id_f06206a5_fk_auth_user_id` FOREIGN KEY (`vendedor_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.pedido_pedido: ~0 rows (aproximadamente)
-DELETE FROM `pedido_pedido`;
 /*!40000 ALTER TABLE `pedido_pedido` DISABLE KEYS */;
+INSERT IGNORE INTO `pedido_pedido` (`id`, `cliente_id`, `status_id`, `forma_pagamento_id`, `data`, `subtotal`, `desconto`, `cupom_id`, `total`, `transportadora_id`, `frete`, `codigo_rastreio`, `notal_fiscal`, `vendedor_id`, `endereco_entrega_id`) VALUES
+	(1, 8, 1, 1, '2021-11-03 20:44:57.456397', 374.09999999999997, 83.9, NULL, 290.19999999999993, NULL, 0, NULL, NULL, 15, 2),
+	(2, 9, 1, 3, '2021-11-03 21:13:46.056808', 128, 38, NULL, 90, NULL, 0, NULL, NULL, 15, 3);
 /*!40000 ALTER TABLE `pedido_pedido` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.pedido_status
-CREATE TABLE IF NOT EXISTS `pedido_status` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `status` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.pedido_status: ~7 rows (aproximadamente)
-DELETE FROM `pedido_status`;
 /*!40000 ALTER TABLE `pedido_status` DISABLE KEYS */;
-INSERT INTO `pedido_status` (`id`, `status`) VALUES
+INSERT IGNORE INTO `pedido_status` (`id`, `status`) VALUES
 	(2, 'Pagamento Aprovado'),
 	(4, 'Pagamento Pendente'),
 	(3, 'Pagamento Reprovado'),
@@ -539,31 +334,13 @@ INSERT INTO `pedido_status` (`id`, `status`) VALUES
 	(1, 'Pedido Realizado');
 /*!40000 ALTER TABLE `pedido_status` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.pedido_transportadora
-CREATE TABLE IF NOT EXISTS `pedido_transportadora` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nome_transportadora` varchar(50) NOT NULL,
-  `telefone` varchar(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nome_transportadora` (`nome_transportadora`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.pedido_transportadora: ~0 rows (aproximadamente)
-DELETE FROM `pedido_transportadora`;
 /*!40000 ALTER TABLE `pedido_transportadora` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pedido_transportadora` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.produtos_categoria
-CREATE TABLE IF NOT EXISTS `produtos_categoria` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.produtos_categoria: ~6 rows (aproximadamente)
-DELETE FROM `produtos_categoria`;
 /*!40000 ALTER TABLE `produtos_categoria` DISABLE KEYS */;
-INSERT INTO `produtos_categoria` (`id`, `nome`) VALUES
+INSERT IGNORE INTO `produtos_categoria` (`id`, `nome`) VALUES
 	(1, 'Acessórios'),
 	(2, 'Assadeiras'),
 	(3, 'Formas'),
@@ -572,54 +349,29 @@ INSERT INTO `produtos_categoria` (`id`, `nome`) VALUES
 	(6, 'Forminhas');
 /*!40000 ALTER TABLE `produtos_categoria` ENABLE KEYS */;
 
--- Copiando estrutura para tabela silpan.produtos_produto
-CREATE TABLE IF NOT EXISTS `produtos_produto` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `slug` varchar(50) DEFAULT NULL,
-  `nome` varchar(250) NOT NULL,
-  `descricao` longtext,
-  `quantidade` int NOT NULL,
-  `imagem` varchar(100) NOT NULL,
-  `categoria_id` bigint DEFAULT NULL,
-  `preco_marketing` double NOT NULL,
-  `preco_marketing_promocional` double DEFAULT NULL,
-  `cor` varchar(50) DEFAULT NULL,
-  `material` varchar(50) DEFAULT NULL,
-  `largura` int DEFAULT NULL,
-  `altura` int DEFAULT NULL,
-  `comprimento` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`),
-  KEY `produtos_produto_categoria_id_4444949b_fk_produtos_categoria_id` (`categoria_id`),
-  CONSTRAINT `produtos_produto_categoria_id_4444949b_fk_produtos_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `produtos_categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Copiando dados para a tabela silpan.produtos_produto: ~22 rows (aproximadamente)
-DELETE FROM `produtos_produto`;
 /*!40000 ALTER TABLE `produtos_produto` DISABLE KEYS */;
-INSERT INTO `produtos_produto` (`id`, `slug`, `nome`, `descricao`, `quantidade`, `imagem`, `categoria_id`, `preco_marketing`, `preco_marketing_promocional`, `cor`, `material`, `largura`, `altura`, `comprimento`) VALUES
-	(2, NULL, 'Kit 3 Aros Coração', 'Cortador De Bolo\r\n23cm 26cm 28cm por 5cm altura', 75, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214139_sw0HNv8.png', 3, 49.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(3, NULL, 'Forma De Panetone', 'Cone Pra Recheio\r\n14x13,5 Com Tampa', 68, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214330.png', 3, 29.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(5, NULL, 'FORMINHAS TORNADO P', 'FORMINHAS TORNADO P\r\n12X6 ALUMINIO', 35, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214922.png', 6, 19.9, 17.9, NULL, NULL, NULL, NULL, NULL),
-	(6, NULL, 'Kit Confeiteiro', '1 Faca fio ondulado\r\n1 fuet\r\n1 espatula liza \r\n25cm com cabo branco', 25, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214302.png', 1, 74.9, 0, NULL, 'Inox', NULL, NULL, NULL),
-	(7, NULL, 'Fuet Batedor De Ovo', 'Fuet Batedor De Ovo Clares Em Neve\r\n25cm e 30cm\r\nvarias cores', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214746_ZK6wngq.apng', 1, 24.9, 0, NULL, NULL, NULL, NULL, NULL),
-	(8, NULL, 'Formas Bolo De Vidro 18x8', 'Formas Bolo De Vidro\r\n18x8', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403.png', 3, 17.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(9, NULL, 'Formas Bolo De Vidro 20x8', 'Formas Bolo De Vidro \r\n20x8', 1, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_TlLUm2Y.png', 3, 19.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(10, NULL, 'Formas Bolo De Vidro 22x8', 'Formas Bolo De Vidro \r\n22x8', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_VcSCuZC.png', 3, 24.9, 21.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(11, NULL, '6 Forminhas suissa decorada', '6 Forminhas suissa decorada\r\n9x6x4', 74, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215528.png', 6, 49.9, 44.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(12, NULL, 'Espatula Plastica', 'Espatula Plastica Decorativa\r\nTriangulo\r\nRosa E Branca', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214727.png', 1, 4.9, 0, NULL, NULL, NULL, NULL, NULL),
-	(13, NULL, '12 FORMINHAS CORACAO', '12 FORMINHAS CORACAO\r\nBALAO\r\n7X2,5', 15, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214448.png', 6, 35.9, 31.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(14, NULL, 'FORMA HOMENAGEM PAPAI', 'FORMA HOMENAGEM PAPAI\r\n14,3X4,8', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215244.png', 3, 19.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(15, NULL, 'Forma De Bolo Pudim', 'Forma De Bolo Pudim\r\nTorta Suissa\r\n13x8', 64, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215336.png', 3, 12.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(16, NULL, 'Balerine Decorada Pequena', 'Balerine Decorada Pequena\r\n16x6', 16, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215639.png', 3, 39.9, 35.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(17, NULL, 'Forma Decorativa Minnie', 'Forma Decorativa Minnie \r\n35x5alt', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215944.png', 3, 69.9, 64.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(18, NULL, 'Forma Artística para Bolos Brasil', 'Forma Artística para Bolos Brasil', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215910.png', 3, 49.9, 45.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(19, NULL, 'Conjunto de Assadeiras Retangular', 'Conjunto de Assadeiras Retangular', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220013.png', 3, 69.9, 0, NULL, 'Aluminio', NULL, NULL, NULL),
-	(20, NULL, '12 Forminhas torta suissa ou pudim mini', '12 Forminhas torta suissa ou pudim mini\r\n0 4 fundo \r\n2,5 altura\r\n5 boca \r\npara bufes', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220112.png', 6, 29.9, 24.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(21, NULL, 'Jogo c/ três formas de bolo redondas', 'Jogo c/ três formas de bolo redondas\r\n10,15,20x10alt', 84, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220229.png', 3, 29.9, 24.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(22, NULL, 'Conjunto de formas', 'Conjunto de formas com 3 peças coração', 49, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220045.png', 3, 39.9, 32.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(23, NULL, '12 Forminhas canudo', '12 Forminhas canudo', 87, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215725.png', 1, 9.9, 13.9, NULL, 'Aluminio', NULL, NULL, NULL),
-	(24, NULL, 'Tes', '', 1, 'produto_imagens/2021/09/ns_153144_1.jpg', 2, 12, 0, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `produtos_produto` (`id`, `slug`, `nome`, `descricao`, `quantidade`, `imagem`, `categoria_id`, `preco_marketing`, `preco_marketing_promocional`, `cor`, `material`, `largura`, `altura`, `comprimento`) VALUES
+	(2, 'kit-3-aros-coracao', 'Kit 3 Aros Coração', 'Cortador De Bolo\r\n23cm 26cm 28cm por 5cm altura', 75, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214139_sw0HNv8.png', 3, 50, 47, NULL, 'Aluminio', NULL, NULL, NULL),
+	(3, 'forma-de-panetone', 'Forma De Panetone', 'Cone Pra Recheio\r\n14x13,5 Com Tampa', 68, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214330.png', 3, 33, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(5, 'forminhas-tornado-p', 'FORMINHAS TORNADO P', 'FORMINHAS TORNADO P\r\n12X6 ALUMINIO', 35, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214922.png', 6, 20, 17, NULL, NULL, NULL, NULL, NULL),
+	(6, 'kit-confeiteiro', 'Kit Confeiteiro', '1 Faca fio ondulado\r\n1 fuet\r\n1 espatula liza \r\n25cm com cabo branco', 25, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214302.png', 1, 75, 73, NULL, 'Inox', NULL, NULL, NULL),
+	(8, 'formas-bolo-de-vidro-18x8', 'Formas Bolo De Vidro 18x8', 'Formas Bolo De Vidro\r\n18x8', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403.png', 3, 18, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(9, 'formas-bolo-de-vidro-20x8', 'Formas Bolo De Vidro 20x8', 'Formas Bolo De Vidro \r\n20x8', 1, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_TlLUm2Y.png', 3, 17, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(10, 'formas-bolo-de-vidro-22x8', 'Formas Bolo De Vidro 22x8', 'Formas Bolo De Vidro \r\n22x8', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215403_VcSCuZC.png', 3, 25, 21, NULL, 'Aluminio', NULL, NULL, NULL),
+	(11, '6-forminhas-suissa-decorada', '6 Forminhas suissa decorada', '6 Forminhas suissa decorada\r\n9x6x4', 74, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215528.png', 6, 50, 45, NULL, 'Aluminio', NULL, NULL, NULL),
+	(12, 'espatula-plastica', 'Espatula Plastica', 'Espatula Plastica Decorativa\r\nTriangulo\r\nRosa E Branca', 65, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214727.png', 1, 5, 0, NULL, NULL, NULL, NULL, NULL),
+	(13, '12-forminhas-coracao', '12 FORMINHAS CORACAO', '12 FORMINHAS CORACAO\r\nBALAO\r\n7X2,5', 15, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_214448.png', 6, 35, 32, NULL, 'Aluminio', NULL, NULL, NULL),
+	(14, 'forma-homenagem-papai', 'FORMA HOMENAGEM PAPAI', 'FORMA HOMENAGEM PAPAI\r\n14,3X4,8', 34, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215244.png', 3, 23, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(15, 'forma-de-bolo-pudim', 'Forma De Bolo Pudim', 'Forma De Bolo Pudim\r\nTorta Suissa\r\n13x8', 64, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215336.png', 3, 12, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(16, 'balerine-decorada-pequena', 'Balerine Decorada Pequena', 'Balerine Decorada Pequena\r\n16x6', 16, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215639.png', 3, 40, 35, NULL, 'Aluminio', NULL, NULL, NULL),
+	(17, 'forma-decorativa-minnie', 'Forma Decorativa Minnie', 'Forma Decorativa Minnie \r\n35x5alt', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215944.png', 3, 70, 65, NULL, 'Aluminio', NULL, NULL, NULL),
+	(18, 'forma-artistica-para-bolos-brasil', 'Forma Artística para Bolos Brasil', 'Forma Artística para Bolos Brasil', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215910.png', 3, 50, 45, NULL, 'Aluminio', NULL, NULL, NULL),
+	(19, 'conjunto-de-assadeiras-retangular', 'Conjunto de Assadeiras Retangular', 'Conjunto de Assadeiras Retangular', 45, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220013.png', 3, 70, 0, NULL, 'Aluminio', NULL, NULL, NULL),
+	(20, '12-forminhas-torta-suissa-ou-pudim-mini', '12 Forminhas torta suissa ou pudim mini', '12 Forminhas torta suissa ou pudim mini\r\n0 4 fundo \r\n2,5 altura\r\n5 boca \r\npara bufes', 36, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220112.png', 6, 30, 25, NULL, 'Aluminio', NULL, NULL, NULL),
+	(21, 'jogo-c-tres-formas-de-bolo-redondas', 'Jogo c/ três formas de bolo redondas', 'Jogo c/ três formas de bolo redondas\r\n10,15,20x10alt', 84, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220229.png', 3, 30, 25, NULL, 'Aluminio', NULL, NULL, NULL),
+	(22, 'conjunto-de-formas', 'Conjunto de formas', 'Conjunto de formas com 3 peças coração', 49, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_220045.png', 3, 40, 33, NULL, 'Aluminio', NULL, NULL, NULL),
+	(23, '12-forminhas-canudo', '12 Forminhas canudo', '12 Forminhas canudo', 87, 'produto_imagens/2021/09/Captura_de_tela_2021-09-12_215725.png', 1, 15, 10, NULL, 'Aluminio', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `produtos_produto` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
