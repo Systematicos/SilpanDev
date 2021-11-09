@@ -55,13 +55,26 @@
                                     <input type="hidden" name="cmd" value="_cart"/>
                                     <input type="hidden" name="add" value="1"/>
                                     <input type="hidden" name="business" value=" "/>
-                                    <input type="hidden" name="item_name" value="Samsung Galaxy J7 Prime"/>
-                                    <input type="hidden" name="amount" value="200.00"/>
-                                    <input type="hidden" name="discount_amount" value="1.00"/>
-                                    <input type="hidden" name="currency_code" value="USD"/>
+                                    <input type="hidden" name="item_name" value={{ object.nome }}/>
+
+                                    {% if produto.preco_marketing_promocional > 0 %}
+
+                                        <input type="hidden" name="amount"
+                                               value="{{ object.preco_marketing_promocional|formata_preco }}"/>
+                                        <input type="hidden" name="discount_amount"
+                                               value="{{ object.getDesconto|formata_preco }}    "/>
+
+                                    {% else %}
+                                        <input type="hidden" name="amount"
+                                               value="{{ object.preco_marketing|formata_preco }}"/>
+                                        <input type="hidden" name="discount_amount"
+                                               z value="0,00"/>
+                                    {% endif %}
+
+                                    <input type="hidden" name="currency_code" value="BRL"/>
                                     <input type="hidden" name="return" value=" "/>
                                     <input type="hidden" name="cancel_return" value=" "/>
-                                    <input type="submit" name="submit" value="Add to cart" class="button"/>
+                                    <input type="submit" name="submit" value="Adicionar" class="button"/>
                                 </fieldset>
                             </form>
                         </div>
