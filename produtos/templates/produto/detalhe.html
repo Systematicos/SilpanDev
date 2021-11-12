@@ -14,13 +14,9 @@
                 <div class="col-lg-5 col-md-8 single-right-left ">
                     <div class="grid images_3_of_2">
                         <div class="flexslider">
-                            <ul class="slides">
-                                <li data-thumb="images/si1.jpg">
                                     <div class="thumb-image">
                                         <img src="{{ object.imagem.url }} " data-imagezoom="true" class="img-fluid"
                                              alt=""></div>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -54,13 +50,22 @@
                                 <fieldset>
                                     <input type="hidden" name="cmd" value="_cart"/>
                                     <input type="hidden" name="add" value="1"/>
-                                    <input type="hidden" name="business" value=" "/>
-                                    <input type="hidden" name="item_name" value={{ object.nome }}/>
+                                    <input type="hidden" name="id" value="{{ object.id }}"/>
+                                    <input type="hidden" name="imagem" value="{{ object.imagem.url }}"/>
+                                    <input type="hidden" name="cor" value="{{ object.cor }}"/>
+                                    <input type="hidden" name="material" value="{{ object.material }}"/>
+                                    <input type="hidden" name="largura" value="{{ object.largura }}"/>
+                                    <input type="hidden" name="altura" value="{{ object.altura }}"/>
+                                    <input type="hidden" name="comprimento" value="{{ object.comprimento }}"/>
 
-                                    {% if produto.preco_marketing_promocional > 0 %}
+                                    <input type="hidden" name="business" value=" "/>
+                                    <input type="hidden" name="item_name"
+                                           value="{{ object.nome }}"/>
+
+                                    {% if object.preco_marketing_promocional > 0 %}
 
                                         <input type="hidden" name="amount"
-                                               value="{{ object.preco_marketing_promocional|formata_preco }}"/>
+                                               value="{{ object.preco_marketing|formata_preco }}"/>
                                         <input type="hidden" name="discount_amount"
                                                value="{{ object.getDesconto|formata_preco }}    "/>
 
@@ -71,10 +76,14 @@
                                                z value="0,00"/>
                                     {% endif %}
 
-                                    <input type="hidden" name="currency_code" value="BRL"/>
+
+                                    <input type="hidden" name="currency_code"
+                                           value="BRL"/>
                                     <input type="hidden" name="return" value=" "/>
-                                    <input type="hidden" name="cancel_return" value=" "/>
-                                    <input type="submit" name="submit" value="Adicionar" class="button"/>
+                                    <input type="hidden" name="cancel_return"
+                                           value=" "/>
+                                    <input type="submit" name="submit" value="Adicionar"
+                                           class="button btn"/>
                                 </fieldset>
                             </form>
                         </div>
