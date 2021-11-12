@@ -112,11 +112,11 @@ label {
 
 .modal-title {
     font-size: 30px;
-    color: #0879c9;
+    color: #111111;
 }
 
 .modal-content {
-    border: 10px solid rgba(244, 92, 93, 0.82);
+    border: 10px solid rgb(8, 121, 201);
 }
 
 label.col-form-label {
