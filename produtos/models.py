@@ -12,8 +12,8 @@ from django_resized import ResizedImageField
 from autoslug import AutoSlugField
 from django.urls import reverse
 
-
 from utils import utilsProduto
+
 
 class AvailableManager(models.Manager):
     def get_queryset(self):

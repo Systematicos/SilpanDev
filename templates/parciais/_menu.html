@@ -118,7 +118,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">Entre</h5>
+                <h5 class="modal-title text-center">Rastrear Pedido</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -127,23 +127,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <form action="{% url 'cliente:login' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-form-label">Usuário</label>
-                        <input type="text" class="form-control" placeholder=" " name="user" required="">
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Senha</label>
-                        <input type="password" class="form-control" placeholder=" " name="password" required="">
+                        <label class="col-form-label">Número do Pedido</label>
+                        <input type="number" class="form-control" placeholder=" " name="numeropedido" required="">
                     </div>
                     <div class="right-w3l">
-                        <input type="submit" class="form-control" value="Entre">
+                        <input type="submit" class="form-control" value="Pesquisar Pedido">
                     </div>
-                    <div class="sub-w3l">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                            <label class="custom-control-label" for="customControlAutosizing">Lembre-me ?</label>
-                        </div>
-                    </div>
-
                 </form>
             </div>
         </div>
@@ -229,7 +218,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="col-md-3 logo_agile">
                 <h1 class="text-center">
                     <a href="{% url 'home' %}" class="font-weight-bold font-italic">
-                        <img src="../static/images/logo2.png" alt=" " class="img-fluid">&nbsp;&nbsp;&nbsp;Silpan
+                        <img src="{% static 'images/logo2.png ' %}" alt=" " class="img-fluid">&nbsp;&nbsp;&nbsp;Silpan
                     </a>
                 </h1>
             </div>

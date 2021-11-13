@@ -8,3 +8,6 @@ register = Library()
 def formata_preco(val):
     return utilsProduto.formata_preco(val)
 
+@register.filter
+def formata_numero_pedido(val):
+    return utilsProduto.formata_numero_pedido(val)

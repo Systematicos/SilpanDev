@@ -3,53 +3,55 @@
 {% load static %}
 
 {% block conteudo %}
-<div class="privacy py-sm-5 py-4">
-    <div class="container py-xl-4 py-lg-2">
-        <!-- tittle heading -->
-        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>C</span>onfirmação de Pedido
-        </h3>
-        <!-- //tittle heading -->
-        <div class="checkout-right">
-            <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                <span>X Produtos</span>
-            </h4>
-            <div class="table-responsive" id="table-products">
-                <table class="timetable_sub">
-                    <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Nome do Produto</th>
-                        <th>Preço</th>
-                        <th>Remover</th>
-                    </tr>
-                    </thead>
-                    <tbody id="t-product">
-                    </tbody>
-                </table>
+    <div class="privacy py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <!-- tittle heading -->
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>C</span>onfirmação de Pedido
+            </h3>
+            <!-- //tittle heading -->
+            <div class="checkout-right">
+                <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
+                    <span>X Produtos</span>
+                </h4>
+                <div class="table-responsive" id="table-products">
+                    <table class="timetable_sub">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Nome do Produto</th>
+                            <th>Preço</th>
+                            <th>Remover</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t-product">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <!-- Endereço-->
-        <div class="checkout-left">
-            <div class="address_form_agile mt-sm-5 mt-4">
-                <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form agileinfo_form" id="form">
+            <!-- Endereço-->
+            <div class="checkout-left">
+                <div class="address_form_agile mt-sm-5 mt-4">
+                    <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
+                          agileinfo_form
+                    " id="form">
                     {% csrf_token %}
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
 
-                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                            >Selecionar Cliente e endereço de entrega
-                                <span class="far fa-hand-point-right"></span>
-                            </button>
-                        </div>
-                </form>
+                        <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                        >Selecionar Cliente e endereço de entrega
+                            <span class="far fa-hand-point-right"></span>
+                        </button>
+                    </div>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- //Endereço-->
+    <!-- //Endereço-->
 
 {% endblock conteudo %}
 
@@ -63,9 +65,7 @@
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
 
-    <!-- pagamento -->
-    <script src="{% static 'js/pagamento.js' %}"></script>
-    <!-- //pagamento -->
+
 
 
     <!-- nav smooth scroll -->
@@ -84,48 +84,9 @@
         });
     </script>
     <!-- //nav smooth scroll -->
-
-    <!-- popup modal (for location)-->
-    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <!-- pagamento -->
+    <script src="{% static 'js/pagamento.js' %}"></script>
     <script>
-        DJANGO_STATIC_URL = '{{ STATIC_URL }}';
-
-        $(document).ready(function () {
-            $('.popup-with-zoom-anim').magnificPopup({
-                type: 'inline',
-                fixedContentPos: false,
-                fixedBgPos: true,
-                overflowY: 'auto',
-                closeBtnInside: true,
-                preloader: false,
-                midClick: true,
-                removalDelay: 300,
-                mainClass: 'my-mfp-zoom-in'
-            });
-
-        });
-
-        const loadProducts = () => {
-            if (typeof window === 'object' && window.localStorage) {
-                var data = window.localStorage.getItem('PPminicarts'), today, expires;
-
-                if (data) {
-                    data = JSON.parse(decodeURIComponent(data));
-                }
-                console.log(data)
-                if (data && data.expires) {
-                    today = new Date();
-                    expires = new Date(data.expires);
-
-                    if (today > expires) {
-                        this.destroy();
-                        return;
-                    }
-                }
-
-                return data;
-            }
-        }
 
         const constructListProducts = () => {
             if (loadProducts().value.items.length > 0) {
@@ -140,7 +101,7 @@
                         <td class="invert">${count}</td>
                         <td class="invert-image">
                             <a href="../../templates/single.html">
-                                <img src=" ${item.image}" alt=" " class="img-responsive">
+                                <img src="${item.imagem}" alt=" " class="img-responsive">
                             </a>
                         </td>
                         <td class="invert">
@@ -175,6 +136,32 @@
         }
         constructListProducts();
         constructListProducts();
+    </script>
+
+    <!-- //pagamento -->
+
+
+    <!-- popup modal (for location)-->
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script>
+        DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+
+
     </script>
     <!-- //popup modal (for location)-->
 
