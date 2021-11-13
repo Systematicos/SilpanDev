@@ -60,7 +60,7 @@ class DetalheProduto(DetailView):
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-        context['categoria'] = Categoria.objects.all().order_by('nome')
+        context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
 
