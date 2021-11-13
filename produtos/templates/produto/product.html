@@ -21,10 +21,8 @@
                 <div class="container">
                     <ul class="w3_short">
                         <li>
-                            <a href="index.html">Início</a>
-                            <i>|</i>
+                            <a href="{% url 'home' %}">Início</a>
                         </li>
-                        <li>Formas Decorativas</li>
                     </ul>
                 </div>
             </div>
@@ -36,8 +34,7 @@
             <div class="container py-xl-4 py-lg-2">
                 <!-- tittle heading -->
                 <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-                    <span>F</span>ormas
-                    <span>D</span>ecorativas</h3>
+                    <span>H</span>ome</h3>
                 <!-- //tittle heading -->
                 <div class="row">
                     <!-- product right -->
@@ -70,7 +67,6 @@
                                         </li>
 
 
-
                                     </ul>
                                 </div>
                             </div>
@@ -81,7 +77,7 @@
                                 <div class="w3l-range">
                                     <ul>
                                         <li>
-                                            <a href="#">Menos de  R$ 19,90</a>
+                                            <a href="#">Menos de R$ 19,90</a>
                                         </li>
                                         <li class="my-1">
                                             <a href="#">R$ 19,90 - R$ 39,90</a>
@@ -117,18 +113,11 @@
                                             <div class="col-md-4 product-men">
                                                 <div class="men-pro-item simpleCart_shelfItem">
                                                     <div class="men-thumb-item text-center">
-
-                                                        {% if produto.imagem %}
-                                                            <img src="{{ produto.imagem.url }}"
-                                                                 alt="{{ produto.nome }}">
-                                                        {% else %}
-                                                            <img src="{{ produto.imagem.url }}"
-                                                                 alt="{{ produto.nome }}">
-                                                        {% endif %}
-
+                                                        <img src="{{ produto.imagem.medium.url }}"
+                                                             alt="{{ produto.nome }}">
                                                         <div class="men-cart-pro">
                                                             <div class="inner-men-cart-pro">
-                                                                <a href="{{ produto.get_absolute_url}}"
+                                                                <a href="{{ produto.get_absolute_url }}"
                                                                    class="link-product-add-cart">Detalhes</a>
                                                             </div>
                                                         </div>
@@ -154,13 +143,20 @@
                                                                 <fieldset>
                                                                     <input type="hidden" name="cmd" value="_cart"/>
                                                                     <input type="hidden" name="add" value="1"/>
-                                                                    <input type="hidden" name="id" value="{{ produto.id }}"/>
-                                                                    <input type="hidden" name="imagem" value="{{ produto.imagem.url }}"/>
-                                                                    <input type="hidden" name="cor" value="{{ produto.cor }}"/>
-                                                                    <input type="hidden" name="material" value="{{ produto.material }}"/>
-                                                                    <input type="hidden" name="largura" value="{{ produto.largura }}"/>
-                                                                    <input type="hidden" name="altura" value="{{ produto.altura }}"/>
-                                                                    <input type="hidden" name="comprimento" value="{{ produto.comprimento }}"/>
+                                                                    <input type="hidden" name="id"
+                                                                           value="{{ produto.id }}"/>
+                                                                    <input type="hidden" name="imagem"
+                                                                           value="{{ produto.imagem.thumbnail.url }}"/>
+                                                                    <input type="hidden" name="cor"
+                                                                           value="{{ produto.cor }}"/>
+                                                                    <input type="hidden" name="material"
+                                                                           value="{{ produto.material }}"/>
+                                                                    <input type="hidden" name="largura"
+                                                                           value="{{ produto.largura }}"/>
+                                                                    <input type="hidden" name="altura"
+                                                                           value="{{ produto.altura }}"/>
+                                                                    <input type="hidden" name="comprimento"
+                                                                           value="{{ produto.comprimento }}"/>
 
                                                                     <input type="hidden" name="business" value=" "/>
                                                                     <input type="hidden" name="item_name"

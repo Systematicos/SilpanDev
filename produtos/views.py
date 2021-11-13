@@ -13,7 +13,6 @@ class ListaProdutos(ListView):
     context_object_name = 'produtos'
 
     template_name = 'produto/product.html'
-    queryset = Produto.objects.all()
 
     def get_context_data(self, **kwargs):
         produtos = Produto.getListProdutInColun()

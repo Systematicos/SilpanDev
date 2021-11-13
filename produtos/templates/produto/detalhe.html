@@ -15,7 +15,7 @@
                     <div class="grid images_3_of_2">
                         <div class="flexslider">
                                     <div class="thumb-image">
-                                        <img src="{{ object.imagem.url }} " data-imagezoom="true" class="img-fluid"
+                                        <img src="{{ object.imagem.full.url }} " data-imagezoom="true" class="img-fluid"
                                              alt=""></div>
                             <div class="clearfix"></div>
                         </div>
@@ -51,7 +51,7 @@
                                     <input type="hidden" name="cmd" value="_cart"/>
                                     <input type="hidden" name="add" value="1"/>
                                     <input type="hidden" name="id" value="{{ object.id }}"/>
-                                    <input type="hidden" name="imagem" value="{{ object.imagem.url }}"/>
+                                    <input type="hidden" name="imagem" value="{{ object.imagem.thumbnail.url }}"/>
                                     <input type="hidden" name="cor" value="{{ object.cor }}"/>
                                     <input type="hidden" name="material" value="{{ object.material }}"/>
                                     <input type="hidden" name="largura" value="{{ object.largura }}"/>
