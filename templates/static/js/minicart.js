@@ -1990,7 +1990,7 @@
 
 
             strings: {
-                button: 'Check Out with <img src="//cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="paypals" />',
+                button: 'Confirmar <img src="//cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="paypals" />',
                 subtotal: 'Subtotal:',
                 discount: 'Desconto:',
                 empty: 'Your shopping cart is empty'
