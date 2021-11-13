@@ -12,7 +12,8 @@
             <!-- //tittle heading -->
             <div class="checkout-right">
                 <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                    <span>X Produtos</span>
+
+                    <span><script> loadProducts().value.items.length</script> Produtos</span>
                 </h4>
                 <div class="table-responsive" id="table-products">
                     <table class="timetable_sub">
@@ -23,6 +24,7 @@
                             <th>Quantidade</th>
                             <th>Nome do Produto</th>
                             <th>Preço</th>
+                            <th>Desconto</th>
                             <th>Remover</th>
                         </tr>
                         </thead>
@@ -35,8 +37,7 @@
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
                     <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
-                          agileinfo_form
-                    " id="form">
+                          agileinfo_form id="form">
                     {% csrf_token %}
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
 
@@ -117,6 +118,8 @@
                         </td>
                         <td class="invert">${item.item_name}</td>
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity*item.amount).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.discount_amount*item.amount).toFixed(2)}</td>
+
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
                         </td>
