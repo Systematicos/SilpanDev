@@ -9,3 +9,5 @@ mysqlclient==2.0.3
 Pillow==8.3.2
 pytz==2021.1
 sqlparse==0.4.1
+pycep-correios==5.0.0
+django-stdimage==5.3.0

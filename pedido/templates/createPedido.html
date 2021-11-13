@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load omFilters %}
+{% load static %}
+
+{% block conteudo %}
+    <div class="container py-xl-4 py-lg-2">
+
+        <div class="card border-0 bg-white p-4" xmlns="http://www.w3.org/1999/html">
+            <div class="checkout-right">
+                <h3 class="mb-sm-4 mb-3">Resumo do Pedido : {{ pedido.id|formata_numero_pedido }}
+                </h3>
+
+                <div class="table-responsive" id="table-products">
+                    <table class="timetable_sub">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Nome do Produto</th>
+                            <th>Preço</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t-product">
+                        {% for item in items %}
+
+                            <tr class="rem1">
+                                <td class="invert"> {{ forloop.counter }}</td>
+                                <td class="invert-image">
+                                    <a href="../../templates/single.html">
+                                        <img src="${item.imagem}" alt=" " class="img-responsive">
+                                    </a>
+                                </td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <span>{{ item.quantidade }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">{{ item.produto.nome }}</td>
+
+                                {% if item.preco_promocional == 0 %}
+                                    <td class="invert">R$ {{ item.preco|formata_preco }}</td>
+                                {% else %}
+                                    <td class="invert">R$ {{ item.preco_promocional|formata_preco }}</td>
+                                {% endif %}
+
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <li class="font-weight-bold list-group-item bg-light">Total
+                <span class="float-right">R$ {{ pedido.total|formata_preco }}</span>
+            </li>
+            </ul>
+
+            </br>
+
+            <div class="checkout-right">
+
+                <h4 class="mb-sm-4 mb-3">Entrega: </h4>
+                <h7>Cliente: {{ pedido.cliente.nome }} {{ pedido.cliente.sobrenome }}</h7>
+                <br>
+                <h7>Rua: {{ endereco.logradouro }} - {{ endereco.numero }}</h7>
+                <br>
+                <h7>Bairro: {{ endereco.bairro }}</h7>
+                <br>
+                <h7>CEP: {{ endereco.cep }}</h7>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock conteudo %}
+
+{% block scripts %}
+
+{% endblock scripts %}

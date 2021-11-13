@@ -5458,7 +5458,7 @@ button.close {
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(5 74 122);
   border-radius: 0.3rem;
   outline: 0;
 }

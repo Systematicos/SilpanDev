@@ -3,53 +3,55 @@
 {% load static %}
 
 {% block conteudo %}
-<div class="privacy py-sm-5 py-4">
-    <div class="container py-xl-4 py-lg-2">
-        <!-- tittle heading -->
-        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>C</span>onfirmação de Pedido
-        </h3>
-        <!-- //tittle heading -->
-        <div class="checkout-right">
-            <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                <span>X Produtos</span>
-            </h4>
-            <div class="table-responsive" id="table-products">
-                <table class="timetable_sub">
-                    <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Nome do Produto</th>
-                        <th>Preço</th>
-                        <th>Remover</th>
-                    </tr>
-                    </thead>
-                    <tbody id="t-product">
-                    </tbody>
-                </table>
+    <div class="privacy py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <!-- tittle heading -->
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>C</span>onfirmação de Pedido
+            </h3>
+            <!-- //tittle heading -->
+            <div class="checkout-right">
+                <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
+                    <span>X Produtos</span>
+                </h4>
+                <div class="table-responsive" id="table-products">
+                    <table class="timetable_sub">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Nome do Produto</th>
+                            <th>Preço</th>
+                            <th>Remover</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t-product">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <!-- Endereço-->
-        <div class="checkout-left">
-            <div class="address_form_agile mt-sm-5 mt-4">
-                <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form agileinfo_form" id="form">
+            <!-- Endereço-->
+            <div class="checkout-left">
+                <div class="address_form_agile mt-sm-5 mt-4">
+                    <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
+                          agileinfo_form
+                    " id="form">
                     {% csrf_token %}
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
 
-                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                            >Selecionar Cliente e endereço de entrega
-                                <span class="far fa-hand-point-right"></span>
-                            </button>
-                        </div>
-                </form>
+                        <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                        >Selecionar Cliente e endereço de entrega
+                            <span class="far fa-hand-point-right"></span>
+                        </button>
+                    </div>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- //Endereço-->
+    <!-- //Endereço-->
 
 {% endblock conteudo %}
 
@@ -63,9 +65,7 @@
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
 
-    <!-- pagamento -->
-    <script src="{% static 'js/pagamento.js' %}"></script>
-    <!-- //pagamento -->
+
 
 
     <!-- nav smooth scroll -->
@@ -84,6 +84,87 @@
         });
     </script>
     <!-- //nav smooth scroll -->
+    <!-- pagamento -->
+    <script src="{% static 'js/pagamento.js' %}"></script>
+    <script>
+
+        const constructListProducts = () => {
+            if (loadProducts().value.items.length > 0) {
+                const items = loadProducts().value.items;
+                let html = '';
+                let count = 0;
+                for (let item of items) {
+                    count++
+                    console.log(item)
+                    html += `
+                    <tr class="rem1">
+                        <td class="invert">${count}</td>
+                        <td class="invert-image">
+                            <a href="../../templates/single.html">
+                                <img src="${item.imagem}" alt=" " class="img-responsive">
+                            </a>
+                        </td>
+                        <td class="invert">
+                            <div class="quantity">
+                                <div class="quantity-select">
+                                    <div class="entry value-minus alter-quantity" id="minus-${item.id}">&nbsp;</div>
+                                    <div class="entry value">
+                                        <span>${item.quantity}</span>
+                                    </div>
+                                    <div class="entry value-plus active alter-quantity" id="plus-${item.id}">&nbsp;</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="invert">${item.item_name}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity*item.amount).toFixed(2)}</td>
+                        <td class="invert">
+                            <button type="button" onclick="removeProduct(${item.id})"> x </button>
+                        </td>
+                    </tr>
+                `
+                }
+                document.getElementById('t-product').innerHTML = html;
+            }
+        }
+        const removeProduct = (id) => {
+            let items = loadProducts();
+
+            itemIndex = items.value.items.findIndex(item => item.id == id);
+            items.value.items.splice(itemIndex, 1);
+            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
+            window.location.reload();
+        }
+
+        constructListProducts();
+
+        const updatePriceProduct = (id)=>{
+            let incr = -1
+            if(id.indexOf('plus') > -1){
+                incr = 1
+            }
+            id = id.replace("plus-","").replace("minus-","")
+            console.log(id)
+            let items = loadProducts();
+
+            itemIndex = items.value.items.findIndex(item => item.id == id);
+            items.value.items[itemIndex].quantity+=incr
+            let product = items.value.items[itemIndex];
+            let total = product.quantity*product.amount
+            document.getElementById(`price-${id}`).innerText=`R$ ${total.toFixed(2)}`
+            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
+
+
+        }
+
+        Array.from(document.getElementsByClassName("alter-quantity")).map(item => {
+            item.addEventListener("click", (event)=> {
+                updatePriceProduct(event.currentTarget.id)
+            })
+        })
+    </script>
+
+    <!-- //pagamento -->
+
 
     <!-- popup modal (for location)-->
     <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
@@ -105,76 +186,7 @@
 
         });
 
-        const loadProducts = () => {
-            if (typeof window === 'object' && window.localStorage) {
-                var data = window.localStorage.getItem('PPminicarts'), today, expires;
 
-                if (data) {
-                    data = JSON.parse(decodeURIComponent(data));
-                }
-                console.log(data)
-                if (data && data.expires) {
-                    today = new Date();
-                    expires = new Date(data.expires);
-
-                    if (today > expires) {
-                        this.destroy();
-                        return;
-                    }
-                }
-
-                return data;
-            }
-        }
-
-        const constructListProducts = () => {
-            if (loadProducts().value.items.length > 0) {
-                const items = loadProducts().value.items;
-                let html = '';
-                let count = 0;
-                for (let item of items) {
-                    count++
-                    console.log(item)
-                    html += `
-                    <tr class="rem1">
-                        <td class="invert">${count}</td>
-                        <td class="invert-image">
-                            <a href="../../templates/single.html">
-                                <img src=" ${item.image}" alt=" " class="img-responsive">
-                            </a>
-                        </td>
-                        <td class="invert">
-                            <div class="quantity">
-                                <div class="quantity-select">
-                                    <div class="entry value-minus">&nbsp;</div>
-                                    <div class="entry value">
-                                        <span>${item.quantity}</span>
-                                    </div>
-                                    <div class="entry value-plus active">&nbsp;</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="invert">${item.item_name}</td>
-                        <td class="invert">R$ ${item.amount.toFixed(2)}</td>
-                        <td class="invert">
-                            <button type="button" onclick="removeProduct(${item.id})"> x </button>
-                        </td>
-                    </tr>
-                `
-                }
-                document.getElementById('t-product').innerHTML = html;
-            }
-        }
-        const removeProduct = (id) => {
-            let items = loadProducts();
-
-            itemIndex = items.value.items.findIndex(item => item.id == id);
-            items.value.items.splice(itemIndex, 1);
-            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
-            window.location.reload();
-        }
-        constructListProducts();
-        constructListProducts();
     </script>
     <!-- //popup modal (for location)-->
 

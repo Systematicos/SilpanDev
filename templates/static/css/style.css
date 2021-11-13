@@ -83,7 +83,7 @@ label {
 /*-- top-header --*/
 
 .main-top-w3l {
-    background: #0879c9;
+    background: #f35c5d;
 }
 
 .header-most-top p {
@@ -112,11 +112,11 @@ label {
 
 .modal-title {
     font-size: 30px;
-    color: #0879c9;
+    color: #111111;
 }
 
 .modal-content {
-    border: 10px solid rgba(244, 92, 93, 0.82);
+    border: 10px solid rgb(8, 121, 201);
 }
 
 label.col-form-label {
@@ -159,7 +159,7 @@ p.dont-do a {
     cursor: pointer;
     letter-spacing: 1px;
     padding: 10px 0;
-    background: #0879c9;
+    background: #b90202;
     color: #fff;
     margin: 2vw 0 1.5vw;
     -webkit-transition: 0.5s all;
@@ -210,7 +210,7 @@ input[type="submit"] {
 
 .agileits_search button {
     border-radius: 0;
-    background: #F45C5D;
+    background: rgba(117, 104, 106, 0.96);
     color: #fff;
     width: 20%;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.22);
@@ -222,7 +222,7 @@ input[type="submit"] {
 /*-- logo --*/
 
 .logo_agile h1 a {
-    color: #F45C5D;
+    color: #f62325;
     font-size: 38px;
     text-decoration: none;
     letter-spacing: 1px;
@@ -252,7 +252,7 @@ button.w3view-cart {
     color: #fff;
     width: 50px;
     height: 44px;
-    background: #000;
+    background: rgb(201, 8, 31);
     border: 1px solid rgba(27, 25, 25, 0.27);
 }
 
@@ -312,7 +312,7 @@ ul.multi-column-dropdown li a:hover {
 
 .dropdown-item.active,
 .dropdown-item:active {
-    background-color: #0879c9;
+    background-color: #2bc908;
 }
 
 /*-- //navigation-dropdown --*/
@@ -420,7 +420,7 @@ ul.multi-column-dropdown li a:hover {
 
 .button2 {
     display: inline-block;
-    background: #0879c9;
+    background: #0ec908;
     border-radius: 4px;
     color: #fff;
     letter-spacing: 2px;
@@ -449,7 +449,7 @@ h3.tittle-w3l {
 }
 
 h3.tittle-w3l span {
-    color: #0879c9;
+    color: #c8081f;
     font-size: 50px;
     letter-spacing: 0;
 }
@@ -470,7 +470,7 @@ h3.tittle-w3l span {
 .snipcart-details input.button {
     font-size: 13px;
     color: #fff;
-    background: #0879c9;
+    background: #f47167;
     text-decoration: none;
     border: none;
     border-radius: 0;
@@ -491,7 +491,7 @@ h3.tittle-w3l span {
 }
 
 .snipcart-details input.button:hover {
-    background: #000;
+    background: rgb(200, 8, 31);
 }
 
 .product_list_header input.button {
@@ -532,15 +532,15 @@ h3.tittle-w3l span {
 }
 
 #PPminicarts .minicarts-remove {
-    background: #3399cc !important;
-    border: 1px solid #3399cc !important;
+    background: #b90202 !important;
+    border: 1px solid rgb(184, 2, 2) !important;
     opacity: 1 !important;
     outline: none;
 }
 
 #PPminicarts .minicarts-submit {
     color: #fff !important;
-    background: #0879c9 !important;
+    background: #f37167 !important;
     padding: 0 10px !important;
     font-size: 15px;
     letter-spacing: 1px;
@@ -552,7 +552,7 @@ h3.tittle-w3l span {
     transition: 0.5s all;
     bottom: -25px !important;
     right: 0 !important;
-    border: 1px solid #0879c9 !important;
+    border: 1px solid #fcfcfc !important;
     border-radius: 0px !important;
     text-shadow: none !important;
 }
@@ -565,9 +565,9 @@ h3.tittle-w3l span {
 #PPminicarts {
     left: inherit ;
     z-index: 999 ;
-    right: 19% ;
-    top: 96px ;
-    position: absolute;
+    right: 60% ;
+    top: 2% ;
+    position: fixed;
 }
 
 .minicarts-showing #PPminicarts form {
@@ -617,7 +617,7 @@ h3.tittle-w3l span {
 }
 
 .product-men:nth-child(4) .product-new-top {
-    background: #219ff3;
+    background: #0879c8;
 }
 
 .product-new-top {
@@ -658,7 +658,7 @@ h3.tittle-w3l span {
 }
 
 .link-product-add-cart {
-    background: hsla(205, 92%, 41%, 0.72);
+    background: hsl(0, 0%, 2%);
     color: #fff;
     display: inline-block;
     height: 37px;
@@ -839,7 +839,7 @@ h3.tittle-w3l span {
 }
 
 .search-hotel form input[type="submit"] {
-    background: url(../images/search.png) no-repeat 13px 11px #0879c9;
+    background: url(../images/search.png) no-repeat 13px 11px #5cf4ba;
     width: 44px;
     height: 39px;
     border: none;
@@ -1125,7 +1125,7 @@ h2.footer-top-head-w3l {
 }
 
 .w3l-middlefooter-sec {
-    background: #333;
+    background: rgba(51, 51, 51, 0.91);
 }
 
 /*-- social-icons --*/
@@ -1161,11 +1161,11 @@ h2.footer-top-head-w3l {
 }
 
 .social .tw {
-    background: #00ACEE;
+    background: #579142;
 }
 
 .social .gp {
-    background: #DD4B39;
+    background: #ec4956;
 }
 
 .social .pin {
@@ -1200,7 +1200,7 @@ h2.footer-top-head-w3l {
 
 .w3l-agileits input[type="email"] {
     display: inline-block;
-    background: #f5f5f5;
+    background: #050505;
     border: none;
     width: 72%;
     padding: 10px;
@@ -1225,7 +1225,7 @@ h2.footer-top-head-w3l {
 }
 
 .w3l-agileits input[type="submit"]:hover {
-    background: #0879c9;
+    background: #2bc908;
     -webkit-transition: 0.5s all;
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
@@ -1264,7 +1264,7 @@ h2.footer-top-head-w3l {
 /*-- copyright --*/
 
 .copy-right {
-    background: #0879c9;
+    background: #f25c5d;
 }
 
 .copy-right p {
@@ -1529,7 +1529,11 @@ li.subitem1 p {
 /*-- //single-page --*/
 
 /*-- checkout --*/
-
+.checkout-right h3 {
+    color: #F45C5D;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
 .checkout-right h4 {
     color: #F45C5D;
     font-size: 26px;
@@ -1684,7 +1688,7 @@ td.invert-image a img {
 button.submit.check_out {
     padding: 12px 25px;
     letter-spacing: 1px;
-    background: #0879c9;
+    background: #f27167;
     font-size: 16px;
     color: #fff;
     border: none;
@@ -2388,7 +2392,7 @@ div#testimonials h4.m-title {
         font-size: 15px;
     }
     .navbar-light .navbar-toggler {
-        border-color: #0879c9;
+        border-color: #2bc908;
         border-radius: 0;
     }
     .carousel-caption p {
