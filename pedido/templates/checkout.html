@@ -107,16 +107,16 @@
                         <td class="invert">
                             <div class="quantity">
                                 <div class="quantity-select">
-                                    <div class="entry value-minus">&nbsp;</div>
+                                    <div class="entry value-minus alter-quantity" id="minus-${item.id}">&nbsp;</div>
                                     <div class="entry value">
                                         <span>${item.quantity}</span>
                                     </div>
-                                    <div class="entry value-plus active">&nbsp;</div>
+                                    <div class="entry value-plus active alter-quantity" id="plus-${item.id}">&nbsp;</div>
                                 </div>
                             </div>
                         </td>
                         <td class="invert">${item.item_name}</td>
-                        <td class="invert">R$ ${item.amount.toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity*item.amount).toFixed(2)}</td>
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
                         </td>
@@ -134,8 +134,33 @@
             window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
             window.location.reload();
         }
+
         constructListProducts();
-        constructListProducts();
+
+        const updatePriceProduct = (id)=>{
+            let incr = -1
+            if(id.indexOf('plus') > -1){
+                incr = 1
+            }
+            id = id.replace("plus-","").replace("minus-","")
+            console.log(id)
+            let items = loadProducts();
+
+            itemIndex = items.value.items.findIndex(item => item.id == id);
+            items.value.items[itemIndex].quantity+=incr
+            let product = items.value.items[itemIndex];
+            let total = product.quantity*product.amount
+            document.getElementById(`price-${id}`).innerText=`R$ ${total.toFixed(2)}`
+            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
+
+
+        }
+
+        Array.from(document.getElementsByClassName("alter-quantity")).map(item => {
+            item.addEventListener("click", (event)=> {
+                updatePriceProduct(event.currentTarget.id)
+            })
+        })
     </script>
 
     <!-- //pagamento -->
