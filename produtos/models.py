@@ -48,7 +48,7 @@ class Produto(models.Model):
     imagem = StdImageField(upload_to='produto_imagens/%Y/%m/',
                            variations={'full': {'width': 500, 'height': 500},
                                        'medium': {'width': 212, 'height': 212},
-                                       'thumbnail': {'width': 50, 'height': 50}})
+                                       'thumbnail': {'width': 100, 'height': 100}})
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
     preco_marketing = models.FloatField()
     preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
