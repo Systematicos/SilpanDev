@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'silpan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'silpan_test',
+        'NAME': 'silpan',
         'USER': 'dev',
         'PASSWORD': '6IcEv7ha',
         'HOST': 'localhost',
