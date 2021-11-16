@@ -62,7 +62,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <!-- header lists -->
                 <ul>
                     <li class="text-center border-right text-white">
-                        <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                        <a href="#" data-toggle="modal" data-target="#rastrearPedido" class="text-white">
                             <i class="fas fa-truck mr-2"></i>Rastrear Pedido</a>
                     </li>
                     <li class="text-center border-right text-white">
@@ -71,32 +71,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     {% if not request.user.is_authenticated %}
 
                         <li class="text-center border-right text-white">
-                            <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                            <a href="#" data-toggle="modal" data-target="#login" class="text-white">
                                 <i class="fas fa-sign-in-alt mr-2"></i> Entre </a>
                         </li>
-                        <!-- <li class="text-center text-white">
-                             <a href="#" data-toggle="modal" data-target="#exampleModal2" class="text-white">
-                                 <i class="fas fa-sign-out-alt mr-2"></i>Cadastre-se </a>
-                         </li>
-                        -->
+
                     {% else %}
                         <!-- menu do cliente quando logar -->
+                        <li class="text-center border-right text-white">
+                            <a href="{% url 'pedido:lista' %}" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Pedidos </a>
+                        </li>
 
                         <li class="text-center border-right text-white">
-
-                        <li class="nav-item dropdown">
-
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown"></a>
-
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'pedido:lista' %}">Pedidos</a>
-                                <a class="dropdown-item" href="{% url 'cliente:logout' %}">Sair</a>
-                            </div>
+                            <a href="{% url 'cliente:logout' %}" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Sair </a>
                         </li>
 
-
-                        </li>
                         <!-- //menu do cliente quando logar -->
 
                     {% endif %}
@@ -113,7 +103,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- modals -->
 <!-- Rastrear Pedido -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="rastrearPedido" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,11 +129,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <!-- Login -->
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">Rastrear Pedido</h5>
+                <h5 class="modal-title text-center">Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -151,12 +141,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="modal-body">
                 <form action="{% url 'cliente:login' %}" method="post">
                     {% csrf_token %}
+
                     <div class="form-group">
-                        <label class="col-form-label">Número do Pedido</label>
-                        <input type="number" class="form-control" placeholder=" " name="numeropedido" required="">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" class="form-control" placeholder=" " name="user" required="" id="user">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input type="password" class="form-control" placeholder=" " name="Password" required="" id="password">
                     </div>
                     <div class="right-w3l">
-                        <input type="submit" class="form-control" value="Pesquisar Pedido">
+                        <input type="submit" class="form-control" value="Log in">
+                    </div>
+                    <div class="sub-w3l">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                            <label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -236,7 +237,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     {% for  categoria in categorias %}
                         <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link" href="{% url 'produtos:listaCategoria' categoria=categoria.nome.lower %} ">{{ categoria.nome }}</a>
+                            <a class="nav-link"
+                               href="{% url 'produtos:listaCategoria' categoria=categoria.nome.lower %} ">{{ categoria.nome }}</a>
                         </li>
                     {% endfor %}
 
