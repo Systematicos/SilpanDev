@@ -12,8 +12,13 @@
             <!-- //tittle heading -->
             <div class="checkout-right">
                 <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
+                    <span><label id="contagem_produto"></label> Produtos</span>
 
-                    <span><script> loadProducts().value.items.length</script> Produtos</span>
+                    <script> var contagem_produt = loadProducts().value.items.length
+                    console.log(contagem_produt)
+                    document.getElementById("contagem_produto").innerHTML = contagem_produt
+
+                    </script>
                 </h4>
                 <div class="table-responsive" id="table-products">
                     <table class="timetable_sub">
@@ -38,14 +43,14 @@
                 <div class="address_form_agile mt-sm-5 mt-4">
                     <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
                           agileinfo_form id="form">
-                    {% csrf_token %}
-                    <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                        {% csrf_token %}
+                        <div class="creditly-wrapper wthree, w3_agileits_wrapper">
 
-                        <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                        >Selecionar Cliente e endereço de entrega
-                            <span class="far fa-hand-point-right"></span>
-                        </button>
-                    </div>
+                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                            >Selecionar Cliente e endereço de entrega
+                                <span class="far fa-hand-point-right"></span>
+                            </button>
+                        </div>
                     </form>
 
                 </div>
@@ -86,7 +91,6 @@
     </script>
     <!-- //nav smooth scroll -->
     <!-- pagamento -->
-    <script src="{% static 'js/pagamento.js' %}"></script>
     <script>
 
         const constructListProducts = () => {
@@ -209,10 +213,7 @@
                 total += items[i].get('quantity');
             }
 
-            if (total < 3) {
-                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-                evt.preventDefault();
-            }
+
         });
 
     </script>
