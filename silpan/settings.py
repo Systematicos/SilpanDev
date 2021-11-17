@@ -96,14 +96,8 @@ DATABASE_URL = os.getenv("JAWSDB_MARIA_URL")
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'silpan',
-        'USER': 'dev',
-        'PASSWORD': '6IcEv7ha',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default': db_from_env
+
 }
 
 # Password validation
