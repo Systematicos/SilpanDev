@@ -61,8 +61,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 ROOT_URLCONF = 'silpan.urls'
 
@@ -92,7 +96,14 @@ DATABASE_URL = os.getenv("JAWSDB_MARIA_URL")
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 
 DATABASES = {
-    'default': db_from_env
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'silpan',
+        'USER': 'dev',
+        'PASSWORD': '6IcEv7ha',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
 }
 
 # Password validation
