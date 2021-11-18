@@ -449,7 +449,7 @@ h3.tittle-w3l {
 }
 
 h3.tittle-w3l span {
-    color: #c8081f;
+    color: #c90818;
     font-size: 50px;
     letter-spacing: 0;
 }
@@ -488,6 +488,7 @@ h3.tittle-w3l span {
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
     -ms-transition: 0.5s all;
+
 }
 
 .snipcart-details input.button:hover {
@@ -1500,6 +1501,8 @@ li.subitem1 p {
     display: block;
     font-size: 14px;
 }
+
+
 
 .product-single-w3l {
     border-top: 1px solid #0879c9;
