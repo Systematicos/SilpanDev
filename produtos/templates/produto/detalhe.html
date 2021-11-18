@@ -35,44 +35,44 @@
 
                         {% endif %}
                     </p>
-                    <div class="single-infoagile">
-                        <ul>
-                            <li class="mb-3">
-                               {% autoescape on %}
-                                   <h4>{{ object.descricao|safe }}</h4>
-                                {% endautoescape %}
+                    <div class="single-infoagile" >
+                        <h5 class="mb-2">
+                            <span style="font-weight: bold; font-size:30px; color: #0b0b0b">Medidas</span>
+                        </h5>
+                            <ul>
+                                <li class="mb-3">
+                                    {% autoescape on %}
+                                       <h4>{{ object.descricao|safe }}</h4>
+                                    {% endautoescape %}
+                                    <br />
 
-                            {% if object.largura != None or object.altura != None or object.comprimento != None %}
+                                    {% if object.largura != None or object.altura != None or object.comprimento != None  or object.material != None%}
 
-                                <h5 class="mb-2">
-                                    <b>Medidas</b>
-                                </h5>
+                                        {% if object.comprimento != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: left">
+                                                Comprimento: {{ object.comprimento }}
+                                            </h5>
+                                        {% endif %}
 
-                                {% if object.comprimento != None %}
-                                    <h6 class="navbar-light">
-                                        Comprimento: {{ object.comprimento }}
-                                    </h6>
-                                {% endif %}
+                                        {% if object.largura != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: left">
+                                                Largura: {{ object.largura }}
+                                            </h5>
+                                        {% endif %}
 
-                                {% if object.largura != None %}
-                                    <h6 class="navbar-light">
-                                        Largura: {{ object.largura }}
-                                    </h6>
-                                {% endif %}
+                                        {% if object.altura != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: left">
+                                                Altura: {{ object.altura }}
+                                            </h5>
+                                        {% endif %}
 
-                                {% if object.altura != None %}
-                                    <h6 class="navbar-light">
-                                        Altura: {{ object.altura }}
-                                    </h6>
-                                {% endif %}
-                                
-                                {% if object.material != None %}
-                                    <h6 class="navbar-light">
-                                        Material: {{ object.material }}
-                                    </h6>
-                                {% endif %}
+                                        {% if object.material != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: left">
+                                                Material: {{ object.material }}
+                                            </h5>
+                                        {% endif %}
 
-                            {% endif %}
+                                    {% endif %}
 
                             </li>
 
