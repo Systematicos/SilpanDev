@@ -12,10 +12,9 @@ from .Serializers import EnderecoSerializer
 from .forms import ClienteForm, UserForm
 from .models import Cliente, Endereco
 from django.contrib.auth.models import User
+from django.core import serializers
 
 
-class Atualizar(View):
-    pass
 
 
 def criar(request):
@@ -43,18 +42,19 @@ def Login(request):
         login(request, user=usuario)
 
         if not usuario:
-            return HttpResponse('nao tem usuario')
-        return redirect('produtos:lista')
+            return HttpResponse({
+                'error':'nao tem usuario'
+            },status=404)
+        return redirect('home')
 
 
 def Logout(request):
     if request.method == 'GET':
         logout(request)
 
-        return redirect('produtos:carrinho')
+        return redirect('home')
 
 
-from django.core import serializers
 
 
 def buscarByCPF(request):
