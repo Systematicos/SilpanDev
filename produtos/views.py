@@ -63,17 +63,3 @@ class DetalheProduto(DetailView):
 
         return context
 
-class AdicionarAoCarrinho(View):
-    pass
-
-
-class RemoverDoCarrinho(View):
-    pass
-
-
-class Carrinho(View):
-    pass
-
-
-class Finalizar(View):
-    pass
