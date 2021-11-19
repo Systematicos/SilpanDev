@@ -1976,7 +1976,7 @@
 
             parent: (typeof document !== 'undefined') ? document.body : null,
 
-            action: "../pedido/fecharpedido",
+            action: `${window.location.origin}/pedido/fecharpedido`,
 
             target: '',
 

@@ -116,7 +116,7 @@ label {
 }
 
 .modal-content {
-    border: 10px solid rgb(8, 121, 201);
+    border: 10px solid rgba(243, 92, 80, 0.87);
 }
 
 label.col-form-label {
