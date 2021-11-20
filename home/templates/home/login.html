@@ -32,9 +32,15 @@
 <div id="login" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">Entre</h5>
+
+                <div class="modal-lg">
+                    <hr>
+                    <h5 style="font-size: 30px; color: #050505; text-align: center "> SISTEMA SILPAN </h5>
+                    <hr>
+                    <h5 style="font-size: 17px; color: #050505; text-align: center "> Controle de Vendas e Gerenciamento de Estoque </h5>
+
                 </div>
+
                 <div class="modal-body">
                     <form action="{% url 'login' %}" method="post">
                         {% csrf_token %}
