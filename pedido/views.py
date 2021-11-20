@@ -6,7 +6,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.generic.list import ListView
 
+import pedido
 from cliente.models import Cliente, Endereco
 from pedido.models import Pedido, FormaDePagamento, Status, ItemPedido
 from produtos.models import Categoria
@@ -101,3 +103,9 @@ class resumo(View):
 
 class Detalhe(View):
     pass
+
+class Lista(ListView):
+    model = Pedido
+    context_object_name = 'pedidos'
+    template_name = 'listapedidos.html'
+
