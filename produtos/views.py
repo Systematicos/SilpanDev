@@ -1,6 +1,9 @@
 import math
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views import View
@@ -9,10 +12,8 @@ from .models import Produto, Categoria
 from . import models
 
 
-class ListaProdutos(ListView):
+class ListaProdutos(LoginRequiredMixin, ListView):
     context_object_name = 'produtos'
-
-    template_name = 'produto/product.html'
 
     def get_context_data(self, **kwargs):
         produtos = Produto.getListProdutInColun()
@@ -22,6 +23,11 @@ class ListaProdutos(ListView):
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
+
+    def get(self, request, *args, **kwargs):
+        context = super(ListaProdutos, self).get_context_data(**kwargs)
+        if request.user.is_authenticated:
+            render(request=request, template_name='produto/product.html',context=context)
 
 
 class ListaProdutosCategoria(ListView):
@@ -57,9 +63,7 @@ class DetalheProduto(DetailView):
         return self.produto
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
-

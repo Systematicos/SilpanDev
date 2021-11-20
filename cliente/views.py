@@ -14,49 +14,6 @@ from .models import Cliente, Endereco
 from django.contrib.auth.models import User
 from django.core import serializers
 
-
-
-
-def criar(request):
-    if request.method == 'POST':
-        formUser = UserForm(request.POST)
-        formCliente = ClienteForm(request.POST)
-
-        usuario = Cliente.popular_usuario(formUser.usuario)
-        cliente = Cliente.popular_cliente(formCliente.cliente, usuario)
-
-        usuario.save()
-        cliente.save()
-        return redirect('../produto')
-
-
-def Login(request):
-    if request.method == 'POST':
-        username = request.POST.get('user')
-        password = request.POST.get('password')
-
-        if not username or not password:
-            return HttpResponse('digtar usuario ou senha')
-
-        usuario = authenticate(request, username=username, password=password)
-        login(request, user=usuario)
-
-        if not usuario:
-            return HttpResponse({
-                'error':'nao tem usuario'
-            },status=404)
-        return redirect('home')
-
-
-def Logout(request):
-    if request.method == 'GET':
-        logout(request)
-
-        return redirect('home')
-
-
-
-
 def buscarByCPF(request):
     print()
     if request.method == 'POST':
