@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.utils import http
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -30,7 +31,7 @@ def login(request):
         template_name = 'home/login.html'
 
         return render(request=request, template_name=template_name)
-    
+
     elif request.method == 'POST':
         username = request.POST.get('user')
         password = request.POST.get('password')
@@ -47,7 +48,7 @@ def login(request):
 
         auth.login(request, user=usuario)
 
-        return redirect(request.GET.get('next'))
+        return redirect('home')
 
 
 def Logout(request):
