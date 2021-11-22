@@ -1,19 +1,14 @@
 import json
 
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from django.views import View
-from rest_framework.renderers import JSONRenderer
-
-import cliente
-from . import forms
-from .Serializers import EnderecoSerializer
-from .forms import ClienteForm, UserForm
-from .models import Cliente, Endereco
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.http import JsonResponse
 
+from .Serializers import EnderecoSerializer
+from .models import Cliente, Endereco
+
+
+@login_required(login_url='login')
 def buscarByCPF(request):
     print()
     if request.method == 'POST':
