@@ -15,15 +15,26 @@ from produtos.models import Categoria, Produto
 
 @login_required(login_url='login')
 def home(request):
-    template_name = 'home/home.html'
-    produtos = Produto.getListProdutInColun()
+    if request.method == 'GET' and request.GET.get('nome'):
+        template_name = 'produto/produto.html'
 
-    context = {}
-    context['produtos'] = produtos
+        context = {}
+        context['pesquisa_produto'] = request.GET.get('nome')
+        context['produtos'] = Produto.getListProdutInColun(nome_produto=context['pesquisa_produto'])
+        context['qtd_product'] = len(context['produtos']) if context['produtos'] != None else 0
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+        return render(request=request, template_name=template_name, context=context)
 
-    context['categorias'] = Categoria.objects.all().order_by('nome')
+    else:
+        template_name = 'home/home.html'
+        produtos = Produto.getListProdutInColun()
 
-    return render(request=request, template_name=template_name, context=context)
+        context = {}
+        context['produtos'] = produtos
+
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+
+        return render(request=request, template_name=template_name, context=context)
 
 
 def login(request):
@@ -56,3 +67,5 @@ def Logout(request):
         auth.logout(request)
 
         return redirect('home')
+
+

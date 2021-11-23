@@ -158,14 +158,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="row">
                         <!-- search -->
                         <div class="col-10 agileits_search">
-                            <form class="form-inline"
-                                  action="{% url 'produtos:listaNome' nome='f' %}" method="get">
-                                {% csrf_token %}
+                            <form class="form-inline" id="formpesquisaprodutobynome" action=""
+                                  method="get">
 
-                                <input class="form-control mr-sm-2" type="search" id="search"
-                                       placeholder="Digite o nome/código do produto" aria-label="Search"
+                                <input class="form-control mr-sm-2" type="search" id="search" name="nome"
+                                       placeholder="Digite o nome do produto" aria-label="Search"
                                        required>
-                                <button class="btn my-2 my-sm-0" type="submit">Pesquisar</button>
+
+                                <button class="btn my-2 my-sm-0" type="submit" onclick="window.location.href=this.form.action+ 'produto/buscar/' + this.form.q.value;">Pesquisar</button>
                             </form>
                         </div>
                         <!-- //search -->
@@ -228,7 +228,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- jquery -->
     <script src="{% static 'js/jquery-2.2.3.min.js ' %}"></script>
     <!-- //jquery -->
-
     <!-- nav smooth scroll -->
     <script>
         $(document).ready(function () {
@@ -347,6 +346,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
     </script>
     <!-- //smooth-scrolling-of-move-up -->
+
+    <script src="{% static 'js/pesquisaProduto.js' %}"></script>
 
     <!-- for bootstrap working -->
     <script src="{% static 'js/bootstrap.js' %} "></script>

@@ -94,8 +94,13 @@ class Produto(models.Model):
                     listProduct.append(produto)
 
         else:
-            for produto in Produto.objects.filter(categoria=categoria):
-                listProduct.append(produto)
+            if nome_produto is not None:
+                for produto in Produto.objects.filter(categoria=categoria, nome__contains=nome_produto):
+                    listProduct.append(produto)
+            else:
+
+                for produto in Produto.objects.filter(categoria=categoria):
+                    listProduct.append(produto)
 
         if listProduct.__len__() < 1:
             return None
