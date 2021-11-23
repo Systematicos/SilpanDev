@@ -11,9 +11,11 @@ app_name = 'produtos'
 
 urlpatterns = [
 
-                  path("", login_required(views.ListaProdutos.as_view(), login_url='login'), name='lista'),
                   path("<categoria>", login_required(views.ListaProdutosCategoria.as_view(), login_url='login'),
                        name='listaCategoria'),
+                  path("buscar/<nome>", login_required(views.ListaProduto.as_view(), login_url='login'),
+                       name='listaNome'),
+
                   path("<slug:slug>/", login_required(views.DetalheProduto.as_view(), login_url='login'),
                        name='detalhe')
 

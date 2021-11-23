@@ -158,8 +158,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="row">
                         <!-- search -->
                         <div class="col-10 agileits_search">
-                            <form class="form-inline" action="#" method="post">
-                                <input class="form-control mr-sm-2" type="search"
+                            <form class="form-inline"
+                                  action="{% url 'produtos:listaNome' nome='f' %}" method="get">
+                                {% csrf_token %}
+
+                                <input class="form-control mr-sm-2" type="search" id="search"
                                        placeholder="Digite o nome/código do produto" aria-label="Search"
                                        required>
                                 <button class="btn my-2 my-sm-0" type="submit">Pesquisar</button>

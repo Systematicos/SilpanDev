@@ -83,15 +83,24 @@ class Produto(models.Model):
         return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
 
     @classmethod
-    def getListProdutInColun(cls, listProduct=[]):
-        lista = []
-        if not listProduct:
-            listProduct = Produto.objects.all()
+    def getListProdutInColun(cls, categoria=None, nome_produto=None):
+        listProduct = []
 
-        for produto in listProduct:
-            lista.append(produto)
+        if categoria is None:
+            if nome_produto is None:
+                listProduct = Produto.objects.all()
+            else:
+                for produto in Produto.objects.filter(nome__contains=nome_produto):
+                    listProduct.append(produto)
 
-        return Produto.split(lista, 3)
+        else:
+            for produto in Produto.objects.filter(categoria=categoria):
+                listProduct.append(produto)
+
+        if listProduct.__len__() < 1:
+            return None
+
+        return Produto.split(listProduct, 3)
 
     @classmethod
     def convert_json_Produto(cls, json_data):
@@ -115,5 +124,6 @@ class Produto(models.Model):
             list_product.append(produto)
         return list_product
 
-
-
+    @classmethod
+    def getProdutoByCategoria(cls):
+        pass

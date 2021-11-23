@@ -12,42 +12,40 @@ from .models import Produto, Categoria
 from . import models
 
 
-class ListaProdutos(LoginRequiredMixin, ListView):
-    context_object_name = 'produtos'
+class ListaProdutosCategoria(ListView):
+    template_name = 'produto/produto.html'
 
     def get_context_data(self, **kwargs):
-        produtos = Produto.getListProdutInColun()
-        context = super(ListaProdutos, self).get_context_data(**kwargs)
-        context['produtos'] = produtos
-        context['qtd_product'] = len(produtos)
+        context = super().get_context_data(**kwargs)
+        if self.kwargs['categoria'] != None:
+            context['categoria'] = Categoria.objects.get(nome=self.kwargs['categoria'])
+            context['produtos'] = Produto.getListProdutInColun(categoria=context['categoria'])
+
+
+        else:
+            self.nome_produto = self.kwargs['nome']
+            context['produtos'] = Produto.getListProdutInColun(nome_produto=self.nome_produto)
+
+        context['qtd_product'] = len(context['produtos']) if context['produtos'] != None else 0
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
 
-    def get(self, request, *args, **kwargs):
-        context = super(ListaProdutos, self).get_context_data(**kwargs)
-        if request.user.is_authenticated:
-            render(request=request, template_name='produto/product.html',context=context)
-
-
-class ListaProdutosCategoria(ListView):
-    context_object_name = 'produtos'
-
+class ListaProduto(ListView):
     template_name = 'produto/produto.html'
 
-    def get_queryset(self):
-        self.categoria = get_object_or_404(Categoria, nome=self.kwargs['categoria'])
-
-        return Produto.objects.filter(categoria=self.categoria)
-
     def get_context_data(self, **kwargs):
-        produtos = Produto.getListProdutInColun()
-
         context = super().get_context_data(**kwargs)
-        context['categoria'] = self.categoria
-        context['produtos'] = Produto.getListProdutInColun(Produto.objects.all().filter(categoria=self.categoria))
+        if self.kwargs['categoria'] != None:
+            context['categoria'] = Categoria.objects.get(nome=self.kwargs['categoria'])
+            context['produtos'] = Produto.getListProdutInColun(categoria=context['categoria'])
 
-        context['qtd_product'] = len(context['produtos'])
+
+        else:
+            self.nome_produto = self.kwargs['nome']
+            context['produtos'] = Produto.getListProdutInColun(nome_produto=self.nome_produto)
+
+        context['qtd_product'] = len(context['produtos']) if context['produtos'] != None else 0
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
