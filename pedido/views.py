@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -104,8 +104,22 @@ class resumo(View):
 class Detalhe(View):
     pass
 
+
 class Lista(ListView):
-    model = Pedido
     context_object_name = 'pedidos'
     template_name = 'listapedidos.html'
+
+    def get_queryset(self):
+
+        return Pedido.objects.all().filter(vendedor=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(Lista, self).get_context_data(**kwargs)
+        user = self.request.user
+        pedidos = Pedido.getPedidoByUser(user)
+
+        context['pedidos'] = pedidos
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+
+        return context
 

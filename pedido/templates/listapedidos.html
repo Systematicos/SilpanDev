@@ -3,9 +3,13 @@
 
 
 {% block conteudo %}
+    {% if pedidos %}
+        {% for pedido in pedidos %}
 
-    Lista de Pedidos
+            <h6>{{ pedido }}</h6>
+        {% endfor %}
 
-
-
+    {% else %}
+        <h4>nao tem pedido</h4>
+    {% endif %}
 {% endblock %}

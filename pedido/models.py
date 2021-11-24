@@ -96,6 +96,15 @@ class Pedido(models.Model):
             produto.quantidade -= item.quantidade
             Produto.save(produto)
 
+    @classmethod
+    def getPedidoByUser(cls, user):
+        listPedido = []
+
+        for pedido in Pedido.objects.all().filter(vendedor=user):
+            listPedido.append(pedido)
+
+        return listPedido
+
     class Meta:
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
