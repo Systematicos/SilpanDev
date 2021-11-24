@@ -1,5 +1,6 @@
 import json
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 # Create your models here.
@@ -44,19 +45,19 @@ class Produto(models.Model):
     slug = AutoSlugField(unique=True, always_update=False, populate_from="nome")
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
-    quantidade = models.IntegerField(default=1)
+    quantidade = models.IntegerField(validators=[MinValueValidator(1)])
     imagem = StdImageField(upload_to='produto_imagens/%Y/%m/',
                            variations={'full': {'width': 500, 'height': 500},
                                        'medium': {'width': 212, 'height': 212},
                                        'thumbnail': {'width': 100, 'height': 100}})
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
-    preco_marketing = models.FloatField()
-    preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
+    preco_marketing = models.FloatField(validators=[MinValueValidator(0.01)])
+    preco_marketing_promocional = models.FloatField(validators=[MinValueValidator(0.01)], blank=True, null=True)
     cor = models.CharField(max_length=50, blank=True, null=True)
     material = models.CharField(max_length=50, blank=True, null=True)
-    largura = models.IntegerField(blank=True, null=True)
-    altura = models.IntegerField(blank=True, null=True)
-    comprimento = models.IntegerField(blank=True, null=True)
+    largura = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
+    altura = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
+    comprimento = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
 
     def get_absolute_url(self):
         return reverse("produtos:detalhe", kwargs={"slug": self.slug})
