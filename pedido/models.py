@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cliente.models import Cliente, Endereco
 from produtos.models import Produto
-from cupom.models import Cupom
+
 
 
 class FormaDePagamento(models.Model):
@@ -49,7 +49,6 @@ class Pedido(models.Model):
     data = models.DateTimeField()
     subtotal = models.FloatField()
     desconto = models.FloatField(default=0.0)
-    cupom = models.ForeignKey(Cupom, on_delete=models.DO_NOTHING, null=True)
     total = models.FloatField()
     transportadora = models.ForeignKey(Transportadora, null=True, on_delete=models.DO_NOTHING)
     frete = models.FloatField(null=True)
@@ -71,7 +70,7 @@ class Pedido(models.Model):
         pedido.forma_pagamento = formaDePagamento
         pedido.vendedor = vendedor
         pedido.endereco_entrega = endereco
-        # pedido.cupom = cupom
+
 
         return pedido
 
