@@ -1,15 +1,40 @@
 {% extends 'base.html' %}
-
+{% load omFilters %}
 
 
 {% block conteudo %}
     {% if pedidos %}
+
+        <table class="table table-striped">
+                    <tr>
+                      <th scope="col">Pedido</th>
+                      <th scope="col">Cliente</th>
+                      <th scope="col">Data</th>
+                      <th scope="col">Forma de Pagamento</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Endereço</th>
+                  </tr>
+
         {% for pedido in pedidos %}
 
-            <h6>{{ pedido }}</h6>
-        {% endfor %}
+            <div>
+                     <tr>
+                         <td>{{pedido}}</td>
+                         <td>{{pedido.cliente}}</td>
+                         <td>{{ pedido.data }}</td>
+                         <td>{{ pedido.forma_pagamento}}</td>
+                         <td>{{ pedido.total|formata_preco }}</td>
+                         <td>{{ pedido.endereco_entrega }}</td>
+                    </tr>
+
+
+            </div>
+
+             {% endfor %}
+        </table>
 
     {% else %}
         <h4>nao tem pedido</h4>
     {% endif %}
+
 {% endblock %}
