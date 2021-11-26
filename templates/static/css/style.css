@@ -2395,7 +2395,7 @@ div#testimonials h4.m-title {
         font-size: 15px;
     }
     .navbar-light .navbar-toggler {
-        border-color: #2bc908;
+        border-color: rgba(243, 92, 80, 0.87);
         border-radius: 0;
     }
     .carousel-caption p {
