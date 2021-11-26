@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'produtos',
     'pedido',
     'cliente',
-    'cupom',
     'home',
 ]
 INTERNAL_IPS = [

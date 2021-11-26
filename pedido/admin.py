@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pedido, ItemPedido, FormaDePagamento, Status, Cupom
+from .models import Pedido, ItemPedido, FormaDePagamento, Status
 
 
 class FormaPagamentoInLine(admin.TabularInline):

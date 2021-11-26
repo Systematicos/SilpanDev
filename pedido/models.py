@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cliente.models import Cliente, Endereco
 from produtos.models import Produto
-from cupom.models import Cupom
+
 
 
 class FormaDePagamento(models.Model):
@@ -69,6 +69,7 @@ class Pedido(models.Model):
         pedido.forma_pagamento = formaDePagamento
         pedido.vendedor = vendedor
         pedido.endereco_entrega = endereco
+
 
         return pedido
 
