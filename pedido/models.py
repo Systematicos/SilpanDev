@@ -69,7 +69,6 @@ class Pedido(models.Model):
         pedido.forma_pagamento = formaDePagamento
         pedido.vendedor = vendedor
         pedido.endereco_entrega = endereco
-        # pedido.cupom = cupom
 
         return pedido
 
