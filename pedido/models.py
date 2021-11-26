@@ -49,9 +49,7 @@ class Pedido(models.Model):
     data = models.DateTimeField()
     subtotal = models.FloatField()
     desconto = models.FloatField(default=0.0)
-    cupom = models.ForeignKey(Cupom, on_delete=models.DO_NOTHING, null=True)
     total = models.FloatField()
-    transportadora = models.ForeignKey(Transportadora, null=True, on_delete=models.DO_NOTHING)
     frete = models.FloatField(null=True)
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)
@@ -95,6 +93,15 @@ class Pedido(models.Model):
             produto = Produto.objects.get(id=item.produto.id)
             produto.quantidade -= item.quantidade
             Produto.save(produto)
+
+    @classmethod
+    def getPedidoByUser(cls, user):
+        listPedido = []
+
+        for pedido in Pedido.objects.all().filter(vendedor=user):
+            listPedido.append(pedido)
+
+        return listPedido
 
     class Meta:
         verbose_name = 'Pedido'

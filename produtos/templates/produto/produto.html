@@ -91,11 +91,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="item-info-product text-center border-top mt-4">
-                                                    <h4 class="pt-1">
-                                                        <a href="{{ produto.nome }}">{{ produto.nome }}</a>
-                                                    </h4>
-                                                    <div class="info-product-price my-2">
+                                                    <div class="item-info-product text-center border-top mt-4">
+                                                        <h4 class="pt-1">
+                                                            <a href="{{ produto.get_absolute_url }}">{{ produto.nome }}</a>
+                                                        </h4>
+                                                        <div class="info-product-price my-2">
 
                                                         {% if produto.preco_marketing_promocional %}
                                                             <span class="item_price">R${{ produto.preco_marketing_promocional|formata_preco }}</span>
