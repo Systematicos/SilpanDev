@@ -12,27 +12,7 @@ from .models import Produto, Categoria
 from . import models
 
 
-class ListaProdutos(LoginRequiredMixin, ListView):
-    context_object_name = 'produtos'
-
-    def get_context_data(self, **kwargs):
-        produtos = Produto.getListProdutInColun()
-        context = super(ListaProdutos, self).get_context_data(**kwargs)
-        context['produtos'] = produtos
-        context['qtd_product'] = len(produtos)
-        context['categorias'] = Categoria.objects.all().order_by('nome')
-
-        return context
-
-    def get(self, request, *args, **kwargs):
-        context = super(ListaProdutos, self).get_context_data(**kwargs)
-        if request.user.is_authenticated:
-            render(request=request, template_name='produto/product.html',context=context)
-
-
 class ListaProdutosCategoria(ListView):
-    context_object_name = 'produtos'
-
     template_name = 'produto/produto.html'
 
     def get_queryset(self):
@@ -41,17 +21,39 @@ class ListaProdutosCategoria(ListView):
         return Produto.objects.filter(categoria=self.categoria)
 
     def get_context_data(self, **kwargs):
-        produtos = Produto.getListProdutInColun()
-
         context = super().get_context_data(**kwargs)
-        context['categoria'] = self.categoria
-        context['produtos'] = Produto.getListProdutInColun(Produto.objects.all().filter(categoria=self.categoria))
 
-        context['qtd_product'] = len(context['produtos'])
+        context['pesquisa_produto'] = self.request.GET.get('nome')
+        context['categoria'] = Categoria.objects.get(nome=self.kwargs['categoria'])
+        context['produtos'] = Produto.getListProdutInColun(categoria=context['categoria'], nome_produto=context['pesquisa_produto'])
+
+        context['qtd_product'] = len(context['produtos']) if context['produtos'] != None else 0
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
 
+
+
+class ListaProduto(ListView):
+    template_name = 'produto/produto.html'
+    context_object_name = 'produtos2'
+
+    def get_queryset(self):
+        self.nome_produto = self.kwargs['search']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        self.nome_produto = self.kwargs['nome']
+        context['produtos'] = Produto.getListProdutInColun(nome_produto=self.nome_produto)
+
+        context['qtd_product'] = len(context['produtos']) if context['produtos'] != None else 0
+        context['categorias'] = Categoria.objects.all().order_by('nome')
+
+        return context
+
+    def get(self, request):
+        print('foi')
 
 class DetalheProduto(DetailView):
     model = models.Produto
