@@ -1,62 +1,14 @@
 import json
 
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from django.views import View
-from rest_framework.renderers import JSONRenderer
-
-import cliente
-from . import forms
-from .Serializers import EnderecoSerializer
-from .forms import ClienteForm, UserForm
-from .models import Cliente, Endereco
-from django.contrib.auth.models import User
-
-
-class Atualizar(View):
-    pass
-
-
-def criar(request):
-    if request.method == 'POST':
-        formUser = UserForm(request.POST)
-        formCliente = ClienteForm(request.POST)
-
-        usuario = Cliente.popular_usuario(formUser.usuario)
-        cliente = Cliente.popular_cliente(formCliente.cliente, usuario)
-
-        usuario.save()
-        cliente.save()
-        return redirect('../produto')
-
-
-def Login(request):
-    if request.method == 'POST':
-        username = request.POST.get('user')
-        password = request.POST.get('password')
-
-        if not username or not password:
-            return HttpResponse('digtar usuario ou senha')
-
-        usuario = authenticate(request, username=username, password=password)
-        login(request, user=usuario)
-
-        if not usuario:
-            return HttpResponse('nao tem usuario')
-        return redirect('produtos:lista')
-
-
-def Logout(request):
-    if request.method == 'GET':
-        logout(request)
-
-        return redirect('produtos:carrinho')
-
-
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.http import JsonResponse
+
+from .Serializers import EnderecoSerializer
+from .models import Cliente, Endereco
 
 
+@login_required(login_url='login')
 def buscarByCPF(request):
     print()
     if request.method == 'POST':

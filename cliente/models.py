@@ -5,6 +5,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
 import re
+
+from pycep_correios import get_address_from_cep, WebService
+
 from utils import validacpf
 
 
@@ -19,8 +22,8 @@ class Cliente(models.Model):
     def clean(self):
         messagens_erros = {}
 
-        # if not validacpf.valida_cpf(self.cpf):
-        # messagens_erros['cpf'] = 'Digite um CPF válido'
+        if not validacpf.valida_cpf(self.cpf):
+         messagens_erros['cpf'] = 'Digite um CPF válido'
 
         if messagens_erros:
             raise ValidationError(messagens_erros)
@@ -43,6 +46,8 @@ class Cliente(models.Model):
 
         return cliente
 
+
+
     def __str__(self):
         return self.nome
 
@@ -57,6 +62,13 @@ class Endereco(models.Model):
     complemento = models.CharField(max_length=50, blank=True, null=True)
     cep = models.CharField(max_length=50)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
+    @classmethod
+    def getEndereco(cls, pedido):
+        endereco = get_address_from_cep(pedido.endereco_entrega.cep, webservice=WebService.VIACEP)
+        endereco['numero'] = pedido.endereco_entrega.numero
+        return endereco
+
 
     def __str__(self):
         return f' Tipo: {self.tipo}, do cliente {self.cliente.nome}{self.cliente.sobrenome}'
