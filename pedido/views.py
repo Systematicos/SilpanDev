@@ -10,9 +10,11 @@ from django.views.generic.list import ListView
 
 import pedido
 from cliente.models import Cliente, Endereco
-from pedido.models import Pedido, FormaDePagamento, Status, ItemPedido
+from pedido.models import Pedido, FormaDePagamento, ItemPedido
 from produtos.models import Categoria
 from pycep_correios import get_address_from_cep, WebService
+
+from utils.enviar_email import sending
 
 
 class Pagar(View):
@@ -30,10 +32,9 @@ class Pagar(View):
             Endereco.save(endereco)
 
         formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
-        status_pedido = Status.objects.get(id=1)
-        vendedor = User.objects.get(id=15)
+        vendedor = self.request.user
         pedido = Pedido.criarPedido(cliente=cliente, formaDePagamento=formaDePagamento, vendedor=vendedor,
-                                    endereco=endereco, status=status_pedido)
+                                    endereco=endereco)
         itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
 
         pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
@@ -44,6 +45,9 @@ class Pagar(View):
             ItemPedido.save(item)
 
         url = reverse('pedido:resumo', kwargs={'id': pedido.id})
+        endereco = Endereco.getEndereco(pedido)
+
+        sending(pedido, itens, endereco)
 
         return redirect(url)
 
@@ -90,14 +94,12 @@ class resumo(View):
         pedido = Pedido.objects.get(id=pedido_id)
         itens = ItemPedido.getItensPedido(pedido_id=pedido.id)
 
-        endereco = get_address_from_cep(pedido.endereco_entrega.cep, webservice=WebService.VIACEP)
-        endereco['numero'] = pedido.endereco_entrega.numero
+        endereco = Endereco.getEndereco(pedido)
         context = {}
         context['categorias'] = Categoria.objects.all().order_by('nome')
         context['items'] = itens
         context['pedido'] = pedido
         context['endereco'] = endereco
-
         return render(request, template_name, context)
 
 
@@ -110,7 +112,6 @@ class Lista(ListView):
     template_name = 'listapedidos.html'
 
     def get_queryset(self):
-
         return Pedido.objects.all().filter(vendedor=self.request.user)
 
     def get_context_data(self, **kwargs):
@@ -122,4 +123,3 @@ class Lista(ListView):
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
         return context
-

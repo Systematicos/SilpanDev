@@ -67,7 +67,7 @@
 
     <!-- js-files -->
     <!-- jquery -->
-<script src="{% static 'js/carrinho.js' %}"></script>
+    <script src="{% static 'js/carrinho.js' %}"></script>
     <script src="{% static 'js/pagamento.js' %}"></script>
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
@@ -122,7 +122,7 @@
                         </td>
                         <td class="invert">${item.item_name}</td>
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.amount).toFixed(2)}</td>
-                        <td class="invert" id="price-${item.id}">R$ ${(item.discount_amount * item.amount).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.discount_amount * item.quantity).toFixed(2)}</td>
 
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
@@ -139,9 +139,13 @@
             itemIndex = items.value.items.findIndex(item => item.id == id);
             items.value.items.splice(itemIndex, 1);
             window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
-            window.location.reload();
+            constructListProducts();
+
+            window.location = window.location;
+
         }
 
+        constructListProducts();
         constructListProducts();
 
         const updatePriceProduct = (id) => {

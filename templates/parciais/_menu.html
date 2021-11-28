@@ -58,9 +58,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
             {% if not request.user.is_authenticated %}
 
-                <div class="col-lg-5 header-right mt-lg-1 mt-2" style="left: 570px">
+                <div class="col-lg-5 header-right mt-lg-1 mt-2" style="">
             {% else %}
-                <div class="col-lg-5 header-right mt-lg-1 mt-2" style="left: 480px">
+                <div class="col-lg-5 header-right mt-lg-1 mt-2" style="width: 200px">
 
             {% endif %}
             <!-- header lists -->
@@ -74,8 +74,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </li>
 
                 {% else %}
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <!-- menu do cliente quando logar -->
-                    <li class="text-center border-right text-white">
+                    <li class="text-center border-right text-white" style="">
                         <a href="{% url 'pedido:lista' %}" class="text-white">
                             <i class="fas fa-sign-in-alt mr-2"></i> Pedidos </a>
                     </li>
@@ -165,7 +166,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                        placeholder="Digite o nome do produto" aria-label="Search"
                                        required>
 
-                                <button class="btn my-2 my-sm-0" type="submit" onclick="window.location.href=this.form.action+ 'produto/buscar/' + this.form.q.value;">Pesquisar</button>
+                                <button class="btn my-2 my-sm-0" type="submit"
+                                        onclick="window.location.href=this.form.action+ 'produto/buscar/' + this.form.q.value;">
+                                    Pesquisar
+                                </button>
                             </form>
                         </div>
                         <!-- //search -->
@@ -204,14 +208,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <ul class="navbar-nav ml-auto text-center mr-xl-5">
                         <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link" href="{% url 'home' %}">Início
-                                <span class="sr-only">(current)</span>
+                                <span class="sr-only"></span>
                             </a>
                         </li>
 
                         {% for  categoria in categorias %}
                             <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
                                 <a class="nav-link"
-                                   href="{% url 'produtos:listaCategoria' categoria=categoria.nome.lower %} ">{{ categoria.nome }}</a>
+                                   href="{% url 'produtos:listaCategoria' categoria=categoria.nome.lower %} ">{{ categoria.nome }}
+                                 <span class="sr-only"></span></a>
                             </li>
                         {% endfor %}
 
