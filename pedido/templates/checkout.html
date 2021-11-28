@@ -15,10 +15,10 @@
                     <span><label id="contagem_produto"></label> Produtos</span>
 
                     <script>
-                        var contagem_produt = window.localStorage.getItem('PPminicarts'), today, expires;
-                        var contagem_produt = contagem_produt.value.items.length
+                        var contagem_produt = window.localStorage.getItem('PPminicarts');
+                        var contagem_produt = JSON.parse(decodeURIComponent(contagem_produt)).value.items.length
                         console.log(contagem_produt)
-                        document.getElementById("contagem_produto").value = contagem_produt
+                        document.getElementById("contagem_produto").innerHTML = contagem_produt
 
                     </script>
                 </h4>
@@ -37,7 +37,11 @@
                         </thead>
                         <tbody id="t-product">
                         </tbody>
+
                     </table>
+                    <li class="font-weight-bold list-group-item bg-light">Total
+                        <span class="float-right" id="total-checkout" ></span>
+                    </li>
                 </div>
             </div>
             <!-- Endereço-->
@@ -100,9 +104,10 @@
                 const items = loadProducts().value.items;
                 let html = '';
                 let count = 0;
+                let total = 0;
                 for (let item of items) {
                     count++
-                    console.log(item)
+                    total += item.quantity * (item.amount - parseFloat(item.discount_amount))
                     html += `
                     <tr class="rem1">
                         <td class="invert">${count}</td>
@@ -122,14 +127,18 @@
                         </td>
                         <td class="invert">${item.item_name}</td>
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.amount).toFixed(2)}</td>
-                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.discount_amount).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * parseFloat(item.discount_amount)).toFixed(2)}</td>
 
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
                         </td>
                     </tr>
                 `
+
                 }
+
+
+                document.getElementById('total-checkout').innerHTML =`R$ ${total.toFixed(2)} `
                 document.getElementById('t-product').innerHTML = html;
             }
         }
