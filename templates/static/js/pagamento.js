@@ -261,8 +261,7 @@ function pagar(element) {
             paypals.minicarts.reset()
             window.location.href = `${res.url}`
         } else {
-            window.location.reload()
-
+            $(".messages").load(location.href + " .messages")
         }
     })
 
