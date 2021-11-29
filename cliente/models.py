@@ -28,7 +28,7 @@ class Cliente(models.Model):
         if messagens_erros:
             raise ValidationError(messagens_erros)
 
-    import re
+
 
     @classmethod
     def popular_cliente(cls, form):
