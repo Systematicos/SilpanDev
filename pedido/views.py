@@ -20,36 +20,39 @@ from utils.enviar_email import sending
 class Pagar(View):
     @method_decorator(login_required(login_url='home'))
     def post(self, request, *args, **kwargs):
+
         requestJson = json.loads(request.body.decode('utf-8'))
-        if not eval(requestJson['cadastro']):
+        if (requestJson['forma_pagamento'] != "0"):
 
-            cliente = Cliente.objects.get(cpf=requestJson['cpf'])
-            endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
-        else:
-            cliente = Cliente.popular_cliente(requestJson)
-            Cliente.save(cliente)
-            endereco = Endereco.populaEndereco(requestJson, cliente)
-            Endereco.save(endereco)
+            if not eval(requestJson['cadastro']):
 
-        formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
-        vendedor = self.request.user
-        pedido = Pedido.criarPedido(cliente=cliente, formaDePagamento=formaDePagamento, vendedor=vendedor,
-                                    endereco=endereco)
-        itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
+                cliente = Cliente.objects.get(cpf=requestJson['cpf'])
+                endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
+            else:
+                cliente = Cliente.popular_cliente(requestJson)
+                Cliente.save(cliente)
+                endereco = Endereco.populaEndereco(requestJson, cliente)
+                Endereco.save(endereco)
 
-        pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
-        Pedido.save(pedido)
+            formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
+            vendedor = self.request.user
+            pedido = Pedido.criarPedido(cliente=cliente, formaDePagamento=formaDePagamento, vendedor=vendedor,
+                                        endereco=endereco)
+            itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
 
-        Pedido.baixaEstoque(itens)
-        for item in itens:
-            ItemPedido.save(item)
+            pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
+            Pedido.save(pedido)
 
-        url = reverse('pedido:resumo', kwargs={'id': pedido.id})
-        endereco = Endereco.getEndereco(pedido)
+            Pedido.baixaEstoque(itens)
+            for item in itens:
+                ItemPedido.save(item)
 
-        sending(pedido, itens, endereco)
+            url = reverse('pedido:resumo', kwargs={'id': pedido.id})
+            endereco = Endereco.getEndereco(pedido)
 
-        return redirect(url)
+            sending(pedido, itens, endereco)
+
+            return redirect(url)
 
 
 class FecharPedido(View):
@@ -75,11 +78,14 @@ class selecionarClienteEndereco(View):
         return context
 
     @method_decorator(login_required(login_url='home'))
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+
         template_name = 'finalizarPedido.html'
         context = {}
         context['categorias'] = Categoria.objects.all().order_by('nome')
         context['Forma_pagamentos'] = FormaDePagamento.objects.all().order_by('forma_de_pagamento')
+
+
         return render(request, template_name, context)
 
 

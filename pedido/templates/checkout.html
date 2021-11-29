@@ -47,7 +47,7 @@
             <!-- Endereço-->
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
-                    <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
+                    <form method="get" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
                           agileinfo_form id="form">
                         {% csrf_token %}
                         <div class="creditly-wrapper wthree, w3_agileits_wrapper">
