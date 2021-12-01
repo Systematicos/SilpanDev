@@ -257,11 +257,13 @@ function pagar(element) {
         headers,
         body: JSON.stringify(data)
     }).then(res => {
-        if(res.status == 200 && res.redirected){
+        if (res.status == 200 && res.redirected) {
             paypals.minicarts.reset()
-            window.location.href=`${res.url}`
+            window.location.href = `${res.url}`
+        } else {
+            $(".messages").load(location.href + " .messages")
         }
-    } )
+    })
 
 
 }
