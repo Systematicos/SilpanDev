@@ -14,10 +14,9 @@
                     <table class="timetable_sub">
                         <thead>
                         <tr>
-                            <th>Item</th>
                             <th>Produto</th>
-                            <th>Quantidade</th>
                             <th>Nome do Produto</th>
+                            <th>Quantidade</th>
                             <th>Preço</th>
                         </tr>
                         </thead>
@@ -25,11 +24,13 @@
                         {% for item in items %}
 
                             <tr class="rem1">
-                                <td class="invert"> {{ forloop.counter }}</td>
+
                                 <td class="invert-image">
                                     <img src="{{ item.imagem }}" alt=" " class="img-responsive">
 
                                 </td>
+                                <td class="invert">{{ item.produto.nome }}</td>
+
                                 <td class="invert">
                                     <div class="quantity">
                                         <div class="quantity-select">
@@ -37,15 +38,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="invert">{{ item.produto.nome }}</td>
 
-                                {% if item.preco_promocional == 0 %}
-                                    <td class="invert">R$ {{ item.preco|formata_preco }}</td>
-                                {% else %}
-                                    <td class="invert">R$ {{ item.preco_promocional|formata_preco }}</td>
-                                {% endif %}
-
-
+                                <td class="invert">R$ {{ item.preco|formata_preco }}</td>
                             </tr>
                         {% endfor %}
 
@@ -53,6 +47,12 @@
                     </table>
                 </div>
             </div>
+            <li class="font-weight-bold list-group-item bg-light">Subtotal
+                <span class="float-right" id="subtotal-checkout">{{ pedido.subtotal|formata_preco }}</span>
+            </li>
+            <li class="font-weight-bold list-group-item bg-light">Desconto
+                <span class="float-right" id="desconto-checkout">{{ pedido.desconto|formata_preco }}</span>
+            </li>
 
             <li class="font-weight-bold list-group-item bg-light">Total
                 <span class="float-right">R$ {{ pedido.total|formata_preco }}</span>

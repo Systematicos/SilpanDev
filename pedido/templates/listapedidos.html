@@ -19,7 +19,7 @@
             <div>
                      <tr>
                          <td>
-                             <a href="{% url 'pedido:resumo' id=pedido.id %}">{{pedido}}</a>
+                             <a href="{% url 'pedido:resumo' id=pedido.id %}">{{pedido.id|formata_numero_pedido}}</a>
                          </td>
                          <td>{{pedido.cliente}}</td>
                          <td>{{ pedido.data }}</td>
