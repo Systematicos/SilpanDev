@@ -137,9 +137,10 @@ class Lista(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Lista, self).get_context_data(**kwargs)
-        user = self.request.user
+        user = User.objects.all().get(id= self.request.user.id)
         pedidos = Pedido.getPedidoByUser(user)
 
+        context['vendedor'] = user
         context['pedidos'] = pedidos
         context['categorias'] = Categoria.objects.all().order_by('nome')
 
