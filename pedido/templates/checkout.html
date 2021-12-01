@@ -12,7 +12,7 @@
             <!-- //tittle heading -->
             <div class="checkout-right">
                 <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                    <span><label id="contagem_produto"></label> Produtos</span>
+                    <span><label id="contagem_produto"></label> Itens</span>
 
                     <script>
                         var contagem_produt = window.localStorage.getItem('PPminicarts');
@@ -26,12 +26,12 @@
                     <table class="timetable_sub">
                         <thead>
                         <tr>
-                            <th>Item</th>
                             <th>Produto</th>
-                            <th>Quantidade</th>
                             <th>Nome do Produto</th>
-                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
                             <th>Desconto</th>
+                            <th>Total</th>
                             <th>Remover</th>
                         </tr>
                         </thead>
@@ -39,10 +39,10 @@
                         </tbody>
 
                     </table>
-                    <li class="font-weight-bold list-group-item bg-light">SUBTOTAL
+                    <li class="font-weight-bold list-group-item bg-light">Subtotal
                         <span class="float-right" id="subtotal-checkout" ></span>
                     </li>
-                    <li class="font-weight-bold list-group-item bg-light">DESCONTO
+                    <li class="font-weight-bold list-group-item bg-light">Desconto
                         <span class="float-right" id="desconto-checkout" ></span>
                     </li>
                      <li class="font-weight-bold list-group-item bg-light">Total
@@ -120,10 +120,11 @@
                     total += item.quantity * (item.amount - parseFloat(item.discount_amount))
                     html += `
                     <tr class="rem1">
-                        <td class="invert">${count}</td>
+
                         <td class="invert-image">
                            <img src="${item.imagem}" alt=" " class="img-responsive">
                         </td>
+                        <td class="invert">${item.item_name}</td>
                         <td class="invert">
                             <div class="quantity">
                                 <div class="quantity-select">
@@ -135,9 +136,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="invert">${item.item_name}</td>
+
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.amount).toFixed(2)}</td>
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * parseFloat(item.discount_amount)).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * (item.amount - parseFloat(item.discount_amount))).toFixed(2)}</td>
+
+
+
 
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
