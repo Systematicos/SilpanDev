@@ -3,6 +3,7 @@ import json
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db import transaction, IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -32,6 +33,7 @@ class Pagar(View):
 
                     cliente = Cliente.objects.get(cpf=requestJson['cpf'])
                     endereco = Endereco.objects.get(cliente=cliente, tipo=requestJson['endereco'])
+                    return self.realizarPedido(cliente, endereco, requestJson)
                 else:
                     cliente = Cliente.popular_cliente(requestJson)
                     erros = Cliente.validacao(cliente)
@@ -39,34 +41,21 @@ class Pagar(View):
                         for e in erros:
                             messages.add_message(request, messages.WARNING, e)
                     else:
-                        Cliente.save(cliente)
-                        endereco = Endereco.populaEndereco(requestJson, cliente)
-                        erros = Endereco.validacao(endereco)
-                        if erros:
-                            for e in erros:
-                                messages.add_message(request, messages.WARNING, e)
-                        else:
-                            Endereco.save(endereco)
+                        try:
+                            with transaction.atomic():
+                                Cliente.save(cliente)
+                                endereco = Endereco.populaEndereco(requestJson, cliente)
+                                erros = Endereco.validacao(endereco)
+                                if erros:
+                                    for e in erros:
+                                        messages.add_message(request, messages.WARNING, e)
+                                        raise IntegrityError
+                                else:
+                                    Endereco.save(endereco)
+                                    return self.realizarPedido(cliente, endereco, requestJson)
+                        except IntegrityError:
+                            print(e)
 
-                            formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
-                            vendedor = self.request.user
-                            pedido = Pedido.criarPedido(cliente=cliente, formaDePagamento=formaDePagamento, vendedor=vendedor,
-                                                        endereco=endereco)
-                            itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
-
-                            pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
-                            Pedido.save(pedido)
-
-                            Pedido.baixaEstoque(itens)
-                            for item in itens:
-                                ItemPedido.save(item)
-
-                            url = reverse('pedido:resumo', kwargs={'id': pedido.id})
-                            endereco = Endereco.getEndereco(pedido)
-
-                            sending(pedido, itens, endereco)
-
-                            return redirect(url)
             else:
                 for estoprod in estoqueProduto:
                     if estoqueProduto[estoprod]["quantidade_estoque"] == 0:
@@ -78,6 +67,22 @@ class Pagar(View):
 
         else:
             messages.add_message(request, messages.ERROR, "Selecione uma metodo de pagamento")
+
+    def realizarPedido(self, cliente, endereco, requestJson):
+        formaDePagamento = FormaDePagamento.objects.get(id=requestJson['forma_pagamento'])
+        vendedor = self.request.user
+        pedido = Pedido.criarPedido(cliente=cliente, formaDePagamento=formaDePagamento, vendedor=vendedor,
+                                    endereco=endereco)
+        itens = ItemPedido.criarListItensPedido(pedido=pedido, reqJson=requestJson['cart'])
+        pedido.subtotal, pedido.total, pedido.desconto = Pedido.calcularCaixa(itens)
+        Pedido.save(pedido)
+        Pedido.baixaEstoque(itens)
+        for item in itens:
+            ItemPedido.save(item)
+        url = reverse('pedido:resumo', kwargs={'id': pedido.id})
+        endereco = Endereco.getEndereco(pedido)
+        sending(pedido, itens, endereco)
+        return redirect(url)
 
 
 class FecharPedido(View):

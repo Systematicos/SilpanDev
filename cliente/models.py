@@ -1,4 +1,5 @@
 import json
+import string
 from datetime import datetime
 
 from django.db import models
@@ -32,33 +33,32 @@ class Cliente(models.Model):
         if not r.match(cliente.email):
             error.append('Por favor digite um email valido')
         r = re.compile(r'^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$')
-        #if not r.match(cls.telefone):
-            #error.append('Por favor digte um telefone valido (xx) xxxxx-xxxx ')
+        # if not r.match(cls.telefone):
+        # error.append('Por favor digte um telefone valido (xx) xxxxx-xxxx ')
         return error
+
     @classmethod
     def splitNome(cls, nome):
         nome = re.findall(r'\S+', nome)
         cls.nome = nome[0]
-        try:
+
+        if len(nome) > 1:
+
             cls.sobrenome = nome[1]
             for i in range(2, len(nome)):
                 cls.sobrenome += f' {nome[i]}'
             return cls.nome, cls.sobrenome
-        except:
-            return cls.nome
-
+        return cls.nome, ""
 
     @classmethod
     def popular_cliente(cls, form):
+        cliente = Cliente()
+        cliente.nome, cliente.sobrenome = Cliente.splitNome(form['nome'])
+        cliente.telefone = re.sub('[^0-9]', '',  form['numero_telefone'])
+        cliente.email = form['email']
+        cliente.cpf = re.sub('[^0-9]', '', form['cpf'])
 
-        cls.nome, cls.sobrenome = Cliente.splitNome(form['nome'])
-        cls.telefone = form['numero_telefone']
-        cls.email = form['email']
-        cls.cpf = form['cpf']
-
-        return cls
-
-
+        return cliente
 
     def __str__(self):
         return self.nome
@@ -81,7 +81,6 @@ class Endereco(models.Model):
         endereco['numero'] = pedido.endereco_entrega.numero
         return endereco
 
-
     def __str__(self):
         return f' Tipo: {self.tipo}, do cliente {self.cliente.nome}{self.cliente.sobrenome}'
 
@@ -98,7 +97,7 @@ class Endereco(models.Model):
         return endereco
 
     @classmethod
-    def validacao(cls,endereco):
+    def validacao(cls, endereco):
         error = []
 
         if not endereco.numero.isdigit():
