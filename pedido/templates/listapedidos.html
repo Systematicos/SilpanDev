@@ -21,7 +21,7 @@
                      <tr>
                          <td>{{pedido}}</td>
                          <td>{{pedido.cliente}}</td>
-                         <td>{{ pedido.data }}</td>
+                         <td>{{ pedido.data | date:"d/m/Y"}} {{ pedido.data | date:"H:i" }}</td>
                          <td>{{ pedido.forma_pagamento}}</td>
                          <td>{{ pedido.total|formata_preco }}</td>
                          <td>{{ pedido.endereco_entrega }}</td>
