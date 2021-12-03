@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cliente.models import Cliente, Endereco
 from produtos.models import Produto
-from cupom.models import Cupom
+
 
 
 class FormaDePagamento(models.Model):
@@ -16,17 +16,6 @@ class FormaDePagamento(models.Model):
     class Meta:
         verbose_name = 'Forma de Pagamento'
         verbose_name_plural = 'Formas de Pagamentos'
-
-
-class Status(models.Model):
-    status = models.CharField(unique=True, max_length=50)
-
-    def __str__(self):
-        return self.status
-
-    class Meta:
-        verbose_name = 'Status'
-        verbose_name_plural = 'Status'
 
 
 class Transportadora(models.Model):
@@ -44,14 +33,10 @@ class Transportadora(models.Model):
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
     total = models.FloatField()
-    status = models.ForeignKey(Status, models.DO_NOTHING)
     forma_pagamento = models.ForeignKey(FormaDePagamento, models.DO_NOTHING)
     data = models.DateTimeField()
     subtotal = models.FloatField()
     desconto = models.FloatField(default=0.0)
-    cupom = models.ForeignKey(Cupom, on_delete=models.DO_NOTHING, null=True)
-    total = models.FloatField()
-    transportadora = models.ForeignKey(Transportadora, null=True, on_delete=models.DO_NOTHING)
     frete = models.FloatField(null=True)
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)
@@ -59,19 +44,18 @@ class Pedido(models.Model):
     endereco_entrega = models.ForeignKey(Endereco, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return f'Pedido N. {self.pk}'
+        return f' N. {self.pk}.zfill(6)'
 
     @classmethod
-    def criarPedido(cls, cliente, formaDePagamento, vendedor, endereco, status):
+    def criarPedido(cls, cliente, formaDePagamento, vendedor, endereco):
         pedido = Pedido()
         pedido.data = datetime.today()
         pedido.frete = 0.0
-        pedido.status = status
         pedido.cliente = cliente
         pedido.forma_pagamento = formaDePagamento
         pedido.vendedor = vendedor
         pedido.endereco_entrega = endereco
-        # pedido.cupom = cupom
+
 
         return pedido
 
@@ -79,7 +63,6 @@ class Pedido(models.Model):
     def calcularCaixa(cls, items):
         subtotal = 0
         desconto = 0
-        total = 0
 
         for item in items:
             subtotal += item.preco * item.quantidade
@@ -95,6 +78,15 @@ class Pedido(models.Model):
             produto = Produto.objects.get(id=item.produto.id)
             produto.quantidade -= item.quantidade
             Produto.save(produto)
+
+    @classmethod
+    def getPedidoByUser(cls, user):
+        listPedido = []
+
+        for pedido in Pedido.objects.all().filter(vendedor=user):
+            listPedido.append(pedido)
+
+        return listPedido
 
     class Meta:
         verbose_name = 'Pedido'
@@ -142,7 +134,7 @@ class ItemPedido(models.Model):
             itens.append(
                 ItemPedido.criarItemPedido(pedido=pedido, produto=produto, cor=item['cor'], material=item['material'],
                                            largura=item['largura'], altura=item['altura'],
-                                           comprimento=item['comprimento'], imagem=item['href'],
+                                           comprimento=item['comprimento'], imagem=item['imagem'],
                                            quantidade=item['quantity']))
 
         return itens

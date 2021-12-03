@@ -116,7 +116,7 @@ label {
 }
 
 .modal-content {
-    border: 10px solid rgb(8, 121, 201);
+    border: 10px solid rgba(243, 92, 80, 0.87);
 }
 
 label.col-form-label {
@@ -449,7 +449,7 @@ h3.tittle-w3l {
 }
 
 h3.tittle-w3l span {
-    color: #c8081f;
+    color: #c90818;
     font-size: 50px;
     letter-spacing: 0;
 }
@@ -488,6 +488,7 @@ h3.tittle-w3l span {
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
     -ms-transition: 0.5s all;
+
 }
 
 .snipcart-details input.button:hover {
@@ -1501,6 +1502,8 @@ li.subitem1 p {
     font-size: 14px;
 }
 
+
+
 .product-single-w3l {
     border-top: 1px solid #0879c9;
 }
@@ -2392,7 +2395,7 @@ div#testimonials h4.m-title {
         font-size: 15px;
     }
     .navbar-light .navbar-toggler {
-        border-color: #2bc908;
+        border-color: rgba(243, 92, 80, 0.87);
         border-radius: 0;
     }
     .carousel-caption p {

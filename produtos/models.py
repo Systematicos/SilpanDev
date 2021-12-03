@@ -1,5 +1,6 @@
 import json
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 # Create your models here.
@@ -44,19 +45,19 @@ class Produto(models.Model):
     slug = AutoSlugField(unique=True, always_update=False, populate_from="nome")
     nome = models.CharField(max_length=250)
     descricao = models.TextField(max_length=250, null=True, blank=True)
-    quantidade = models.IntegerField(default=1)
+    quantidade = models.IntegerField(validators=[MinValueValidator(1)])
     imagem = StdImageField(upload_to='produto_imagens/%Y/%m/',
                            variations={'full': {'width': 500, 'height': 500},
                                        'medium': {'width': 212, 'height': 212},
                                        'thumbnail': {'width': 100, 'height': 100}})
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, null=True)
-    preco_marketing = models.FloatField()
-    preco_marketing_promocional = models.FloatField(default=0, blank=True, null=True)
+    preco_marketing = models.FloatField(validators=[MinValueValidator(0.01)])
+    preco_marketing_promocional = models.FloatField(validators=[MinValueValidator(0.01)], blank=True, null=True)
     cor = models.CharField(max_length=50, blank=True, null=True)
     material = models.CharField(max_length=50, blank=True, null=True)
-    largura = models.IntegerField(blank=True, null=True)
-    altura = models.IntegerField(blank=True, null=True)
-    comprimento = models.IntegerField(blank=True, null=True)
+    largura = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
+    altura = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
+    comprimento = models.IntegerField(blank=True, null=True,validators=[MinValueValidator(0.01)])
 
     def get_absolute_url(self):
         return reverse("produtos:detalhe", kwargs={"slug": self.slug})
@@ -83,15 +84,40 @@ class Produto(models.Model):
         return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
 
     @classmethod
-    def getListProdutInColun(cls, listProduct=[]):
-        lista = []
-        if not listProduct:
-            listProduct = Produto.objects.all()
+    def verificarEstoque(cls, produtos):
+        produtoSemEstoque = {}
+        for produto in produtos:
+            prod = Produto.objects.all().get(id=produto['id'])
+            if not prod.quantidade >= produto['quantity']:
+                produtoSemEstoque[prod.nome] = {'quantidade_estoque': prod.quantidade,
+                                                'quantidade_compra': produto['quantity']}
+        return produtoSemEstoque
 
-        for produto in listProduct:
-            lista.append(produto)
+    @classmethod
+    def getListProdutInColun(cls, categoria=None, nome_produto=None):
+        listProduct = []
 
-        return Produto.split(lista, 3)
+        if categoria is None:
+            if nome_produto is None:
+                listProduct = Produto.objects.all()
+            else:
+
+                for produto in Produto.objects.filter(nome__contains=nome_produto):
+                    listProduct.append(produto)
+
+        else:
+            if nome_produto is not None:
+                for produto in Produto.objects.filter(categoria=categoria, nome__contains=nome_produto):
+                    listProduct.append(produto)
+            else:
+
+                for produto in Produto.objects.filter(categoria=categoria):
+                    listProduct.append(produto)
+
+        if listProduct.__len__() < 1:
+            return None
+
+        return Produto.split(listProduct, 3)
 
     @classmethod
     def convert_json_Produto(cls, json_data):
@@ -115,5 +141,6 @@ class Produto(models.Model):
             list_product.append(produto)
         return list_product
 
-
-
+    @classmethod
+    def getProdutoByCategoria(cls):
+        pass

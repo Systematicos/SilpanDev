@@ -12,39 +12,62 @@
             <!-- //tittle heading -->
             <div class="checkout-right">
                 <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                    <span>X Produtos</span>
+                    <span><label id="contagem_produto"></label> Itens</span>
+
+                    <script>
+                        var contagem_produt = window.localStorage.getItem('PPminicarts');
+                        var contagem_produt = JSON.parse(decodeURIComponent(contagem_produt)).value.items
+                        var len_contagem_produt = 0
+                        for (let item of contagem_produt) {
+                            len_contagem_produt += item.quantity
+                        }
+
+
+                        document.getElementById("contagem_produto").innerHTML = len_contagem_produt
+
+                    </script>
                 </h4>
                 <div class="table-responsive" id="table-products">
                     <table class="timetable_sub">
                         <thead>
                         <tr>
-                            <th>Item</th>
                             <th>Produto</th>
-                            <th>Quantidade</th>
                             <th>Nome do Produto</th>
-                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                            <th>Desconto</th>
+                            <th>Total</th>
                             <th>Remover</th>
                         </tr>
                         </thead>
                         <tbody id="t-product">
                         </tbody>
+
                     </table>
+                    <li class="font-weight-bold list-group-item bg-light">Subtotal
+                        <span class="float-right" id="subtotal-checkout"></span>
+                    </li>
+                    <li class="font-weight-bold list-group-item bg-light">Desconto
+                        <span class="float-right" id="desconto-checkout"></span>
+                    </li>
+                    <li class="font-weight-bold list-group-item bg-light">Total
+                        <span class="float-right" id="total-checkout"></span>
+                    </li>
                 </div>
             </div>
             <!-- Endereço-->
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
-                    <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
-                          agileinfo_form
-                    " id="form">
-                    {% csrf_token %}
-                    <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                    <form method="get" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
+                          agileinfo_form id="form">
+                        {% csrf_token %}
+                        <div class="creditly-wrapper wthree, w3_agileits_wrapper">
 
-                        <button class="submit check_out btn" type="submit" id="pagamento_pedido"
-                        >Selecionar Cliente e endereço de entrega
-                            <span class="far fa-hand-point-right"></span>
-                        </button>
-                    </div>
+                            <button class="submit check_out btn" type="submit" id="pagamento_pedido"
+                            >Selecionar Cliente e Endereço de Entrega
+                                <span class="far fa-hand-point-right"></span>
+                            </button>
+                        </div>
                     </form>
 
                 </div>
@@ -61,10 +84,10 @@
 
     <!-- js-files -->
     <!-- jquery -->
-
+    <script src="{% static 'js/carrinho.js' %}"></script>
+    <script src="{% static 'js/pagamento.js' %}"></script>
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
-
 
 
 
@@ -85,7 +108,6 @@
     </script>
     <!-- //nav smooth scroll -->
     <!-- pagamento -->
-    <script src="{% static 'js/pagamento.js' %}"></script>
     <script>
 
         const constructListProducts = () => {
@@ -93,17 +115,21 @@
                 const items = loadProducts().value.items;
                 let html = '';
                 let count = 0;
+                let total = 0;
+                let subtotal = 0;
+                let descontos = 0;
                 for (let item of items) {
                     count++
-                    console.log(item)
+                    descontos += parseFloat(item.discount_amount) * item.quantity
+                    subtotal += item.quantity * item.amount
+                    total += item.quantity * (item.amount - parseFloat(item.discount_amount))
                     html += `
                     <tr class="rem1">
-                        <td class="invert">${count}</td>
+
                         <td class="invert-image">
-                            <a href="../../templates/single.html">
-                                <img src="${item.imagem}" alt=" " class="img-responsive">
-                            </a>
+                           <img src="${item.imagem}" alt=" " class="img-responsive">
                         </td>
+                        <td class="invert">${item.item_name}</td>
                         <td class="invert">
                             <div class="quantity">
                                 <div class="quantity-select">
@@ -115,14 +141,26 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="invert">${item.item_name}</td>
-                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity*item.amount).toFixed(2)}</td>
+
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.amount).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * parseFloat(item.discount_amount)).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * (item.amount - parseFloat(item.discount_amount))).toFixed(2)}</td>
+
+
+
+
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
                         </td>
                     </tr>
                 `
+
                 }
+
+
+                document.getElementById('subtotal-checkout').innerHTML = `R$ ${subtotal.toFixed(2)} `
+                document.getElementById('desconto-checkout').innerHTML = `R$ ${descontos.toFixed(2)} `
+                document.getElementById('total-checkout').innerHTML = `R$ ${total.toFixed(2)} `
                 document.getElementById('t-product').innerHTML = html;
             }
         }
@@ -132,196 +170,49 @@
             itemIndex = items.value.items.findIndex(item => item.id == id);
             items.value.items.splice(itemIndex, 1);
             window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
-            window.location.reload();
+
+            window.location.reload()
+
         }
 
         constructListProducts();
 
-        const updatePriceProduct = (id)=>{
+        const updatePriceProduct = (id) => {
             let incr = -1
-            if(id.indexOf('plus') > -1){
+            descrementa = true
+            if (id.indexOf('plus') > -1) {
                 incr = 1
+                descrementa = false
             }
-            id = id.replace("plus-","").replace("minus-","")
+            id = id.replace("plus-", "").replace("minus-", "")
             console.log(id)
             let items = loadProducts();
 
             itemIndex = items.value.items.findIndex(item => item.id == id);
-            items.value.items[itemIndex].quantity+=incr
-            let product = items.value.items[itemIndex];
-            let total = product.quantity*product.amount
-            document.getElementById(`price-${id}`).innerText=`R$ ${total.toFixed(2)}`
-            window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
 
+            if (items.value.items[itemIndex].quantity == 1 && descrementa) {
+                removeProduct(itemIndex)
+            } else {
+                items.value.items[itemIndex].quantity += incr
+                let product = items.value.items[itemIndex];
+                let total = product.quantity * product.amount
+                document.getElementById(`price-${id}`).innerText = `R$ ${total.toFixed(2)}`
+                window.localStorage.setItem('PPminicarts', encodeURIComponent(JSON.stringify(items)))
 
+            }
         }
 
         Array.from(document.getElementsByClassName("alter-quantity")).map(item => {
-            item.addEventListener("click", (event)=> {
+            item.addEventListener("click", (event) => {
                 updatePriceProduct(event.currentTarget.id)
+                window.location.reload()
+
             })
+
         })
     </script>
 
-    <!-- //pagamento -->
 
 
-    <!-- popup modal (for location)-->
-    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script>
-        DJANGO_STATIC_URL = '{{ STATIC_URL }}';
 
-        $(document).ready(function () {
-            $('.popup-with-zoom-anim').magnificPopup({
-                type: 'inline',
-                fixedContentPos: false,
-                fixedBgPos: true,
-                overflowY: 'auto',
-                closeBtnInside: true,
-                preloader: false,
-                midClick: true,
-                removalDelay: 300,
-                mainClass: 'my-mfp-zoom-in'
-            });
-
-        });
-
-
-    </script>
-    <!-- //popup modal (for location)-->
-
-    <!-- cart-js -->
-    <script src="{% static 'js/minicart.js' %}"></script>
-    <script>
-        paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
-
-        paypals.minicarts.cart.on('checkout', function (evt) {
-            var items = this.items(),
-                len = items.length,
-                total = 0,
-                i;
-
-            // Count the number of each item in the cart
-            for (i = 0; i < len; i++) {
-                total += items[i].get('quantity');
-            }
-
-            if (total < 3) {
-                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-                evt.preventDefault();
-            }
-        });
-
-    </script>
-    <!-- //cart-js -->
-
-    <!-- password-script -->
-    <script>
-        window.onload = function () {
-            document.getElementById("password1").onchange = validatePassword;
-            document.getElementById("password2").onchange = validatePassword;
-        }
-
-        function validatePassword() {
-            var pass2 = document.getElementById("password2").value;
-            var pass1 = document.getElementById("password1").value;
-            if (pass1 != pass2)
-                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-            else
-                document.getElementById("password2").setCustomValidity('');
-            //empty string means no validation error
-        }
-    </script>
-    <!-- //password-script -->
-
-    <!-- quantity -->
-    <script>
-        $('.value-plus').on('click', function () {
-            var divUpd = $(this).parent().find('.value'),
-                newVal = parseInt(divUpd.text(), 10) + 1;
-            divUpd.text(newVal);
-        });
-
-        $('.value-minus').on('click', function () {
-            var divUpd = $(this).parent().find('.value'),
-                newVal = parseInt(divUpd.text(), 10) - 1;
-            if (newVal >= 1) divUpd.text(newVal);
-        });
-    </script>
-    <!--quantity-->
-    <script>
-        $(document).ready(function (c) {
-            $('.close1').on('click', function (c) {
-                $('.rem1').fadeOut('slow', function (c) {
-                    $('.rem1').remove();
-                });
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function (c) {
-            $('.close2').on('click', function (c) {
-                $('.rem2').fadeOut('slow', function (c) {
-                    $('.rem2').remove();
-                });
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function (c) {
-            $('.close3').on('click', function (c) {
-                $('.rem3').fadeOut('slow', function (c) {
-                    $('.rem3').remove();
-                });
-            });
-        });
-    </script>
-    <!-- //quantity -->
-
-    <!-- smoothscroll -->
-    <script src="{% static 'js/SmoothScroll.min.js' %}"></script>
-    <!-- //smoothscroll -->
-
-    <!-- start-smooth-scrolling -->
-    <script src="{% static 'js/move-top.js' %}"></script>
-    <script src="{% static 'js/easing.js' %}"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
-            });
-        });
-    </script>
-    <!-- //end-smooth-scrolling -->
-
-    <!-- smooth-scrolling-of-move-up -->
-    <script>
-        $(document).ready(function () {
-            /*
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-            };
-            */
-            $().UItoTop({
-                easingType: 'easeOutQuart'
-            });
-
-        });
-    </script>
-    <!-- //smooth-scrolling-of-move-up -->
-
-    <!-- for bootstrap working -->
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <!-- //for bootstrap working -->
-    <!-- //js-files -->
-
-
-    <!-- //top products -->
 {% endblock scripts %}

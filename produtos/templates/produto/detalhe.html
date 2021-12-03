@@ -23,8 +23,11 @@
                 </div>
 
                 <div class="col-lg-7 single-right-left simpleCart_shelfItem">
-                    <h3 class="mb-3">{{ object }}</h3>
+                    <h2 class="mb-3">{{ object }}</h2>
                     <p class="mb-3">
+
+                    <h3 style="font-size: 15px; text-align: center ">Cód. {{ object.id|formata_codigo_produto }}</h3>
+                    <br />
 
                         {% if object.preco_marketing_promocional %}
                             <span class="item_price">R${{ object.preco_marketing_promocional|formata_preco }}</span>
@@ -35,17 +38,54 @@
 
                         {% endif %}
                     </p>
-                    <div class="single-infoagile">
-                        <ul>
-                            <li class="mb-3">
-                                {{ object.descricao }}
-                            </li>
+                    <br />
 
-                        </ul>
+                    <div class="single-infoagile" >
+                            <ul>
+                                <li class="mb-3">
+                                    {% autoescape on %}
+                                       <h4 style="font-size: 22px">{{ object.descricao|safe }}</h4>
+                                    {% endautoescape %}
+                                    <br />
+
+                                    {% if object.largura != None or object.altura != None or object.comprimento != None  or object.material != None%}
+
+                                        <h5 class="mb-2">
+                                            <span style="font-weight: bold; font-size:20px; color: #0b0b0b">Medidas</span>
+                                        </h5>
+
+                                        {% if object.comprimento != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: center">
+                                                Comprimento: {{ object.comprimento }} cm
+                                            </h5>
+                                        {% endif %}
+
+                                        {% if object.largura != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: center">
+                                                Largura: {{ object.largura }} cm
+                                            </h5>
+                                        {% endif %}
+
+                                        {% if object.altura != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: center">
+                                                Altura: {{ object.altura }} cm
+                                            </h5>
+                                        {% endif %}
+
+                                        {% if object.material != None %}
+                                            <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: center">
+                                                Material: {{ object.material }} 
+                                            </h5>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </li>
+
+                            </ul>
                     </div>
 
                     <div class="occasion-cart">
-                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out" style="margin: 10%; width: 80%">
                             <form action="#" method="post">
                                 <fieldset>
                                     <input type="hidden" name="cmd" value="_cart"/>
