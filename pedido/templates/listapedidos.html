@@ -22,7 +22,7 @@
                              <a href="{% url 'pedido:resumo' id=pedido.id %}">{{pedido.id|formata_numero_pedido}}</a>
                          </td>
                          <td>{{pedido.cliente}}</td>
-                         <td>{{ pedido.data }}</td>
+                         <td>{{ pedido.data | date:"d/m/Y"}} {{ pedido.data | date:"H:i" }}</td>
                          <td>{{ pedido.forma_pagamento}}</td>
                          <td>{{ pedido.total|formata_preco }}</td>
                     </tr>
