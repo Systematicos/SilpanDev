@@ -12,21 +12,20 @@
                       <th scope="col">Data</th>
                       <th scope="col">Forma de Pagamento</th>
                       <th scope="col">Total</th>
-                      <th scope="col">Endereço</th>
                   </tr>
 
         {% for pedido in pedidos %}
 
             <div>
                      <tr>
-                         <td>{{pedido}}</td>
+                         <td>
+                             <a href="{% url 'pedido:resumo' id=pedido.id %}">{{pedido.id|formata_numero_pedido}}</a>
+                         </td>
                          <td>{{pedido.cliente}}</td>
-                         <td>{{ pedido.data }}</td>
+                         <td>{{ pedido.data | date:"d/m/Y"}} {{ pedido.data | date:"H:i" }}</td>
                          <td>{{ pedido.forma_pagamento}}</td>
                          <td>{{ pedido.total|formata_preco }}</td>
-                         <td>{{ pedido.endereco_entrega }}</td>
                     </tr>
-
 
             </div>
 
@@ -34,7 +33,9 @@
         </table>
 
     {% else %}
-        <h4>nao tem pedido</h4>
+        <br>
+        <h4 style="text-align: center; font-size: 35px"> {{ vendedor.get_full_name }} não realizou nenhuma venda </h4>
+        <br>
     {% endif %}
 
 {% endblock %}

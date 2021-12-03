@@ -27,41 +27,50 @@
     <!-- Main css -->
     <link rel="stylesheet" href="{% static 'css/fontawesome-all.css' %}">
     <!-- Font-Awesome-Icons-CSS -->
+
+
 </head>
 
 <div id="login" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-                <div class="modal-title">
-                    <hr>
-                    <h5 style="font-size: 30px; color: #050505; text-align: center "> SISTEMA SILPAN </h5>
-                    <hr>
-                    <h5 style="font-size: 17px; color: #b90202; text-align: center "> Controle de Vendas e Gerenciamento de Estoque </h5>
+            <div class="modal-title">
+                <hr>
+                <h5 style="font-size: 30px; color: #050505; text-align: center "> SISTEMA SILPAN </h5>
+                <hr>
+                <h5 style="font-size: 17px; color: #b90202; text-align: center "> Controle de Vendas e Gerenciamento de
+                    Estoque </h5>
 
+            </div>
+
+            <div class="modal-body">
+                <div class="messages" style="color: red; text-align: center" >
+                    {% for message in messages %}
+                        <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a>
+                    {% endfor %}
                 </div>
+                <form action="{% url 'login' %}" method="post" id="form_login">
+                    {% csrf_token %}
 
-                <div class="modal-body">
-                    <form action="{% url 'login' %}" method="post">
-                        {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-form-label">Usuário</label>
+                        <input type="text" class="form-control" placeholder=" " name="user" required="" id="user"
+                               minlength="4">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Senha</label>
+                        <input type="password" class="form-control" placeholder=" " name="password" required=""
+                               id="password" minlength="4">
+                    </div>
+                    <div class="right-w3l">
+                        <input type="submit" class="form-control" value="Entrar">
+                    </div>
+                    <div class="sub-w3l">
 
-                        <div class="form-group">
-                            <label class="col-form-label">Usuário</label>
-                            <input type="text" class="form-control" placeholder=" " name="user" required="" id="user">
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label">Senha</label>
-                            <input type="password" class="form-control" placeholder=" " name="password" required=""
-                                   id="password">
-                        </div>
-                        <div class="right-w3l">
-                            <input type="submit" class="form-control" value="Entrar">
-                        </div>
-                        <div class="sub-w3l">
-
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>

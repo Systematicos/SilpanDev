@@ -1,6 +1,7 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -47,15 +48,12 @@ def login(request):
         username = request.POST.get('user')
         password = request.POST.get('password')
 
-        if not username or not password:
-            return HttpResponse('digtar usuario ou senha')
-
         usuario = authenticate(request, username=username, password=password)
 
         if not usuario:
-            return HttpResponse({
-                'error': 'nao tem usuario'
-            }, status=404)
+            messages.add_message(request,messages.ERROR, "Usuário ou senha incorreto")
+
+            return redirect(request.path_info)
 
         auth.login(request, user=usuario)
 
@@ -68,4 +66,6 @@ def Logout(request):
 
         return redirect('home')
 
-
+def validarLogin(request):
+    if request.method == "POST":
+        pass

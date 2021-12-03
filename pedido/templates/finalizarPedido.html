@@ -9,7 +9,11 @@
             <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
                 <span>A</span>dicionar detalhes da compra
             </h3>
-
+            <div class="messages" style="color: red; text-align: center">
+                {% for message in messages %}
+                    <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br>
+                {% endfor %}
+            </div>
             <!-- Endereço-->
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
@@ -18,7 +22,7 @@
                         <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                             <div class="information-wrapper">
                                 <div class="first-row">
-                                    <input type="hidden" name="cadastro" value="False" id="cadastro"  >
+                                    <input type="hidden" name="cadastro" value="False" id="cadastro">
                                     <div class="controls form-group">
                                         <input class="billing-address-name form-control" type="text" name="cpf"
                                                placeholder="CPF" id="text_cpf" required="">
@@ -42,7 +46,7 @@
                                     </div>
                                     <div class="controls form-group">
                                         <select class="option-w3ls" name="forma_pagamento">
-                                            <option>Tipo de Pagamento</option>
+                                            <option value="0">Tipo de Pagamento</option>
                                             {% for Forma_pagamento in Forma_pagamentos %}
                                                 <option value="{{ Forma_pagamento.id }}">{{ Forma_pagamento }}</option>
 
@@ -75,8 +79,8 @@
 
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- //jquery -->
-<script src="{% static 'js/pagamento.js' %}"></script>
-<script src="{% static 'js/carrinho.js' %}"></script>
+    <script src="{% static 'js/pagamento.js' %}"></script>
+    <script src="{% static 'js/carrinho.js' %}"></script>
 
 
     <!-- nav smooth scroll -->

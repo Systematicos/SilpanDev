@@ -84,6 +84,16 @@ class Produto(models.Model):
         return [lista[i:i + tamanho] for i in range(0, len(lista), tamanho)]
 
     @classmethod
+    def verificarEstoque(cls, produtos):
+        produtoSemEstoque = {}
+        for produto in produtos:
+            prod = Produto.objects.all().get(id=produto['id'])
+            if not prod.quantidade >= produto['quantity']:
+                produtoSemEstoque[prod.nome] = {'quantidade_estoque': prod.quantidade,
+                                                'quantidade_compra': produto['quantity']}
+        return produtoSemEstoque
+
+    @classmethod
     def getListProdutInColun(cls, categoria=None, nome_produto=None):
         listProduct = []
 
@@ -91,6 +101,7 @@ class Produto(models.Model):
             if nome_produto is None:
                 listProduct = Produto.objects.all()
             else:
+
                 for produto in Produto.objects.filter(nome__contains=nome_produto):
                     listProduct.append(produto)
 

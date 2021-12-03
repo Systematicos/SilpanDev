@@ -12,13 +12,18 @@
             <!-- //tittle heading -->
             <div class="checkout-right">
                 <h4 class="mb-sm-4 mb-3">Seu carrinho de compras contém:
-                    <span><label id="contagem_produto"></label> Produtos</span>
+                    <span><label id="contagem_produto"></label> Itens</span>
 
                     <script>
                         var contagem_produt = window.localStorage.getItem('PPminicarts');
-                        var contagem_produt = JSON.parse(decodeURIComponent(contagem_produt)).value.items.length
-                        console.log(contagem_produt)
-                        document.getElementById("contagem_produto").innerHTML = contagem_produt
+                        var contagem_produt = JSON.parse(decodeURIComponent(contagem_produt)).value.items
+                        var len_contagem_produt = 0
+                        for (let item of contagem_produt) {
+                            len_contagem_produt += item.quantity
+                        }
+
+
+                        document.getElementById("contagem_produto").innerHTML = len_contagem_produt
 
                     </script>
                 </h4>
@@ -26,12 +31,12 @@
                     <table class="timetable_sub">
                         <thead>
                         <tr>
-                            <th>Item</th>
                             <th>Produto</th>
-                            <th>Quantidade</th>
                             <th>Nome do Produto</th>
-                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
                             <th>Desconto</th>
+                            <th>Total</th>
                             <th>Remover</th>
                         </tr>
                         </thead>
@@ -39,15 +44,21 @@
                         </tbody>
 
                     </table>
+                    <li class="font-weight-bold list-group-item bg-light">Subtotal
+                        <span class="float-right" id="subtotal-checkout"></span>
+                    </li>
+                    <li class="font-weight-bold list-group-item bg-light">Desconto
+                        <span class="float-right" id="desconto-checkout"></span>
+                    </li>
                     <li class="font-weight-bold list-group-item bg-light">Total
-                        <span class="float-right" id="total-checkout" ></span>
+                        <span class="float-right" id="total-checkout"></span>
                     </li>
                 </div>
             </div>
             <!-- Endereço-->
             <div class="checkout-left">
                 <div class="address_form_agile mt-sm-5 mt-4">
-                    <form method="post" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
+                    <form method="get" action={% url "pedido:selecionarClienteEndereco" %} class="creditly-card-form
                           agileinfo_form id="form">
                         {% csrf_token %}
                         <div class="creditly-wrapper wthree, w3_agileits_wrapper">
@@ -105,15 +116,20 @@
                 let html = '';
                 let count = 0;
                 let total = 0;
+                let subtotal = 0;
+                let descontos = 0;
                 for (let item of items) {
                     count++
+                    descontos += parseFloat(item.discount_amount) * item.quantity
+                    subtotal += item.quantity * item.amount
                     total += item.quantity * (item.amount - parseFloat(item.discount_amount))
                     html += `
                     <tr class="rem1">
-                        <td class="invert">${count}</td>
+
                         <td class="invert-image">
                            <img src="${item.imagem}" alt=" " class="img-responsive">
                         </td>
+                        <td class="invert">${item.item_name}</td>
                         <td class="invert">
                             <div class="quantity">
                                 <div class="quantity-select">
@@ -125,9 +141,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="invert">${item.item_name}</td>
+
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * item.amount).toFixed(2)}</td>
                         <td class="invert" id="price-${item.id}">R$ ${(item.quantity * parseFloat(item.discount_amount)).toFixed(2)}</td>
+                        <td class="invert" id="price-${item.id}">R$ ${(item.quantity * (item.amount - parseFloat(item.discount_amount))).toFixed(2)}</td>
+
+
+
 
                         <td class="invert">
                             <button type="button" onclick="removeProduct(${item.id})"> x </button>
@@ -138,7 +158,9 @@
                 }
 
 
-                document.getElementById('total-checkout').innerHTML =`R$ ${total.toFixed(2)} `
+                document.getElementById('subtotal-checkout').innerHTML = `R$ ${subtotal.toFixed(2)} `
+                document.getElementById('desconto-checkout').innerHTML = `R$ ${descontos.toFixed(2)} `
+                document.getElementById('total-checkout').innerHTML = `R$ ${total.toFixed(2)} `
                 document.getElementById('t-product').innerHTML = html;
             }
         }
