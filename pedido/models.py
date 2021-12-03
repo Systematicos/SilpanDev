@@ -37,7 +37,6 @@ class Pedido(models.Model):
     data = models.DateTimeField()
     subtotal = models.FloatField()
     desconto = models.FloatField(default=0.0)
-    total = models.FloatField()
     frete = models.FloatField(null=True)
     codigo_rastreio = models.CharField(unique=True, max_length=50, blank=True, null=True)
     notal_fiscal = models.CharField(max_length=70, blank=True, null=True)

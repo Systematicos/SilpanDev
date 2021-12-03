@@ -101,6 +101,7 @@ class Produto(models.Model):
             if nome_produto is None:
                 listProduct = Produto.objects.all()
             else:
+
                 for produto in Produto.objects.filter(nome__contains=nome_produto):
                     listProduct.append(produto)
 
