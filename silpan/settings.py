@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ynac3#(84kfr8&++4=@4+1l=)qh+!(pr$%w@!7d7n5^$10j*w3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['silpan.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -66,6 +66,7 @@ MIDDLEWARE = [
 
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 ROOT_URLCONF = 'silpan.urls'
@@ -96,8 +97,14 @@ DATABASE_URL = os.getenv("JAWSDB_MARIA_URL")
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 
 DATABASES = {
-    'default': db_from_env
-
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'silpan',
+        'USER': 'dev',
+        'PASSWORD': '6IcEv7ha',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
 }
 
 # Password validation
@@ -135,12 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'templates/static')
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -156,7 +161,7 @@ django_heroku.settings(locals())
 #email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = 'silpanecommerce@gmail.com'
+EMAIL_HOST_PASSWORD = '4569442311vfg@'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
