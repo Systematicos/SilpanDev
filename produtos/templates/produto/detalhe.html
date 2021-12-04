@@ -48,7 +48,7 @@
                                     {% endautoescape %}
                                     <br />
 
-                                    {% if object.largura != None or object.altura != None or object.comprimento != None  or object.material != None%}
+                                    {% if object.largura != None or object.altura != None or object.comprimento != None%}
 
                                         <h5 class="mb-2">
                                             <span style="font-weight: bold; font-size:20px; color: #0b0b0b">Medidas</span>
@@ -71,14 +71,14 @@
                                                 Altura: {{ object.altura }} cm
                                             </h5>
                                         {% endif %}
-
+{% endif %}
                                         {% if object.material != None %}
                                             <h5 style="font-weight: bold; font-size: 18px; color: #0b0b0b;  text-align: center">
                                                 Material: {{ object.material }} 
                                             </h5>
                                         {% endif %}
 
-                                    {% endif %}
+
                                 </li>
 
                             </ul>
