@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['silpandev-production.up.railway.app']
 CORS_ALLOW_ALL_ORIGINS=False
-CSRF_TRUSTED_ORIGINS = ['silpandev-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://silpandev-production.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
