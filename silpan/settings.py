@@ -31,8 +31,6 @@ ALLOWED_HOSTS = ['https://web-production-0a03.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
-    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
