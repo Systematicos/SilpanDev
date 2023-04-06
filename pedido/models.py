@@ -83,7 +83,7 @@ class Pedido(models.Model):
     def getPedidoByUser(cls, user):
         listPedido = []
 
-        for pedido in Pedido.objects.all().filter(vendedor=user):
+        for pedido in Pedido.objects.all().filter(vendedor=user).order_by('id').reverse():
             listPedido.append(pedido)
 
         return listPedido
