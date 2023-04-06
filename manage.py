@@ -6,6 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    os.environ.setdefault('DISABLE_COLLECTSTATIC', '1')
+
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'silpan.settings')
     try:
         from django.core.management import execute_from_command_line
