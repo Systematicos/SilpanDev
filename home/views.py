@@ -10,10 +10,11 @@ from django.shortcuts import render, redirect
 from django.utils import http
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_protect
 
 from produtos.models import Categoria, Produto
 
-
+@csrf_protect
 @login_required(login_url='login')
 def home(request):
     if request.method == 'GET' and request.GET.get('nome'):
@@ -37,7 +38,7 @@ def home(request):
 
         return render(request=request, template_name=template_name, context=context)
 
-
+@csrf_protect
 def login(request):
     if request.method == 'GET':
         template_name = 'home/login.html'
