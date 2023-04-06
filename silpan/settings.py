@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-import dj_database_url
+#import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ynac3#(84kfr8&++4=@4+1l=)qh+!(pr$%w@!7d7n5^$10j*w3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://web-production-0a03.up.railway.app']
+ALLOWED_HOSTS = ['silpandev-production.up.railway.app']
 
 # Application definition
 
@@ -89,14 +89,19 @@ WSGI_APPLICATION = 'silpan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASE_URL = os.getenv("JAWSDB_MARIA_URL")
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
+#DATABASE_URL = os.getenv("JAWSDB_MARIA_URL")
+#db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 
 DATABASES = {
-    'default': db_from_env
-
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('MYSQL_DATABASE_HOST'),
+        'PORT': os.getenv('MYSQL_DATABASE_PORT'),
+    }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
