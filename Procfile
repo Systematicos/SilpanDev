@@ -1,1 +1,1 @@
-web: gunicorn silpan.wsgi --log-file -
+web: waitress-serve --port=$PORT silpan.wsgi:application
