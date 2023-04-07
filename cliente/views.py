@@ -8,7 +8,6 @@ from .Serializers import EnderecoSerializer
 from .models import Cliente, Endereco
 
 
-@login_required(login_url='login')
 def buscarByCPF(request):
     print()
     if request.method == 'POST':
