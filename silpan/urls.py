@@ -27,6 +27,5 @@ urlpatterns = [
                   path('produto/', include('produtos.urls')),
                   path('cliente/', include('cliente.urls')),
                   path('pedido/', include('pedido.urls')),
-                  path('__debug__/', include(debug_toolbar.urls)),
                   path('administrativo/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
