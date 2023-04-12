@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-ynac3#(84kfr8&++4=@4+1l=)qh+!(pr$%w@!7d7n5^$10j*w3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['silpandev-production.up.railway.app']
+ALLOWED_HOSTS = ['silpandev-production.up.railway.app','127.0.0.1', 'silpan.onrender.com']
 CORS_ALLOW_ALL_ORIGINS=False
-CSRF_TRUSTED_ORIGINS = ['https://silpandev-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://silpandev-production.up.railway.app', 'silpan.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
